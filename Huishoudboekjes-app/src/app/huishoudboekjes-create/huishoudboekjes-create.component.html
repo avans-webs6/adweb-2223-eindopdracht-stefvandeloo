@@ -1,0 +1,14 @@
+<button (click)="onCreate()">Add huishoudboekje</button>
+
+<dialog id="create-book-Dialog">
+    <h1>Create huishoudboekje</h1>
+
+    <table>
+        <tr><td>Title</td><td><input [(ngModel)]="book.title"/></td></tr>
+        <tr><td>Description</td><td><input [(ngModel)]="book.description"/></td></tr>
+    </table>
+    
+    <div>
+        <button style="float: left;" (click)="onCancel()">Cancel</button><button style="float: right;" (click)="onSave()">Save</button>
+    </div>
+</dialog>

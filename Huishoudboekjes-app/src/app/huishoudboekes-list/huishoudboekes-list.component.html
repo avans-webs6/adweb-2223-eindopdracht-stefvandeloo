@@ -1,0 +1,26 @@
+<app-huishoudboekjes-create></app-huishoudboekjes-create>
+
+<h3>Huishoudboekjes</h3>
+<ul>
+    <p *ngIf="(books | async)?.length === 0">No huishoudboekjes found!</p>
+    <li *ngFor="let book of books | async">
+        <div>
+            <a>{{book.title}}</a>
+            <p>{{book.description}}</p>
+        </div>
+        <app-huishoudboekjes-edit [book]="book"></app-huishoudboekjes-edit>
+        <button (click)="archiveBook(book)">Archive</button>
+    </li>
+</ul>
+
+<h3>Archived huishoudboekjes</h3>
+<ul>
+    <p *ngIf="(archivedBooks | async)?.length === 0">No archived huishoudboekjes found!</p>
+    <li *ngFor="let archivedBook of archivedBooks | async">
+        <div>
+            <p>{{archivedBook.title}}</p>
+            <p>{{archivedBook.description}}</p>
+        </div>
+        <button (click)="dearchiveBook(archivedBook)">Dearchive</button>
+    </li>
+</ul>
