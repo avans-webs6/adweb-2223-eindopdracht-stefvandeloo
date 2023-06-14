@@ -9,7 +9,7 @@ import { BookService } from '../book.service';
 })
 export class HuishoudboekjesEditComponent {
   @Input()
-  book: Book = new Book("", "", "");
+  book: Book = new Book();
   editDialog: any;
 
   constructor(public bookService: BookService) {  }

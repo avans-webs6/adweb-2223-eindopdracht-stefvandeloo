@@ -5,7 +5,7 @@
     <p *ngIf="(books | async)?.length === 0">No huishoudboekjes found!</p>
     <li *ngFor="let book of books | async">
         <div>
-            <a>{{book.title}}</a>
+            <a routerLink="../book/{{book.id}}" routerLinkActive="active">{{book.title}}</a>
             <p>{{book.description}}</p>
         </div>
         <app-huishoudboekjes-edit [book]="book"></app-huishoudboekjes-edit>

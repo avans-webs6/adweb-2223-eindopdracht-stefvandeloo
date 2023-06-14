@@ -9,7 +9,7 @@ import { BookService } from '../book.service';
 })
 export class HuishoudboekjesCreateComponent {
 
-  book: Book = new Book("", "", "");
+  book: Book = new Book();
   createDialog: any;
 
   constructor(public bookService: BookService) {  }
@@ -19,7 +19,7 @@ export class HuishoudboekjesCreateComponent {
   }
 
   onCreate() {
-    this.book = new Book("", "", "");
+    this.book = new Book();
     this.createDialog.showModal();
   }
 

@@ -1,0 +1,15 @@
+<div *ngIf="book">
+    <h2>{{book.title}}</h2>
+    <h3>{{book.description}}</h3>
+
+    <div id="income">
+        <ul>
+            <li *ngFor="let incomeItem of income">
+                <p>{{incomeItem.description}}</p>
+                <p>{{incomeItem.date}}</p>
+                <p>{{incomeItem.price}}</p>
+            </li>
+        </ul>
+    </div>
+</div>
+

@@ -5,6 +5,7 @@ import { Firestore , getFirestore, onSnapshot, collection, addDoc, updateDoc, de
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { environment } from 'src/environments/environment';
 import { Book } from './book.model';
+import { Income } from './income';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class BookService {
   firestore: Firestore;
   booksCollectionName = "books";
   archivedBooksCollectionName = "archivedBooks";
+  incomeCollectionName = "income";
 
   constructor() { 
     const app = initializeApp(environment.firebaseConfig); 
@@ -33,9 +35,9 @@ export class BookService {
   }
 
   //TODO: Maybe use the bookConverter here too, instead of 'as Book'.
-  getBook(book: Book): Observable<Book> {
+  getBook(bookId: string): Observable<Book> {
     return new Observable((subscriber: Subscriber<Book>) => {
-      getDoc(doc(this.firestore, this.booksCollectionName, book.id)).then((doc) => {
+      getDoc(doc(this.firestore, this.booksCollectionName, bookId)).then((doc) => {
         let book = doc.data() as Book ?? {};
         book['id'] = doc.id;
         subscriber.next(book);
@@ -64,6 +66,20 @@ export class BookService {
     updateDoc(doc(this.firestore, this.booksCollectionName, book.id).withConverter(this.bookConverter), book);
   }
 
+  getIncome(incomeId: string) {
+    return new Observable((Subscriber: Subscriber<Income[]>) => {
+      onSnapshot(collection(this.firestore, this.booksCollectionName), (snapshot) => {
+        let income: Income[] = [];
+        snapshot.forEach((doc) => {
+          let incomeItem = doc.data() as Income;
+          incomeItem['id'] = doc.id;
+          income.push(incomeItem);
+        });
+        Subscriber.next(income);
+      });
+    });
+  }
+
 
 
   addBookTemplate(book: Book, collectionTitle: string) {
@@ -88,16 +104,19 @@ export class BookService {
   }
 
   bookConverter = {
-    toFirestore: (book: { id: string; title: string; description: string; }) => {
+    toFirestore: (book: Book) => {
         return {
             id: book.id,
             title: book.title,
-            description: book.description
+            description: book.description,
+            incomeId: book.incomeId
         };
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
-        return new Book(data.id, data.title, data.description);
+        let book = new Book();
+        book.createBook(data.id, data.title, data.description, data.incomeId);
+        return book;
     }
-};
+  };
 }

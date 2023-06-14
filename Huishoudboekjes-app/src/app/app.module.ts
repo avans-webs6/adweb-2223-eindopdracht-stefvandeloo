@@ -8,13 +8,15 @@ import { HuishoudboekesListComponent } from './huishoudboekes-list/huishoudboeke
 import { BookService } from './book.service';
 import { HuishoudboekjesCreateComponent } from './huishoudboekjes-create/huishoudboekjes-create.component';
 import { HuishoudboekjesEditComponent } from './huishoudboekjes-edit/huishoudboekjes-edit.component';
+import { HuishoudboekjesDetailComponent } from './huishoudboekjes-detail/huishoudboekjes-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HuishoudboekesListComponent,
     HuishoudboekjesCreateComponent,
-    HuishoudboekjesEditComponent
+    HuishoudboekjesEditComponent,
+    HuishoudboekjesDetailComponent
   ],
   imports: [
     BrowserModule,
