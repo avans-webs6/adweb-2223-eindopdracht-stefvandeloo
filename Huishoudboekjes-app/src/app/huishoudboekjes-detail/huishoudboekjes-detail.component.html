@@ -3,6 +3,8 @@
     <h3>{{book.description}}</h3>
 
     <div id="income">
+        <p *ngIf="income.length === 0">No income found!</p>
+
         <ul>
             <li *ngFor="let incomeItem of income">
                 <p>{{incomeItem.description}}</p>

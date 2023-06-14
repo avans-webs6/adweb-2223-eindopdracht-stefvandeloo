@@ -22,9 +22,9 @@ export class HuishoudboekjesDetailComponent {
         this.book = book;
       });
 
-      this.bookService.getIncome(this.book.incomeId).subscribe((income) => {
+      this.bookService.getIncomeOfBook(bookId).subscribe((income) => {
         this.income = income;
-      })
+      });
     }
   }
 }

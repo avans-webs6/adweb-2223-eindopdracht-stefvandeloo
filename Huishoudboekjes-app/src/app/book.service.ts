@@ -66,9 +66,9 @@ export class BookService {
     updateDoc(doc(this.firestore, this.booksCollectionName, book.id).withConverter(this.bookConverter), book);
   }
 
-  getIncome(incomeId: string) {
+  getIncomeOfBook(bookId: string) {
     return new Observable((Subscriber: Subscriber<Income[]>) => {
-      onSnapshot(collection(this.firestore, this.booksCollectionName), (snapshot) => {
+      onSnapshot(collection(this.firestore, 'books/' + bookId + '/income'), (snapshot) => {
         let income: Income[] = [];
         snapshot.forEach((doc) => {
           let incomeItem = doc.data() as Income;
@@ -79,8 +79,6 @@ export class BookService {
       });
     });
   }
-
-
 
   addBookTemplate(book: Book, collectionTitle: string) {
     const bookDocument = doc(collection(this.firestore, collectionTitle));
