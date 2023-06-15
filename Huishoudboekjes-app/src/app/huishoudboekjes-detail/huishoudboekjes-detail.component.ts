@@ -4,6 +4,7 @@ import { BookService } from '../book.service';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction } from '../transaction.model';
 import { TransactionService } from '../transaction.service';
+import { TransactionType } from '../transaction-type.enum';
 
 @Component({
   selector: 'app-huishoudboekjes-detail',
@@ -18,6 +19,11 @@ export class HuishoudboekjesDetailComponent {
 
   date: Date = new Date();
 
+  transactionTypeEnum = TransactionType;
+
+  createIncomeDialog: any;
+  createExpensesDialog: any;
+
   constructor(private bookService: BookService, private transactionService: TransactionService, private route: ActivatedRoute) {
     let bookId = this.route.snapshot.paramMap.get('id');
     if (!bookId) return;
@@ -28,6 +34,21 @@ export class HuishoudboekjesDetailComponent {
 
     this.receiveIncomeOfBookByDate(bookId);
     this.receiveExpensesOfBookByDate(bookId);
+  }
+
+  ngAfterViewInit() {
+    this.createIncomeDialog = document.getElementById("create-" + this.transactionTypeEnum.INCOME + "-dialog") as HTMLDialogElement;
+    this.createExpensesDialog = document.getElementById("create-" + this.transactionTypeEnum.EXPENSES + "-dialog") as HTMLDialogElement;
+  }
+
+  onCreateDialog(transactionType: TransactionType) {
+    switch (transactionType) {
+      case this.transactionTypeEnum.INCOME:
+        this.createIncomeDialog.showModal();
+        break;
+      case this.transactionTypeEnum.EXPENSES:
+        this.createExpensesDialog.showModal();
+    }
   }
 
   updateIncome(bookId: string) {

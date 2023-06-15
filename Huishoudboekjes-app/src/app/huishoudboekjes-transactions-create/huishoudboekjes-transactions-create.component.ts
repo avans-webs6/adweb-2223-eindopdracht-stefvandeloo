@@ -14,7 +14,7 @@ export class HuishoudboekjesTransactionsCreateComponent {
   @Input()
   bookId: string = "";
 
-  TransactionTypeEnum = TransactionType;
+  @Input()
   transactionType: string = TransactionType.INCOME;
 
   transaction: Transaction = new Transaction();
@@ -22,27 +22,21 @@ export class HuishoudboekjesTransactionsCreateComponent {
 
   constructor(public transactionService: TransactionService) {  }
 
-  ngOnInit(): void {
-    this.createDialog = document.getElementById("create-transaction-Dialog") as HTMLDialogElement;
-  }
-
-  onCreate(transactionType: string) {
-    this.transactionType = transactionType;
-    console.log(this.transactionType)
-    this.transaction = new Transaction();
-    this.createDialog.showModal();
+  ngAfterViewInit(): void {
+    this.createDialog = document.getElementById("create-" + this.transactionType + "-dialog") as HTMLDialogElement;
   }
 
   onSave() {
     if (this.transaction.description && this.transaction.price) {
       this.transaction.date = this.generateTimestampOfToday();
-
       this.transactionService.addTransactionToBook(this.bookId, this.transaction, this.transactionType);
+      this.transaction = new Transaction();
       this.createDialog.close();
     }
   }
 
   onCancel() {
+    this.transaction = new Transaction();
     this.createDialog.close();
   }
 

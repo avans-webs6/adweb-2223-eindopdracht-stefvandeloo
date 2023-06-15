@@ -1,7 +1,4 @@
-<button (click)="onCreate(TransactionTypeEnum.INCOME)">Add {{TransactionTypeEnum.INCOME}}</button>
-<button (click)="onCreate(TransactionTypeEnum.EXPENSES)">Add {{TransactionTypeEnum.EXPENSES}}</button>
-
-<dialog id="create-transaction-Dialog">
+<dialog [id]="'create-' + transactionType + '-dialog'">
     <h1>Create {{transactionType}}</h1>
 
     <table>
