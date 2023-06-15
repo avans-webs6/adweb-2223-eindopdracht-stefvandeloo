@@ -15,7 +15,7 @@ export class HuishoudboekjesEditComponent {
   constructor(public bookService: BookService) {  }
 
   ngOnInit(): void {
-    this.editDialog = document.getElementById("edit-book-Dialog") as HTMLDialogElement;
+    this.editDialog = document.getElementById("edit-book-dialog") as HTMLDialogElement;
   }
 
   onEdit() {

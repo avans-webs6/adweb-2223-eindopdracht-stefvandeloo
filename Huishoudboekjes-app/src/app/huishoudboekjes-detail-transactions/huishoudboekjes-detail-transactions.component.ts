@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Transaction } from '../transaction.model';
+import { TransactionType } from '../transaction-type.enum';
 
 @Component({
   selector: 'app-huishoudboekjes-detail-transactions',
@@ -9,6 +10,10 @@ import { Transaction } from '../transaction.model';
 export class HuishoudboekjesDetailTransactionsComponent {
   @Input()
   title: string = "";
+
   @Input()
   transactions: Transaction[] = [];
+
+  @Input()
+  transactionType = TransactionType.INCOME;
 }

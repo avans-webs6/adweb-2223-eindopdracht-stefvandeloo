@@ -12,6 +12,7 @@ import { HuishoudboekjesEditComponent } from './huishoudboekjes-edit/huishoudboe
 import { HuishoudboekjesDetailComponent } from './huishoudboekjes-detail/huishoudboekjes-detail.component';
 import { HuishoudboekjesDetailTransactionsComponent } from './huishoudboekjes-detail-transactions/huishoudboekjes-detail-transactions.component';
 import { HuishoudboekjesTransactionsCreateComponent } from './huishoudboekjes-transactions-create/huishoudboekjes-transactions-create.component';
+import { HuishoudboekjesTransactionsEditComponent } from './huishoudboekjes-transactions-edit/huishoudboekjes-transactions-edit.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HuishoudboekjesTransactionsCreateComponent } from './huishoudboekjes-tr
     HuishoudboekjesEditComponent,
     HuishoudboekjesDetailComponent,
     HuishoudboekjesDetailTransactionsComponent,
-    HuishoudboekjesTransactionsCreateComponent
+    HuishoudboekjesTransactionsCreateComponent,
+    HuishoudboekjesTransactionsEditComponent
   ],
   imports: [
     BrowserModule,

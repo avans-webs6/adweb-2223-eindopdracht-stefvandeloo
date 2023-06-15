@@ -53,27 +53,24 @@ export class TransactionService {
     });
   }
 
+  getTransaction(bookId: string, transactionId: string, transactionType: string) {
+    return new Observable((subscriber: Subscriber<Transaction>) => {
+      getDoc(doc(this.firestore, 'books/' + bookId + '/' + transactionType.toLowerCase() + '/' + transactionId)).then((doc) => {
+        let transaction = doc.data() as Transaction ?? {};
+        transaction['id'] = doc.id;
+        subscriber.next(transaction);
+      });
+    });
+  }
+
   addTransactionToBook(bookId: string, transaction: Transaction, transactionType: string) {
-    // console.log('books/' + bookId + '/' + transactionType.toLowerCase())
-    // const test = collection(this.firestore, 'books/' + bookId + '/' + transactionType.toLowerCase()).withConverter(this.transactionConverter);
-    // console.log(test.id)
-      // onSnapshot(collection(), (snapshot) => {
-      //   let expenses: Transaction[] = [];
-      //   snapshot.forEach((doc) => {
-      //     let expense = doc.data() as Transaction;
-      //     expense['id'] = doc.id;
-      //     expenses.push(expense);
-      //   });
-      //   Subscriber.next(expenses);
-      // });
       const transactionDocument = this.addTransactionTemplate(transaction, 'books/' + bookId + '/' + transactionType.toLowerCase());
       setDoc(transactionDocument, transaction);
   }
 
-  // addTransaction(transaction: Transaction, collectiontitle: string) {
-  //   const transactionDocument = this.addTransactionTemplate(transaction, this.booksCollectionName).withConverter(this.transactionConverter);
-  //   setDoc(transactionDocument, transaction);
-  // }
+  editTransaction(bookId: string, transaction: Transaction, transactionType: string) {
+    updateDoc(doc(this.firestore, 'books/' + bookId + '/' + transactionType.toLowerCase(), transaction.id).withConverter(this.transactionConverter), transaction);
+  }
 
   addTransactionTemplate(transaction: Transaction, collectionTitle: string) {
     const transactionDocument = doc(collection(this.firestore, collectionTitle));
