@@ -17,8 +17,4 @@ export class Book {
         this.description = description;
         this.incomeId = incomeId;
     }
-
-    // addIncome(incomeItem: Income) {
-    //     this.income.push(incomeItem);
-    // }
 }

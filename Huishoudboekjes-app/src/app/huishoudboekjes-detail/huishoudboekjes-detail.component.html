@@ -2,19 +2,8 @@
     <h2>{{book.title}}</h2>
     <h3>{{book.description}}</h3>
 
-    <div id="income">
-        <input type="month" [(ngModel)]="date" (ngModelChange)="updateIncome(book.id)" />
-
-        <p *ngIf="income.length <= 0">No income found!</p>
-        <div *ngIf="income.length > 0">
-            <ul>
-                <li *ngFor="let incomeItem of income">
-                    <p>{{incomeItem.description}}</p>
-                    <p>{{incomeItem.date.toDate() | date:'yyyy/MMMM/dd'}}</p>
-                    <p>{{incomeItem.price}}</p>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <input type="month" [(ngModel)]="date" (ngModelChange)="updateIncome(book.id)" />
+    <app-huishoudboekjes-detail-transactions [transactions]="income" [title]="'Income'"></app-huishoudboekjes-detail-transactions>
+    <app-huishoudboekjes-detail-transactions [transactions]="expenses" [title]="'Expenses'"></app-huishoudboekjes-detail-transactions>
 </div>
 

@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-export class Income {
+export class Transaction {
     id: string;
     description: string;
     price: Number;
@@ -13,7 +13,7 @@ export class Income {
         this.date = new Timestamp(0, 0);
     }
 
-    createIncome(id: string, description: string, price: Number, date: Timestamp) {
+    createTransaction(id: string, description: string, price: Number, date: Timestamp) {
         this.id = id;
         this.description = description;
         this.price = price;

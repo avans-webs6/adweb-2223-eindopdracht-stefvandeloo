@@ -1,0 +1,13 @@
+<div>
+    <h2>{{title}}</h2>
+    <p *ngIf="transactions.length <= 0">No transactions found!</p>
+    <div *ngIf="transactions.length > 0">
+        <ul>
+            <li *ngFor="let transaction of transactions">
+                <p>{{transaction.description}}</p>
+                <p>{{transaction.date.toDate() | date:'yyyy/MMMM/dd'}}</p>
+                <p>{{transaction.price}}</p>
+            </li>
+        </ul>
+    </div>
+</div>

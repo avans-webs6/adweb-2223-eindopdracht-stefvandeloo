@@ -9,6 +9,7 @@ import { BookService } from './book.service';
 import { HuishoudboekjesCreateComponent } from './huishoudboekjes-create/huishoudboekjes-create.component';
 import { HuishoudboekjesEditComponent } from './huishoudboekjes-edit/huishoudboekjes-edit.component';
 import { HuishoudboekjesDetailComponent } from './huishoudboekjes-detail/huishoudboekjes-detail.component';
+import { HuishoudboekjesDetailTransactionsComponent } from './huishoudboekjes-detail-transactions/huishoudboekjes-detail-transactions.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HuishoudboekjesDetailComponent } from './huishoudboekjes-detail/huishou
     HuishoudboekesListComponent,
     HuishoudboekjesCreateComponent,
     HuishoudboekjesEditComponent,
-    HuishoudboekjesDetailComponent
+    HuishoudboekjesDetailComponent,
+    HuishoudboekjesDetailTransactionsComponent
   ],
   imports: [
     BrowserModule,

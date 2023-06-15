@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Book } from '../book.model';
 import { BookService } from '../book.service';
 import { ActivatedRoute } from '@angular/router';
-import { Income } from '../income';
-import { Timestamp } from 'firebase/firestore';
+import { Transaction } from '../transaction.model';
 
 @Component({
   selector: 'app-huishoudboekjes-detail',
@@ -13,7 +12,8 @@ import { Timestamp } from 'firebase/firestore';
 export class HuishoudboekjesDetailComponent {
 
   book: Book = new Book();
-  income: Income[] = [];
+  income: Transaction[] = [];
+  expenses: Transaction[] = [];
 
   date: Date = new Date();
 
@@ -26,21 +26,34 @@ export class HuishoudboekjesDetailComponent {
     });
 
     this.receiveIncomeOfBookByDate(bookId);
+    this.receiveExpensesOfBookByDate(bookId);
   }
 
   updateIncome(bookId: string) {
     this.receiveIncomeOfBookByDate(bookId);
+    this.receiveExpensesOfBookByDate(bookId);
   }
 
   receiveIncomeOfBookByDate(bookId: string) {
     this.bookService.getIncomeOfBook(bookId).subscribe((income) => {
-      this.income = income.filter(i => i.date.toDate().getMonth() === new Date(this.date).getMonth() && i.date.toDate().getFullYear() === new Date(this.date).getFullYear());;
-      this.sortData();
+      this.income = this.filterTransactionsByDate(income);
+      this.sortData(this.income);
     });
   }
 
-  sortData() {
-    return this.income.sort((first, second) => {
+  receiveExpensesOfBookByDate(bookId: string) {
+    this.bookService.getExpensesOfBook(bookId).subscribe((expenses) => {
+      this.expenses = this.filterTransactionsByDate(expenses);
+      this.sortData(this.expenses);
+    });
+  }
+
+  filterTransactionsByDate(transactions: Transaction[]) {
+    return transactions.filter(i => i.date.toDate().getMonth() === new Date(this.date).getMonth() && i.date.toDate().getFullYear() === new Date(this.date).getFullYear());
+  }
+
+  sortData(transactions: Transaction[]) {
+    return transactions.sort((first, second) => {
       return <any>new Date(first.date.toDate()) - <any>new Date(second.date.toDate());
     });
   }
