@@ -1,0 +1,15 @@
+<button (click)="onCreate(TransactionTypeEnum.INCOME)">Add {{TransactionTypeEnum.INCOME}}</button>
+<button (click)="onCreate(TransactionTypeEnum.EXPENSES)">Add {{TransactionTypeEnum.EXPENSES}}</button>
+
+<dialog id="create-transaction-Dialog">
+    <h1>Create {{transactionType}}</h1>
+
+    <table>
+        <tr><td>Description</td><td><input [(ngModel)]="transaction.description"/></td></tr>
+        <tr><td>Price</td><td><input [(ngModel)]="transaction.price" type="number" /></td></tr>
+    </table>
+    
+    <div>
+        <button style="float: left;" (click)="onCancel()">Cancel</button><button style="float: right;" (click)="onSave()">Save</button>
+    </div>
+</dialog>

@@ -5,7 +5,6 @@ import { Firestore , getFirestore, onSnapshot, collection, addDoc, updateDoc, de
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { environment } from 'src/environments/environment';
 import { Book } from './book.model';
-import { Transaction } from './transaction.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,34 +63,6 @@ export class BookService {
 
   editBook(book: Book) {
     updateDoc(doc(this.firestore, this.booksCollectionName, book.id).withConverter(this.bookConverter), book);
-  }
-
-  getIncomeOfBook(bookId: string) {
-    return new Observable((Subscriber: Subscriber<Transaction[]>) => {
-      onSnapshot(collection(this.firestore, 'books/' + bookId + '/income'), (snapshot) => {
-        let income: Transaction[] = [];
-        snapshot.forEach((doc) => {
-          let incomeItem = doc.data() as Transaction;
-          incomeItem['id'] = doc.id;
-          income.push(incomeItem);
-        });
-        Subscriber.next(income);
-      });
-    });
-  }
-
-  getExpensesOfBook(bookId: string) {
-    return new Observable((Subscriber: Subscriber<Transaction[]>) => {
-      onSnapshot(collection(this.firestore, 'books/' + bookId + '/expenses'), (snapshot) => {
-        let expenses: Transaction[] = [];
-        snapshot.forEach((doc) => {
-          let expense = doc.data() as Transaction;
-          expense['id'] = doc.id;
-          expenses.push(expense);
-        });
-        Subscriber.next(expenses);
-      });
-    });
   }
 
   addBookTemplate(book: Book, collectionTitle: string) {

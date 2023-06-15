@@ -3,6 +3,7 @@ import { Book } from '../book.model';
 import { BookService } from '../book.service';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction } from '../transaction.model';
+import { TransactionService } from '../transaction.service';
 
 @Component({
   selector: 'app-huishoudboekjes-detail',
@@ -17,7 +18,7 @@ export class HuishoudboekjesDetailComponent {
 
   date: Date = new Date();
 
-  constructor(private bookService: BookService, private route: ActivatedRoute) {
+  constructor(private bookService: BookService, private transactionService: TransactionService, private route: ActivatedRoute) {
     let bookId = this.route.snapshot.paramMap.get('id');
     if (!bookId) return;
 
@@ -35,14 +36,14 @@ export class HuishoudboekjesDetailComponent {
   }
 
   receiveIncomeOfBookByDate(bookId: string) {
-    this.bookService.getIncomeOfBook(bookId).subscribe((income) => {
+    this.transactionService.getIncomeOfBook(bookId).subscribe((income) => {
       this.income = this.filterTransactionsByDate(income);
       this.sortData(this.income);
     });
   }
 
   receiveExpensesOfBookByDate(bookId: string) {
-    this.bookService.getExpensesOfBook(bookId).subscribe((expenses) => {
+    this.transactionService.getExpensesOfBook(bookId).subscribe((expenses) => {
       this.expenses = this.filterTransactionsByDate(expenses);
       this.sortData(this.expenses);
     });

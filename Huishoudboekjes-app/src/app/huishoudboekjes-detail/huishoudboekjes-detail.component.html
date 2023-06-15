@@ -3,7 +3,11 @@
     <h3>{{book.description}}</h3>
 
     <input type="month" [(ngModel)]="date" (ngModelChange)="updateIncome(book.id)" />
+    
+    <app-huishoudboekjes-transactions-create [bookId]="book.id"></app-huishoudboekjes-transactions-create>
     <app-huishoudboekjes-detail-transactions [transactions]="income" [title]="'Income'"></app-huishoudboekjes-detail-transactions>
+    
+    <app-huishoudboekjes-transactions-create [bookId]="book.id"></app-huishoudboekjes-transactions-create>
     <app-huishoudboekjes-detail-transactions [transactions]="expenses" [title]="'Expenses'"></app-huishoudboekjes-detail-transactions>
 </div>
 
