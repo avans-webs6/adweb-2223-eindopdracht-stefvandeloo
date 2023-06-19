@@ -3,6 +3,7 @@ import { Transaction } from '../transaction.model';
 import { TransactionService } from '../transaction.service';
 import { TransactionType } from '../transaction-type.enum';
 import { Timestamp } from 'firebase/firestore';
+import { Book } from '../book.model';
 
 @Component({
   selector: 'app-huishoudboekjes-transactions-create',
@@ -12,7 +13,7 @@ import { Timestamp } from 'firebase/firestore';
 export class HuishoudboekjesTransactionsCreateComponent {
 
   @Input()
-  bookId: string = "";
+  book: Book = new Book();
 
   @Input()
   transactionType: string = TransactionType.INCOME;
@@ -29,7 +30,7 @@ export class HuishoudboekjesTransactionsCreateComponent {
   onSave() {
     if (this.transaction.description && this.transaction.price) {
       this.transaction.date = this.generateTimestampOfToday();
-      this.transactionService.addTransactionToBook(this.bookId, this.transaction, this.transactionType);
+      this.transactionService.addTransactionToBook(this.book, this.transaction, this.transactionType);
       this.transaction = new Transaction();
       this.createDialog.close();
     }

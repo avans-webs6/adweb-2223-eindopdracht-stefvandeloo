@@ -5,6 +5,9 @@ import { Firestore , getFirestore, onSnapshot, collection, addDoc, updateDoc, de
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { environment } from 'src/environments/environment';
 import { Transaction } from './transaction.model';
+import { BookService } from './book.service';
+import { Book } from './book.model';
+import { TransactionType } from './transaction-type.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,7 @@ export class TransactionService {
   archivedBooksCollectionName = "archivedBooks";
   incomeCollectionName = "income";
 
-  constructor() { 
+  constructor(private bookService: BookService) { 
     const app = initializeApp(environment.firebaseConfig); 
     this.firestore = getFirestore(app);
     const auth = getAuth(app);
@@ -27,7 +30,7 @@ export class TransactionService {
 
   getIncomeOfBook(bookId: string) {
     return new Observable((Subscriber: Subscriber<Transaction[]>) => {
-      onSnapshot(collection(this.firestore, 'books/' + bookId + '/income'), (snapshot) => {
+      onSnapshot(collection(this.firestore, 'books/' + bookId + '/' + TransactionType.INCOME.toLowerCase()), (snapshot) => {
         let income: Transaction[] = [];
         snapshot.forEach((doc) => {
           let incomeItem = doc.data() as Transaction;
@@ -41,7 +44,7 @@ export class TransactionService {
 
   getExpensesOfBook(bookId: string) {
     return new Observable((Subscriber: Subscriber<Transaction[]>) => {
-      onSnapshot(collection(this.firestore, 'books/' + bookId + '/expenses'), (snapshot) => {
+      onSnapshot(collection(this.firestore, 'books/' + bookId + '/' + TransactionType.EXPENSES.toLowerCase()), (snapshot) => {
         let expenses: Transaction[] = [];
         snapshot.forEach((doc) => {
           let expense = doc.data() as Transaction;
@@ -63,8 +66,19 @@ export class TransactionService {
     });
   }
 
-  addTransactionToBook(bookId: string, transaction: Transaction, transactionType: string) {
-      const transactionDocument = this.addTransactionTemplate(transaction, 'books/' + bookId + '/' + transactionType.toLowerCase());
+  addTransactionToBook(book: Book, transaction: Transaction, transactionType: string) {
+      const transactionDocument = this.addTransactionTemplate(transaction, 'books/' + book.id + '/' + transactionType.toLowerCase());
+
+      switch (transactionType) {
+        case TransactionType.INCOME:
+          book.incomeId = transactionDocument.id;
+          break;
+        case TransactionType.EXPENSES:
+          book.expensesId = transactionDocument.id;
+          break;
+      }
+
+      this.bookService.editBook(book);
       setDoc(transactionDocument, transaction);
   }
 
@@ -75,6 +89,7 @@ export class TransactionService {
   addTransactionTemplate(transaction: Transaction, collectionTitle: string) {
     const transactionDocument = doc(collection(this.firestore, collectionTitle));
     transaction.id = transactionDocument.id;
+    console.log(transactionDocument)
     return transactionDocument.withConverter(this.transactionConverter);
   }
 
