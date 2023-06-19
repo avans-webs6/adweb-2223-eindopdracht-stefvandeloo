@@ -68,16 +68,6 @@ export class TransactionService {
 
   addTransactionToBook(book: Book, transaction: Transaction, transactionType: string) {
       const transactionDocument = this.addTransaction(transaction, 'books/' + book.id + '/' + transactionType.toLowerCase());
-
-      switch (transactionType) {
-        case TransactionType.INCOME:
-          book.incomeId = transactionDocument.id;
-          break;
-        case TransactionType.EXPENSES:
-          book.expensesId = transactionDocument.id;
-          break;
-      }
-
       this.bookService.editBook(book);
       setDoc(transactionDocument, transaction);
   }
@@ -89,7 +79,6 @@ export class TransactionService {
   addTransaction(transaction: Transaction, collectionTitle: string) {
     const transactionDocument = doc(collection(this.firestore, collectionTitle));
     transaction.id = transactionDocument.id;
-    console.log(transactionDocument)
     return transactionDocument.withConverter(this.transactionConverter);
   }
 

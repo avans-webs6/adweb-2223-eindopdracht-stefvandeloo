@@ -123,15 +123,13 @@ export class BookService {
         return {
             id: book.id,
             title: book.title,
-            description: book.description,
-            incomeId: book.incomeId,
-            expensesId: book.expensesId
+            description: book.description
         };
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
         let book = new Book();
-        book.createBook(data.id, data.title, data.description, data.incomeId, data.expensesId);
+        book.createBook(data.id, data.title, data.description);
         return book;
     }
   };
