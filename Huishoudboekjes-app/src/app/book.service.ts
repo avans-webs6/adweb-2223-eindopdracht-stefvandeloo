@@ -47,7 +47,7 @@ export class BookService {
   }
 
   addBook(book: Book) {
-    this.addBookTemplate(book, this.booksCollectionName);
+    this.addBookCollection(book, this.booksCollectionName);
   }
 
   editBook(book: Book) {
@@ -72,7 +72,7 @@ export class BookService {
     this.changeTransactionSaveCollection(storedExpensesDocuments, this.booksCollectionName, this.archivedBooksCollectionName, oldBookId, book.id, TransactionType.EXPENSES);
   }
 
-  addBookTemplate(book: Book, collectionTitle: string) {
+  addBookCollection(book: Book, collectionTitle: string) {
     const bookDocument = doc(collection(this.firestore, collectionTitle)).withConverter(this.bookConverter);
     book.id = bookDocument.id;
     setDoc(bookDocument, book);
@@ -81,7 +81,7 @@ export class BookService {
   toggleArchivationBook(book: Book, addCollectionName: string, deleteCollectionName: string) {
     const oldBookId = book.id;
     deleteDoc(doc(this.firestore, deleteCollectionName, book.id));
-    this.addBookTemplate(book, addCollectionName);
+    this.addBookCollection(book, addCollectionName);
     return oldBookId;
   }
 
@@ -92,13 +92,15 @@ export class BookService {
   changeTransactionSaveCollection(storedDocuments: QuerySnapshot<Transaction>, addCollectionName: string, deleteCollectionName: string, 
                                   oldBookId: string, bookId: string, transactionType: TransactionType) {
     storedDocuments.forEach((transaction) => {
-      this.addBookTransactionsTemplate(addCollectionName + "/" + bookId + "/" + transactionType.toLowerCase(), transaction.data());
+      this.addBookTransaction(addCollectionName + "/" + bookId + "/" + transactionType.toLowerCase(), transaction.data());
       deleteDoc(doc(this.firestore, deleteCollectionName + "/" + oldBookId + "/" + transactionType.toLowerCase(), transaction.id));
     });
   }
 
-  addBookTransactionsTemplate(collectionTitle: string, documentToAdd: any) {
-    addDoc(collection(this.firestore, collectionTitle).withConverter(this.transactionConverter), documentToAdd);
+  addBookTransaction(collectionTitle: string, documentToAdd: Transaction) {
+    const transactionDocument = doc(collection(this.firestore, collectionTitle)).withConverter(this.transactionConverter);
+    documentToAdd.id = transactionDocument.id;
+    setDoc(transactionDocument, documentToAdd);
   }
 
   //TODO: Maybe use the bookConverter here too, instead of 'as Book'.

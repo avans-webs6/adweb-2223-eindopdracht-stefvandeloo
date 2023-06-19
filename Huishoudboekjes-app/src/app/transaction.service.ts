@@ -67,7 +67,7 @@ export class TransactionService {
   }
 
   addTransactionToBook(book: Book, transaction: Transaction, transactionType: string) {
-      const transactionDocument = this.addTransactionTemplate(transaction, 'books/' + book.id + '/' + transactionType.toLowerCase());
+      const transactionDocument = this.addTransaction(transaction, 'books/' + book.id + '/' + transactionType.toLowerCase());
 
       switch (transactionType) {
         case TransactionType.INCOME:
@@ -86,7 +86,7 @@ export class TransactionService {
     updateDoc(doc(this.firestore, 'books/' + bookId + '/' + transactionType.toLowerCase(), transaction.id).withConverter(this.transactionConverter), transaction);
   }
 
-  addTransactionTemplate(transaction: Transaction, collectionTitle: string) {
+  addTransaction(transaction: Transaction, collectionTitle: string) {
     const transactionDocument = doc(collection(this.firestore, collectionTitle));
     transaction.id = transactionDocument.id;
     console.log(transactionDocument)
