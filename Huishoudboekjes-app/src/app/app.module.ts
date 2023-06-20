@@ -13,6 +13,9 @@ import { HuishoudboekjesDetailComponent } from './huishoudboekjes-detail/huishou
 import { HuishoudboekjesDetailTransactionsComponent } from './huishoudboekjes-detail-transactions/huishoudboekjes-detail-transactions.component';
 import { HuishoudboekjesTransactionsCreateComponent } from './huishoudboekjes-transactions-create/huishoudboekjes-transactions-create.component';
 import { HuishoudboekjesTransactionsEditComponent } from './huishoudboekjes-transactions-edit/huishoudboekjes-transactions-edit.component';
+import { HuishoudboekjesDetailCategoriesComponent } from './huishoudboekjes-detail-categories/huishoudboekjes-detail-categories.component';
+import { CategoryService } from './category.service';
+import { HuishoudboekjesDetailCategoriesCreateComponent } from './huishoudboekjes-detail-categories-create/huishoudboekjes-detail-categories-create.component';
 
 @NgModule({
   declarations: [
@@ -23,14 +26,16 @@ import { HuishoudboekjesTransactionsEditComponent } from './huishoudboekjes-tran
     HuishoudboekjesDetailComponent,
     HuishoudboekjesDetailTransactionsComponent,
     HuishoudboekjesTransactionsCreateComponent,
-    HuishoudboekjesTransactionsEditComponent
+    HuishoudboekjesTransactionsEditComponent,
+    HuishoudboekjesDetailCategoriesComponent,
+    HuishoudboekjesDetailCategoriesCreateComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [BookService, TransactionService],
+  providers: [BookService, TransactionService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

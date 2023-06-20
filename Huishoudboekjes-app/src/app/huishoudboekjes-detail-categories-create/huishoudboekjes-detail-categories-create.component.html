@@ -1,0 +1,15 @@
+<button (click)="onCreate()">Add category</button>
+
+<dialog id="create-category-dialog">
+    <h1>Create category</h1>
+
+    <table>
+        <tr><td>Name</td><td><input [(ngModel)]="category.name"/></td></tr>
+        <tr><td>Budget</td><td><input [(ngModel)]="category.budget"/></td></tr>
+        <tr><td>Closing date</td><td><input [(ngModel)]="category.endDate" type="date" /></td></tr>
+    </table>
+    
+    <div>
+        <button style="float: left;" (click)="onCancel()">Cancel</button><button style="float: right;" (click)="onSave()">Save</button>
+    </div>
+</dialog>

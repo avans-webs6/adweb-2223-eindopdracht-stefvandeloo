@@ -1,0 +1,14 @@
+<app-huishoudboekjes-detail-categories-create></app-huishoudboekjes-detail-categories-create>
+
+<h3>Transaction categories</h3>
+<ul>
+    <p *ngIf="categories.length === 0">No categories found!</p>
+    <li *ngFor="let category of categories">
+        <div>
+            <p>{{category.name}}</p>
+            <p>{{category.budget}}</p>
+            <p *ngIf="(category.endDate | date:'dd/MM/yyyy') !== '01/01/1970'">{{category.endDate | date:'dd/MMMM/yyyy'}}</p>
+        </div>
+        <button (click)="deleteCategory(category.id)">Delete</button>
+    </li>
+</ul>

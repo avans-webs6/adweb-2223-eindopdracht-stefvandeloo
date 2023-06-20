@@ -5,7 +5,7 @@
         <ul>
             <li *ngFor="let transaction of transactions">
                 <p>{{transaction.description}}</p>
-                <p>{{transaction.date.toDate() | date:'yyyy/MMMM/dd'}}</p>
+                <p>{{transaction.date.toDate() | date:'dd/MMMM/yyyy'}}</p>
                 <p>{{transaction.price}}</p>
 
                 <app-huishoudboekjes-transactions-edit [transactionId]="transaction.id" [transactionType]="transactionType"></app-huishoudboekjes-transactions-edit>

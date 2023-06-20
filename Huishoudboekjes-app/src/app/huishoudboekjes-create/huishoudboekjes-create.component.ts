@@ -15,7 +15,7 @@ export class HuishoudboekjesCreateComponent {
   constructor(public bookService: BookService) {  }
 
   ngOnInit(): void {
-    this.createDialog = document.getElementById("create-book-Dialog") as HTMLDialogElement;
+    this.createDialog = document.getElementById("create-book-dialog") as HTMLDialogElement;
   }
 
   onCreate() {
