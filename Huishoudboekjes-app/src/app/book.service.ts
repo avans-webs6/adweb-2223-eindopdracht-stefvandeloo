@@ -141,13 +141,15 @@ export class BookService {
             description: transaction.description,
             price: transaction.price,
             date: transaction.date,
+            type: transaction.type,
+            bookId: transaction.bookId,
             categoryId: transaction.categoryId
         };
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
         let transaction = new Transaction();
-        transaction.createTransaction(data.id, data.description, data.price, data.date, data.categoryId);
+        transaction.createTransaction(data.id, data.description, data.price, data.date, data.type, data.bookId, data.categoryId);
         return transaction;
     }
   };

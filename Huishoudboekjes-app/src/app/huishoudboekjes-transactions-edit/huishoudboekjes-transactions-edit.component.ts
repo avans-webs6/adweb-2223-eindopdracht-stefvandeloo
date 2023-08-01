@@ -38,7 +38,7 @@ export class HuishoudboekjesTransactionsEditComponent {
       this.categories = categories;
     });
 
-    this.transactionService.getTransaction(this.bookId, this.transactionId, this.transactionType).subscribe((transaction) => {
+    this.transactionService.getTransaction(this.transactionId).subscribe((transaction) => {
       this.transaction = transaction;
     });
     
@@ -47,7 +47,7 @@ export class HuishoudboekjesTransactionsEditComponent {
 
   onSave() {
     if (this.transaction.description && this.transaction.price) {
-      this.transactionService.editTransaction(this.bookId, this.transaction, this.transactionType);
+      this.transactionService.editTransaction(this.transaction);
       this.editDialog.close();
     }
   }

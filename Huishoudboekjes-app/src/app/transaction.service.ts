@@ -15,10 +15,11 @@ import { TransactionType } from './transaction-type.enum';
 export class TransactionService {
   firestore: Firestore;
   booksCollectionName = "books";
+  transactionsCollectionName = "transactions";
   archivedBooksCollectionName = "archivedBooks";
   incomeCollectionName = "income";
 
-  constructor(private bookService: BookService) { 
+  constructor() { 
     const app = initializeApp(environment.firebaseConfig); 
     this.firestore = getFirestore(app);
     const auth = getAuth(app);
@@ -30,35 +31,35 @@ export class TransactionService {
 
   getIncomeOfBook(bookId: string) {
     return new Observable((Subscriber: Subscriber<Transaction[]>) => {
-      onSnapshot(collection(this.firestore, 'books/' + bookId + '/' + TransactionType.INCOME.toLowerCase()), (snapshot) => {
-        let income: Transaction[] = [];
-        snapshot.forEach((doc) => {
-          let incomeItem = doc.data() as Transaction;
-          incomeItem['id'] = doc.id;
-          income.push(incomeItem);
-        });
-        Subscriber.next(income);
-      });
+      this.createTransactionSnapshot(bookId, Subscriber, TransactionType.INCOME);
     });
   }
 
   getExpensesOfBook(bookId: string) {
     return new Observable((Subscriber: Subscriber<Transaction[]>) => {
-      onSnapshot(collection(this.firestore, 'books/' + bookId + '/' + TransactionType.EXPENSES.toLowerCase()), (snapshot) => {
-        let expenses: Transaction[] = [];
-        snapshot.forEach((doc) => {
-          let expense = doc.data() as Transaction;
-          expense['id'] = doc.id;
-          expenses.push(expense);
-        });
-        Subscriber.next(expenses);
-      });
+      this.createTransactionSnapshot(bookId, Subscriber, TransactionType.EXPENSES);
     });
   }
 
-  getTransaction(bookId: string, transactionId: string, transactionType: string) {
+  createTransactionSnapshot(bookId: string, Subscriber: Subscriber<Transaction[]>, transactionType: TransactionType) {
+    onSnapshot(collection(this.firestore, this.transactionsCollectionName), (snapshot) => {
+      let transactions: Transaction[] = [];
+      snapshot.forEach((doc) => {
+        let transaction = doc.data() as Transaction;
+        if (!transaction.bookId || !transaction.bookId.match(bookId)) return;
+
+        if (transaction.type === transactionType) {
+          transaction['id'] = doc.id;
+          transactions.push(transaction);
+        }
+      });
+      Subscriber.next(transactions);
+    });
+  }
+
+  getTransaction(transactionId: string) {
     return new Observable((subscriber: Subscriber<Transaction>) => {
-      getDoc(doc(this.firestore, 'books/' + bookId + '/' + transactionType.toLowerCase() + '/' + transactionId)).then((doc) => {
+      getDoc(doc(this.firestore, this.transactionsCollectionName + '/' + transactionId)).then((doc) => {
         let transaction = doc.data() as Transaction ?? {};
         transaction['id'] = doc.id;
         subscriber.next(transaction);
@@ -66,36 +67,32 @@ export class TransactionService {
     });
   }
 
-  addTransactionToBook(book: Book, transaction: Transaction, transactionType: string) {
-      const transactionDocument = this.addTransaction(transaction, 'books/' + book.id + '/' + transactionType.toLowerCase());
-      this.bookService.editBook(book);
-      setDoc(transactionDocument, transaction);
+  editTransaction(transaction: Transaction) {
+    updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.id).withConverter(this.transactionConverter), transaction);
   }
 
-  editTransaction(bookId: string, transaction: Transaction, transactionType: string) {
-    updateDoc(doc(this.firestore, 'books/' + bookId + '/' + transactionType.toLowerCase(), transaction.id).withConverter(this.transactionConverter), transaction);
-  }
-
-  addTransaction(transaction: Transaction, collectionTitle: string) {
-    const transactionDocument = doc(collection(this.firestore, collectionTitle));
+  addTransaction(transaction: Transaction) {
+    const transactionDocument = doc(collection(this.firestore, this.transactionsCollectionName)).withConverter(this.transactionConverter);
     transaction.id = transactionDocument.id;
-    return transactionDocument.withConverter(this.transactionConverter);
+    setDoc(transactionDocument, transaction);
   }
 
   transactionConverter = {
     toFirestore: (transaction: Transaction) => {
-        return {
+    return {
             id: transaction.id,
             description: transaction.description,
             price: transaction.price,
             date: transaction.date,
+            type: transaction.type,
+            bookId: transaction.bookId,
             categoryId: transaction.categoryId
         };
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
         let transaction = new Transaction();
-        transaction.createTransaction(data.id, data.description, data.price, data.date, data.categoryId);
+        transaction.createTransaction(data.id, data.description, data.price, data.date, data.type, data.bookId, data.categoryId);
         return transaction;
     }
   };

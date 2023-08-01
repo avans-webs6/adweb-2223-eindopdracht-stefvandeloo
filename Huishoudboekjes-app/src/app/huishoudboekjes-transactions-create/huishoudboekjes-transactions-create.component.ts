@@ -29,8 +29,11 @@ export class HuishoudboekjesTransactionsCreateComponent {
 
   onSave() {
     if (this.transaction.description && this.transaction.price) {
+      this.transaction.bookId = this.book.id;
+      this.transaction.type = this.transactionType;
       this.transaction.date = this.generateTimestampOfToday();
-      this.transactionService.addTransactionToBook(this.book, this.transaction, this.transactionType);
+      this.transactionService.addTransaction(this.transaction);
+
       this.transaction = new Transaction();
       this.createDialog.close();
     }
