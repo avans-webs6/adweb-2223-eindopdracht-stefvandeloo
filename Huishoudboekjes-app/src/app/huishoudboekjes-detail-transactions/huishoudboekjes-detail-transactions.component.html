@@ -7,7 +7,7 @@
                 <p>{{transaction.description}}</p>
                 <p>{{transaction.date.toDate() | date:'dd/MMMM/yyyy'}}</p>
                 <p>€ {{transaction.price}}</p>
-                <p>{{transaction.categoryId}}</p>
+                <p>{{getCategoryName(transaction.categoryId)}}</p>
 
                 <app-huishoudboekjes-transactions-edit [transactionId]="transaction.id" [transactionType]="transactionType"></app-huishoudboekjes-transactions-edit>
             </li>
