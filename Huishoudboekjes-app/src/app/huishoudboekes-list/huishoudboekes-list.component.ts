@@ -18,10 +18,10 @@ export class HuishoudboekesListComponent {
   }
 
   archiveBook(book: Book) {
-    this.bookService.archiveBookAndTransactions(book);
+    this.bookService.archiveBook(book);
   }
 
   dearchiveBook(book: Book) {
-    this.bookService.dearchiveBookAndTransactions(book);
+    this.bookService.dearchiveBook(book);
   }
 }

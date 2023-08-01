@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { initializeApp } from "firebase/app";
-import { Firestore , getFirestore, onSnapshot, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { Firestore , getFirestore, onSnapshot, collection, updateDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { environment } from 'src/environments/environment';
 import { Transaction } from './transaction.model';
-import { BookService } from './book.service';
-import { Book } from './book.model';
 import { TransactionType } from './transaction-type.enum';
 
 @Injectable({
@@ -77,7 +75,7 @@ export class TransactionService {
     setDoc(transactionDocument, transaction);
   }
 
-  transactionConverter = {
+  public transactionConverter = {
     toFirestore: (transaction: Transaction) => {
     return {
             id: transaction.id,
