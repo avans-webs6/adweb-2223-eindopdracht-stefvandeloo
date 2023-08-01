@@ -47,7 +47,7 @@ export class CategoryService {
     deleteDoc(doc(this.firestore, this.categoryCollectionName, categoryId));
   }
 
-  categoryConverter = {
+  private categoryConverter = {
     toFirestore: (category: Category) => {
         return {
             id: category.id,
