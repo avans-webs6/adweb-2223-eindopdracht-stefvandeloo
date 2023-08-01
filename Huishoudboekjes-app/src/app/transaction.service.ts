@@ -88,13 +88,14 @@ export class TransactionService {
             id: transaction.id,
             description: transaction.description,
             price: transaction.price,
-            date: transaction.date
+            date: transaction.date,
+            categoryId: transaction.categoryId
         };
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
         let transaction = new Transaction();
-        transaction.createTransaction(data.id, data.description, data.price, data.date);
+        transaction.createTransaction(data.id, data.description, data.price, data.date, data.categoryId);
         return transaction;
     }
   };
