@@ -37,6 +37,16 @@ export class CategoryService {
     });
   }
 
+  getCategory(categoryId: string): Observable<Category> {
+    return new Observable((subscriber: Subscriber<Category>) => {
+      getDoc(doc(this.firestore, this.categoryCollectionName, categoryId)).then((doc) => {
+        let category = doc.data() as Category ?? {};
+        category['id'] = doc.id;
+        subscriber.next(category);
+      });
+    });
+  }
+
   addCategory(category: Category) {
     const categoryDocument = doc(collection(this.firestore, this.categoryCollectionName)).withConverter(this.categoryConverter);
     category.id = categoryDocument.id;
@@ -47,7 +57,7 @@ export class CategoryService {
     deleteDoc(doc(this.firestore, this.categoryCollectionName, categoryId));
   }
 
-  categoryConverter = {
+  private categoryConverter = {
     toFirestore: (category: Category) => {
         return {
             id: category.id,

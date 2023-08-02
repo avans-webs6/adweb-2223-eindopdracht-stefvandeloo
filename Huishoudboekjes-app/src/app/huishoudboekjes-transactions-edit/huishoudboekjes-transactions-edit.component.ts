@@ -3,6 +3,8 @@ import { Transaction } from '../transaction.model';
 import { TransactionService } from '../transaction.service';
 import { TransactionType } from '../transaction-type.enum';
 import { ActivatedRoute } from '@angular/router';
+import { Category } from '../category.model';
+import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'app-huishoudboekjes-transactions-edit',
@@ -18,11 +20,12 @@ export class HuishoudboekjesTransactionsEditComponent {
   transactionType = TransactionType.INCOME;
 
   bookId: string = "";
+  categories: Category[] = [];
   transaction: Transaction = new Transaction();
 
   editDialog: any;
 
-  constructor (private transactionService: TransactionService, private route: ActivatedRoute) { 
+  constructor (private transactionService: TransactionService, private categoryService: CategoryService, private route: ActivatedRoute) { 
     this.bookId = this.route.snapshot.paramMap.get('id') ?? "";
   }
 
@@ -31,7 +34,11 @@ export class HuishoudboekjesTransactionsEditComponent {
   }
 
   openEditDialog() {
-    this.transactionService.getTransaction(this.bookId, this.transactionId, this.transactionType).subscribe((transaction) => {
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
+
+    this.transactionService.getTransaction(this.transactionId).subscribe((transaction) => {
       this.transaction = transaction;
     });
     
@@ -40,7 +47,7 @@ export class HuishoudboekjesTransactionsEditComponent {
 
   onSave() {
     if (this.transaction.description && this.transaction.price) {
-      this.transactionService.editTransaction(this.bookId, this.transaction, this.transactionType);
+      this.transactionService.editTransaction(this.transaction);
       this.editDialog.close();
     }
   }
