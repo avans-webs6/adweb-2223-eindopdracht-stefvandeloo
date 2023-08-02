@@ -9,6 +9,7 @@
                 <p>{{transaction.price}}</p>
 
                 <app-huishoudboekjes-transactions-edit [transactionId]="transaction.id" [transactionType]="transactionType"></app-huishoudboekjes-transactions-edit>
+                <button (click)="deleteTransaction(transaction.id)">Delete</button>
             </li>
         </ul>
     </div>
