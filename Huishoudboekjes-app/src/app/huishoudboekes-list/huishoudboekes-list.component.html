@@ -1,26 +1,50 @@
 <app-huishoudboekjes-create></app-huishoudboekjes-create>
 
-<h3>Huishoudboekjes</h3>
-<ul>
-    <p *ngIf="(books | async)?.length === 0">No huishoudboekjes found!</p>
-    <li *ngFor="let book of books | async">
-        <div>
-            <a routerLink="../book/{{book.id}}" routerLinkActive="active">{{book.title}}</a>
-            <p>{{book.description}}</p>
-        </div>
-        <app-huishoudboekjes-edit [bookId]="book.id"></app-huishoudboekjes-edit>
-        <button (click)="archiveBook(book)">Archive</button>
-    </li>
-</ul>
+<div class="books">
+    <div>
+        <h2>Huishoudboekjes</h2>
+        <ul>
+            <p *ngIf="(books | async)?.length === 0">No huishoudboekjes found!</p>
+            <li *ngFor="let book of books | async">
+                <div class="book-information">
+                    <label for="title">Title: </label>
+                    <a name="title" routerLink="../book/{{book.id}}" routerLinkActive="active">{{book.title}}</a>
 
-<h3>Archived huishoudboekjes</h3>
-<ul>
-    <p *ngIf="(archivedBooks | async)?.length === 0">No archived huishoudboekjes found!</p>
-    <li *ngFor="let archivedBook of archivedBooks | async">
-        <div>
-            <p>{{archivedBook.title}}</p>
-            <p>{{archivedBook.description}}</p>
-        </div>
-        <button (click)="dearchiveBook(archivedBook)">Dearchive</button>
-    </li>
-</ul>
+                    <p name="description">
+                        <label for="description">Description: </label>
+                        {{book.description}}
+                    </p>
+                </div>
+
+                <div class="buttons">
+                    <app-huishoudboekjes-edit [bookId]="book.id"></app-huishoudboekjes-edit>
+                    <button (click)="archiveBook(book)">Archive</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h3>Archived huishoudboekjes</h3>
+        <ul>
+            <p *ngIf="(archivedBooks | async)?.length === 0">No archived huishoudboekjes found!</p>
+            <li *ngFor="let archivedBook of archivedBooks | async">
+                <div class="book-information">
+                    <p name="title">
+                        <label for="title">Title: </label>
+                        {{archivedBook.title}}
+                    </p>
+
+                    <p name="description">
+                        <label for="description">Description: </label>
+                        {{archivedBook.description}}
+                    </p>
+                </div>
+
+                <div class="buttons">
+                    <button (click)="dearchiveBook(archivedBook)">Dearchive</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
