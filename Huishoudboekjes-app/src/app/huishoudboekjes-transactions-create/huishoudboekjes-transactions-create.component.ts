@@ -3,6 +3,8 @@ import { Transaction } from '../transaction.model';
 import { TransactionService } from '../transaction.service';
 import { TransactionType } from '../transaction-type.enum';
 import { DatePipe } from '@angular/common';
+import { CategoryService } from '../category.service';
+import { Category } from '../category.model';
 
 @Component({
   selector: 'app-huishoudboekjes-transactions-create',
@@ -17,13 +19,19 @@ export class HuishoudboekjesTransactionsCreateComponent {
   @Input()
   transactionType: string = TransactionType.INCOME;
 
+  categories: Category[] = [];
   transaction: Transaction = new Transaction();
+  
   createDialog: any;
 
-  constructor(public transactionService: TransactionService, public datepipe: DatePipe) {  }
+  constructor(public transactionService: TransactionService, private categoryService: CategoryService, public datepipe: DatePipe) {  }
 
   ngAfterViewInit(): void {
     this.createDialog = document.getElementById("create-" + this.transactionType + "-dialog") as HTMLDialogElement;
+
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
   }
 
   onSave() {

@@ -27,13 +27,13 @@ export class HuishoudboekjesTransactionsEditComponent {
 
   ngAfterViewInit(): void {
     this.editDialog = document.getElementById("edit-transaction-dialog-" + this.transactionId) as HTMLDialogElement;
-  }
 
-  openEditDialog() {
     this.categoryService.getCategories().subscribe((categories) => {
       this.categories = categories;
     });
+  }
 
+  openEditDialog() {
     this.transactionService.getTransaction(this.transactionId).subscribe((transaction) => {
       this.transaction = transaction;
     });
