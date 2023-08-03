@@ -19,6 +19,7 @@ export class HuishoudboekjesTransactionsEditComponent {
   @Input()
   transactionType = TransactionType.INCOME;
 
+  //TODO: Delete bookId
   bookId: string = "";
   categories: Category[] = [];
   transaction: Transaction = new Transaction();
@@ -30,7 +31,7 @@ export class HuishoudboekjesTransactionsEditComponent {
   }
 
   ngAfterViewInit(): void {
-    this.editDialog = document.getElementById("edit-transaction-dialog" + this.transactionId) as HTMLDialogElement;
+    this.editDialog = document.getElementById("edit-transaction-dialog-" + this.transactionId) as HTMLDialogElement;
   }
 
   openEditDialog() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { initializeApp } from "firebase/app";
-import { Firestore , getFirestore, onSnapshot, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc, getDocs, QuerySnapshot } from "firebase/firestore";
+import { Firestore , getFirestore, onSnapshot, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc, deleteField } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { environment } from 'src/environments/environment';
 import { Category } from './category.model';
@@ -53,23 +53,42 @@ export class CategoryService {
     setDoc(categoryDocument, category);
   }
 
+  editCategory(category: Category) {
+    const categoryDocument = doc(this.firestore, this.categoryCollectionName, category.id);
+    const categoryData = this.categoryConverter.toFirestore(category);
+    updateDoc(categoryDocument, categoryData);
+  }
+
   deleteCategory(categoryId: string) {
     deleteDoc(doc(this.firestore, this.categoryCollectionName, categoryId));
   }
 
-  private categoryConverter = {
+  categoryConverter = {
     toFirestore: (category: Category) => {
+      if (category.endDate) {
         return {
-            id: category.id,
-            name: category.name,
-            budget: category.budget,
-            endDate: new Date(category.endDate)
-        };
+          id: category.id,
+          name: category.name,
+          budget: category.budget,
+          endDate: category.endDate
+        }
+      } else {
+        return {
+          id: category.id,
+          name: category.name,
+          budget: category.budget,
+          endDate: deleteField()
+        }
+      }
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
+
         let category = new Category();
-        category.createCategory(data.id, data.name, data.budget, data.endDate.toDate());
+        category.createCategory(data.id, data.name, data.budget);
+        if (data.endDate) {
+          category.setEndDate(data.endDate);
+        }
         return category;
     }
   };

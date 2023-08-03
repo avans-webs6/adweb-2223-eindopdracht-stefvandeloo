@@ -1,0 +1,15 @@
+<button (click)="openEditDialog()">Edit</button>
+
+<dialog [id]="'edit-category-dialog-' + category.id">
+    <h1>Edit Category</h1>
+
+    <table>
+        <tr><td>Name</td><td><input [(ngModel)]="category.name"/></td></tr>
+        <tr><td>Budget</td><td><input [(ngModel)]="category.budget"/></td></tr>
+        <tr><td>Closing date</td><td><input type="date" [(ngModel)]="category.endDate" /></td></tr>
+    </table>
+    
+    <div>
+        <button style="float: left;" (click)="onCancel()">Cancel</button><button style="float: right;" (click)="onSave()">Save</button>
+    </div>
+</dialog>

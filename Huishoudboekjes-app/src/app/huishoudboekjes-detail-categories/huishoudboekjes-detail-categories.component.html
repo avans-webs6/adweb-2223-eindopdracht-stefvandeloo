@@ -7,8 +7,9 @@
         <div>
             <p>{{category.name}}</p>
             <p>{{category.budget}}</p>
-            <p *ngIf="(category.endDate | date:'dd/MM/yyyy') !== '01/01/1970'">{{category.endDate | date:'dd/MMMM/yyyy'}}</p>
+            <p *ngIf="category.endDate">{{category.endDate | date:'dd/MMMM/yyyy'}}</p>
         </div>
+        <app-huishoudboekjes-detail-categories-edit [category]="category"></app-huishoudboekjes-detail-categories-edit>
         <button (click)="deleteCategory(category.id)">Delete</button>
     </li>
 </ul>

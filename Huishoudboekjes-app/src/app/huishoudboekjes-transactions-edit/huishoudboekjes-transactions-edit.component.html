@@ -1,6 +1,6 @@
 <button (click)="openEditDialog()">Edit</button>
 
-<dialog [id]="'edit-transaction-dialog' + transactionId">
+<dialog [id]="'edit-transaction-dialog-' + transactionId">
     <h1>Edit {{transactionType}}</h1>
 
     <table>

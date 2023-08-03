@@ -16,6 +16,7 @@ import { HuishoudboekjesTransactionsEditComponent } from './huishoudboekjes-tran
 import { HuishoudboekjesDetailCategoriesComponent } from './huishoudboekjes-detail-categories/huishoudboekjes-detail-categories.component';
 import { CategoryService } from './category.service';
 import { HuishoudboekjesDetailCategoriesCreateComponent } from './huishoudboekjes-detail-categories-create/huishoudboekjes-detail-categories-create.component';
+import { HuishoudboekjesDetailCategoriesEditComponent } from './huishoudboekjes-detail-categories-edit/huishoudboekjes-detail-categories-edit.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HuishoudboekjesDetailCategoriesCreateComponent } from './huishoudboekje
     HuishoudboekjesTransactionsCreateComponent,
     HuishoudboekjesTransactionsEditComponent,
     HuishoudboekjesDetailCategoriesComponent,
-    HuishoudboekjesDetailCategoriesCreateComponent
+    HuishoudboekjesDetailCategoriesCreateComponent,
+    HuishoudboekjesDetailCategoriesEditComponent
   ],
   imports: [
     BrowserModule,
