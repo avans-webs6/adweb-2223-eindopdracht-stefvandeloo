@@ -1,6 +1,6 @@
 <button (click)="onEdit()">Edit huishoudboekje</button>
 
-<dialog id="edit-book-dialog">
+<dialog [id]="'edit-book-dialog-' + bookId">
     <h1>Edit huishoudboekje</h1>
 
     <table>

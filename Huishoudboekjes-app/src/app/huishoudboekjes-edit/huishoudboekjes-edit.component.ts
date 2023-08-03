@@ -9,16 +9,23 @@ import { BookService } from '../book.service';
 })
 export class HuishoudboekjesEditComponent {
   @Input()
+  bookId: string = "";
+
   book: Book = new Book();
+
   editDialog: any;
 
   constructor(public bookService: BookService) {  }
 
-  ngOnInit(): void {
-    this.editDialog = document.getElementById("edit-book-dialog") as HTMLDialogElement;
+  ngAfterViewInit(): void {
+    this.editDialog = document.getElementById("edit-book-dialog-" + this.bookId) as HTMLDialogElement;
   }
 
   onEdit() {
+    this.bookService.getBook(this.bookId).subscribe((book) => {
+      this.book = book;
+    });
+
     this.editDialog.showModal();
   }
 
@@ -29,8 +36,6 @@ export class HuishoudboekjesEditComponent {
     }
   }
 
-  //TODO: When pressing OnCancel, the value of the input fields are not stored in Firebase (like it shouldn't),
-  //      but the input looks changed because when opening the dialog again the edited value is displayed (unless the page is reloaded).
   onCancel() {
     this.editDialog.close();
   }

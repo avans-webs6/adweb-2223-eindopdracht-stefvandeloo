@@ -8,7 +8,7 @@
             <a routerLink="../book/{{book.id}}" routerLinkActive="active">{{book.title}}</a>
             <p>{{book.description}}</p>
         </div>
-        <app-huishoudboekjes-edit [book]="book"></app-huishoudboekjes-edit>
+        <app-huishoudboekjes-edit [bookId]="book.id"></app-huishoudboekjes-edit>
         <button (click)="archiveBook(book)">Archive</button>
     </li>
 </ul>

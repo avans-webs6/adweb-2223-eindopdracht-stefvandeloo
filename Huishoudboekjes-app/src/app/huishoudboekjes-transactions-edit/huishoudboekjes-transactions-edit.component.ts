@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { Transaction } from '../transaction.model';
 import { TransactionService } from '../transaction.service';
 import { TransactionType } from '../transaction-type.enum';
-import { ActivatedRoute } from '@angular/router';
 import { Category } from '../category.model';
 import { CategoryService } from '../category.service';
 

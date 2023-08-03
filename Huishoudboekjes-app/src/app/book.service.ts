@@ -35,7 +35,6 @@ export class BookService {
     return this.getBooksFromFirestore(this.archivedBooksCollectionName);
   }
 
-  //TODO: Maybe use the bookConverter here too, instead of 'as Book'.
   getBook(bookId: string): Observable<Book> {
     return new Observable((subscriber: Subscriber<Book>) => {
       getDoc(doc(this.firestore, this.booksCollectionName, bookId)).then((doc) => {
@@ -85,13 +84,12 @@ export class BookService {
     });
   }
 
-  //TODO: Maybe use the bookConverter here too, instead of 'as Book'.
   getBooksFromFirestore(collectionTitle: string) {
     return new Observable((Subscriber: Subscriber<Book[]>) => {
       onSnapshot(collection(this.firestore, collectionTitle).withConverter(this.bookConverter), (snapshot) => {
         let books: Book[] = [];
         snapshot.forEach((doc) => {
-          let book = doc.data() as Book;
+          let book = doc.data();
           book['id'] = doc.id;
           books.push(book);
         });
