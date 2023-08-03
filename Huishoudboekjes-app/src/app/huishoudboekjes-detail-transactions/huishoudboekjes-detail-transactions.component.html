@@ -4,13 +4,29 @@
     <div *ngIf="transactions.length > 0">
         <ul>
             <li *ngFor="let transaction of transactions">
-                <p>{{transaction.description}}</p>
-                <p>{{transaction.date | date:'dd/MMMM/yyyy'}}</p>
-                <p>€ {{transaction.price}}</p>
-                <p>{{getCategoryName(transaction.categoryId)}}</p>
+                <div class="transaction-information">
+                    <p>
+                        <label>Description: </label>
+                        {{transaction.description}}
+                    </p>
+                    <p>
+                        <label>Date: </label>
+                        {{transaction.date | date:'dd/MMMM/yyyy'}}
+                    </p>
+                    <p>
+                        <label>Price: </label>
+                        € {{transaction.price}}
+                    </p>
+                    <p>
+                        <label>Category: </label>
+                        {{getCategoryName(transaction.categoryId)}}
+                    </p>
+                </div>
 
-                <app-huishoudboekjes-transactions-edit [transactionId]="transaction.id" [transactionType]="transactionType"></app-huishoudboekjes-transactions-edit>
-                <button (click)="deleteTransaction(transaction.id)">Delete</button>
+                <div class="buttons">
+                    <app-huishoudboekjes-transactions-edit [transactionId]="transaction.id" [transactionType]="transactionType"></app-huishoudboekjes-transactions-edit>
+                    <button (click)="deleteTransaction(transaction.id)">Delete</button>
+                </div>
             </li>
         </ul>
     </div>

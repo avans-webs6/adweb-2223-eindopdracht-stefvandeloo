@@ -1,11 +1,11 @@
-<button (click)="openEditDialog()">Edit</button>
+<button id="edit-transaction-button" (click)="openEditDialog()">Edit</button>
 
 <dialog [id]="'edit-transaction-dialog-' + transactionId">
     <h1>Edit {{transactionType}}</h1>
 
     <table>
         <tr><td>Description</td><td><input [(ngModel)]="transaction.description"/></td></tr>
-        <tr><td>Price</td><td><input [(ngModel)]="transaction.price"/></td></tr>
+        <tr><td>Price</td><td><input [(ngModel)]="transaction.price" type="number" /></td></tr>
         <tr><td>Category</td><td>
             <select [(ngModel)]="transaction.categoryId">
                 <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>

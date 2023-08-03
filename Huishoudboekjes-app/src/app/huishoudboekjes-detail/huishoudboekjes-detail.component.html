@@ -1,16 +1,34 @@
 <div *ngIf="book">
-    <h2>{{book.title}}</h2>
-    <h3>{{book.description}}</h3>
 
-    <input type="month" [(ngModel)]="date" (ngModelChange)="updateIncome(book.id)" />
-    <button (click)="onCreateDialog(transactionTypeEnum.INCOME)">Add {{transactionTypeEnum.INCOME}}</button>
-    <button (click)="onCreateDialog(transactionTypeEnum.EXPENSES)">Add {{transactionTypeEnum.EXPENSES}}</button>
-    <button [routerLink]="'../../categories'" routerLinkActive="active">Categories</button>
+    <h2>
+        <label>Title: </label>
+        {{book.title}}
+    </h2>
+    <h3>
+        <label>Description: </label>
+        {{book.description}}
+    </h3>
+
+    <div class="tools">
+        <div class="datepicker">
+            <label for="date">Datum: </label>
+            <input name="date" type="month" [(ngModel)]="date" (ngModelChange)="updateIncome(book.id)" />
+        </div>
+
+        <div class="create-transaction-buttons">
+            <button (click)="onCreateDialog(transactionTypeEnum.INCOME)">Add {{transactionTypeEnum.INCOME}}</button>
+            <button (click)="onCreateDialog(transactionTypeEnum.EXPENSES)">Add {{transactionTypeEnum.EXPENSES}}</button>
+        </div>
+        
+        <button [routerLink]="'../../categories'" routerLinkActive="active">Categories</button>
+    </div>
     
-    <app-huishoudboekjes-transactions-create [bookId]="book.id" [transactionType]="transactionTypeEnum.INCOME"></app-huishoudboekjes-transactions-create>
-    <app-huishoudboekjes-detail-transactions [transactions]="income" [title]="transactionTypeEnum.INCOME" [transactionType]="transactionTypeEnum.INCOME"></app-huishoudboekjes-detail-transactions>
-    
-    <app-huishoudboekjes-transactions-create [bookId]="book.id" [transactionType]="transactionTypeEnum.EXPENSES"></app-huishoudboekjes-transactions-create>
-    <app-huishoudboekjes-detail-transactions [transactions]="expenses" [title]="transactionTypeEnum.EXPENSES" [transactionType]="transactionTypeEnum.EXPENSES"></app-huishoudboekjes-detail-transactions>
+    <div class="transactions-container">
+        <app-huishoudboekjes-detail-transactions [transactions]="income" [title]="transactionTypeEnum.INCOME" [transactionType]="transactionTypeEnum.INCOME"></app-huishoudboekjes-detail-transactions>
+        <app-huishoudboekjes-detail-transactions [transactions]="expenses" [title]="transactionTypeEnum.EXPENSES" [transactionType]="transactionTypeEnum.EXPENSES"></app-huishoudboekjes-detail-transactions>
+    </div>
 </div>
 
+<!-- Dialogs -->
+<app-huishoudboekjes-transactions-create [bookId]="book.id" [transactionType]="transactionTypeEnum.INCOME"></app-huishoudboekjes-transactions-create>
+<app-huishoudboekjes-transactions-create [bookId]="book.id" [transactionType]="transactionTypeEnum.EXPENSES"></app-huishoudboekjes-transactions-create>
