@@ -2,8 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Transaction } from '../transaction.model';
 import { TransactionService } from '../transaction.service';
 import { TransactionType } from '../transaction-type.enum';
-import { Timestamp } from 'firebase/firestore';
-import { Book } from '../book.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-huishoudboekjes-transactions-create',
@@ -13,7 +12,7 @@ import { Book } from '../book.model';
 export class HuishoudboekjesTransactionsCreateComponent {
 
   @Input()
-  book: Book = new Book();
+  bookId: string = "";
 
   @Input()
   transactionType: string = TransactionType.INCOME;
@@ -21,7 +20,7 @@ export class HuishoudboekjesTransactionsCreateComponent {
   transaction: Transaction = new Transaction();
   createDialog: any;
 
-  constructor(public transactionService: TransactionService) {  }
+  constructor(public transactionService: TransactionService, public datepipe: DatePipe) {  }
 
   ngAfterViewInit(): void {
     this.createDialog = document.getElementById("create-" + this.transactionType + "-dialog") as HTMLDialogElement;
@@ -29,9 +28,9 @@ export class HuishoudboekjesTransactionsCreateComponent {
 
   onSave() {
     if (this.transaction.description && this.transaction.price) {
-      this.transaction.bookId = this.book.id;
+      this.transaction.bookId = this.bookId;
       this.transaction.type = this.transactionType;
-      this.transaction.date = this.generateTimestampOfToday();
+      this.transaction.date = this.createDateStringOfToday();
       this.transactionService.addTransaction(this.transaction);
 
       this.transaction = new Transaction();
@@ -44,7 +43,8 @@ export class HuishoudboekjesTransactionsCreateComponent {
     this.createDialog.close();
   }
 
-  generateTimestampOfToday() {
-    return new Timestamp(new Date().getTime() / 1000, 0);
+  createDateStringOfToday() {
+    let date = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+    return date ? date : new Date().toString();
   }
 }

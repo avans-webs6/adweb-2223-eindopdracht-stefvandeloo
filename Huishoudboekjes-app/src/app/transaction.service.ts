@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { initializeApp } from "firebase/app";
 import { Firestore , getFirestore, onSnapshot, collection, updateDoc, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { environment } from 'src/environments/environment';
 import { Transaction } from './transaction.model';
 import { TransactionType } from './transaction-type.enum';
@@ -20,11 +19,6 @@ export class TransactionService {
   constructor() { 
     const app = initializeApp(environment.firebaseConfig); 
     this.firestore = getFirestore(app);
-    const auth = getAuth(app);
-
-    signInWithEmailAndPassword(auth, 'fakeUser@gmail.com', 'fakeUserPassword').then((response) => {
-      console.log(response);
-    });
   }
 
   getIncomeOfBook(bookId: string) {

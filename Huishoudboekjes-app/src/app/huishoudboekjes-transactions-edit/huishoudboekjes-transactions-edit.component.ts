@@ -19,16 +19,12 @@ export class HuishoudboekjesTransactionsEditComponent {
   @Input()
   transactionType = TransactionType.INCOME;
 
-  //TODO: Delete bookId
-  bookId: string = "";
   categories: Category[] = [];
   transaction: Transaction = new Transaction();
 
   editDialog: any;
 
-  constructor (private transactionService: TransactionService, private categoryService: CategoryService, private route: ActivatedRoute) { 
-    this.bookId = this.route.snapshot.paramMap.get('id') ?? "";
-  }
+  constructor (private transactionService: TransactionService, private categoryService: CategoryService) {  }
 
   ngAfterViewInit(): void {
     this.editDialog = document.getElementById("edit-transaction-dialog-" + this.transactionId) as HTMLDialogElement;

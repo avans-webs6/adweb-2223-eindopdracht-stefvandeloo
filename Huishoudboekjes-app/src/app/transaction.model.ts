@@ -1,11 +1,10 @@
-import { Timestamp } from "firebase/firestore";
 import { TransactionType } from "./transaction-type.enum";
 
 export class Transaction {
     id: string;
     description: string;
     price: Number;
-    date: Timestamp;
+    date: string;
     type: string;
     bookId: string;
     categoryId: string;
@@ -14,13 +13,13 @@ export class Transaction {
         this.id = "";
         this.description = "";
         this.price = 0;
-        this.date = new Timestamp(0, 0);
+        this.date = "";
         this.type = TransactionType.INCOME;
         this.bookId = "";
         this.categoryId = "";
     }
 
-    createTransaction(id: string, description: string, price: Number, date: Timestamp, type: string, bookId: string, categoryId: string) {
+    createTransaction(id: string, description: string, price: Number, date: string, type: string, bookId: string, categoryId: string) {
         this.id = id;
         this.description = description;
         this.price = price;

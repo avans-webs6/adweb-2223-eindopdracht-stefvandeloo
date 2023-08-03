@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { initializeApp } from "firebase/app";
-import { Firestore , getFirestore, onSnapshot, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, setDoc, deleteField } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Firestore , getFirestore, onSnapshot, collection, updateDoc, deleteDoc, doc, getDoc, setDoc, deleteField } from "firebase/firestore";
 import { environment } from 'src/environments/environment';
 import { Category } from './category.model';
 
@@ -16,11 +15,6 @@ export class CategoryService {
   constructor() { 
     const app = initializeApp(environment.firebaseConfig); 
     this.firestore = getFirestore(app);
-    const auth = getAuth(app);
-
-    signInWithEmailAndPassword(auth, 'fakeUser@gmail.com', 'fakeUserPassword').then((response) => {
-      console.log(response);
-    });
   }
 
   getCategories(): Observable<Category[]> {

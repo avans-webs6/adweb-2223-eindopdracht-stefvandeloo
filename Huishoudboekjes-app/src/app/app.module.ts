@@ -17,6 +17,7 @@ import { HuishoudboekjesDetailCategoriesComponent } from './huishoudboekjes-deta
 import { CategoryService } from './category.service';
 import { HuishoudboekjesDetailCategoriesCreateComponent } from './huishoudboekjes-detail-categories-create/huishoudboekjes-detail-categories-create.component';
 import { HuishoudboekjesDetailCategoriesEditComponent } from './huishoudboekjes-detail-categories-edit/huishoudboekjes-detail-categories-edit.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { HuishoudboekjesDetailCategoriesEditComponent } from './huishoudboekjes-
     AppRoutingModule,
     FormsModule
   ],
-  providers: [BookService, TransactionService, CategoryService],
+  providers: [BookService, TransactionService, CategoryService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
