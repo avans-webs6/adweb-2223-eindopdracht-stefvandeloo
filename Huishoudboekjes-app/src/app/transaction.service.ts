@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { initializeApp } from "firebase/app";
+import {getApp, initializeApp} from "firebase/app";
 import { Firestore , getFirestore, onSnapshot, collection, updateDoc, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { environment } from 'src/environments/environment';
 import { Transaction } from './transaction.model';
@@ -16,8 +16,8 @@ export class TransactionService {
   archivedBooksCollectionName = "archivedBooks";
   incomeCollectionName = "income";
 
-  constructor() { 
-    const app = initializeApp(environment.firebaseConfig); 
+  constructor() {
+    const app = getApp();
     this.firestore = getFirestore(app);
   }
 

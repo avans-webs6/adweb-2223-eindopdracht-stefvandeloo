@@ -6,6 +6,9 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { environment } from 'src/environments/environment';
 import { Book } from './book.model';
 import { TransactionService } from './transaction.service';
+import firebase from "firebase/compat";
+import { getApp } from "firebase/app";
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +20,17 @@ export class BookService {
   archivedBooksCollectionName = "archivedBooks";
   incomeCollectionName = "income";
 
-  constructor(private transactionService: TransactionService) { 
-    const app = initializeApp(environment.firebaseConfig); 
+  constructor(private transactionService: TransactionService) {
+    const app = getApp();
     this.firestore = getFirestore(app);
     const auth = getAuth(app);
 
-    signInWithEmailAndPassword(auth, 'fakeUser@gmail.com', 'fakeUserPassword').then((response) => {
-      console.log(response);
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("User logged in with email: ", user.email);
+      } else {
+        console.log("No user logged in");
+      }
     });
   }
 
@@ -67,8 +74,8 @@ export class BookService {
   async dearchiveBook(book: Book) {
     const oldBookId = this.toggleArchivationBook(book, this.booksCollectionName, this.archivedBooksCollectionName);
     await this.changeTransactionsBookId(oldBookId, book.id);
-  }  
-  
+  }
+
   toggleArchivationBook(book: Book, addCollectionName: string, deleteCollectionName: string) {
     const oldBookId = book.id;
     deleteDoc(doc(this.firestore, deleteCollectionName, book.id));

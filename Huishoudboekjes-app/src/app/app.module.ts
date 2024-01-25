@@ -18,6 +18,10 @@ import { CategoryService } from './category.service';
 import { HuishoudboekjesDetailCategoriesCreateComponent } from './huishoudboekjes-detail-categories-create/huishoudboekjes-detail-categories-create.component';
 import { HuishoudboekjesDetailCategoriesEditComponent } from './huishoudboekjes-detail-categories-edit/huishoudboekjes-detail-categories-edit.component';
 import { DatePipe } from '@angular/common';
+import {environment} from "../environments/environment";
+import { AuthenticationRegisterUserComponent } from './authentication-register-user/authentication-register-user.component';
+import { AuthenticationLoginUserComponent } from './authentication-login-user/authentication-login-user.component';
+import {PermissionService} from "./permission.service";
 
 @NgModule({
   declarations: [
@@ -31,14 +35,16 @@ import { DatePipe } from '@angular/common';
     HuishoudboekjesTransactionsEditComponent,
     HuishoudboekjesDetailCategoriesComponent,
     HuishoudboekjesDetailCategoriesCreateComponent,
-    HuishoudboekjesDetailCategoriesEditComponent
+    HuishoudboekjesDetailCategoriesEditComponent,
+    AuthenticationRegisterUserComponent,
+    AuthenticationLoginUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [BookService, TransactionService, CategoryService, DatePipe],
+  providers: [BookService, TransactionService, CategoryService, PermissionService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

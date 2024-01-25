@@ -8,9 +8,9 @@
             <li *ngFor="let book of books | async">
                 <div class="book-information">
                     <label for="title">Title: </label>
-                    <a name="title" routerLink="../book/{{book.id}}" routerLinkActive="active">{{book.title}}</a>
+                    <a id="title" routerLink="../book/{{book.id}}" routerLinkActive="active">{{book.title}}</a>
 
-                    <p name="description">
+                    <p id="description">
                         <label for="description">Description: </label>
                         {{book.description}}
                     </p>
@@ -30,13 +30,13 @@
             <p *ngIf="(archivedBooks | async)?.length === 0">No archived huishoudboekjes found!</p>
             <li *ngFor="let archivedBook of archivedBooks | async">
                 <div class="book-information">
-                    <p name="title">
-                        <label for="title">Title: </label>
+                    <p id="archived-title">
+                        <label for="archived-title">Title: </label>
                         {{archivedBook.title}}
                     </p>
 
-                    <p name="description">
-                        <label for="description">Description: </label>
+                    <p id="archived-description">
+                        <label for="archived-description">Description: </label>
                         {{archivedBook.description}}
                     </p>
                 </div>

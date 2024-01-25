@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { initializeApp } from "firebase/app";
+import {getApp, initializeApp} from "firebase/app";
 import { Firestore , getFirestore, onSnapshot, collection, updateDoc, deleteDoc, doc, getDoc, setDoc, deleteField } from "firebase/firestore";
 import { environment } from 'src/environments/environment';
 import { Category } from './category.model';
@@ -12,8 +12,8 @@ export class CategoryService {
   firestore: Firestore;
   categoryCollectionName: string = 'categories';
 
-  constructor() { 
-    const app = initializeApp(environment.firebaseConfig); 
+  constructor() {
+    const app = getApp();
     this.firestore = getFirestore(app);
   }
 
