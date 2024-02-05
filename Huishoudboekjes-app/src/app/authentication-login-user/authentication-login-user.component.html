@@ -1,11 +1,19 @@
-<h1>Login user</h1>
+<div class="login-container">
+  <div>
+    <h1>Login user</h1>
 
-<form (submit)="loginUser()">
-  <label for="email">E-mail</label>
-  <input id="email" type="email" name="email" [(ngModel)]="email" />
+    <form (submit)="loginUser()">
+      <div class="form-item">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" name="email" placeholder="E-mail" [(ngModel)]="email" />
+      </div>
 
-  <label for="password">Password</label>
-  <input id="password" type="password" name="password" [(ngModel)]="password" />
+      <div class="form-item">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" placeholder="Password" [(ngModel)]="password" />
+      </div>
 
-  <button type="submit">Register</button>
-</form>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
