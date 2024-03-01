@@ -13,7 +13,6 @@ export class HuishoudboekjesCreateComponent {
 
   book: Book;
   createDialog: any;
-
   createBookForm: FormGroup;
 
   constructor(public bookService: BookService) {

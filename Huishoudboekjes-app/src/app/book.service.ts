@@ -44,8 +44,8 @@ export class BookService {
 
   getBook(bookId: string): Observable<Book> {
     return new Observable((subscriber: Subscriber<Book>) => {
-      getDoc(doc(this.firestore, this.booksCollectionName, bookId)).then((doc) => {
-        let book = doc.data() as Book ?? {};
+      getDoc(doc(this.firestore, this.booksCollectionName, bookId).withConverter(this.bookConverter)).then((doc) => {
+        let book = doc.data() as Book;
         book['id'] = doc.id;
         subscriber.next(book);
       });
@@ -57,7 +57,7 @@ export class BookService {
   }
 
   editBook(book: Book) {
-    updateDoc(doc(this.firestore, this.booksCollectionName, book.id).withConverter(this.bookConverter), book);
+    updateDoc(doc(this.firestore, this.booksCollectionName, book.id).withConverter(this.bookConverter), this.bookConverter.toFirestore(book));
   }
 
   addBookCollection(book: Book, collectionTitle: string) {
