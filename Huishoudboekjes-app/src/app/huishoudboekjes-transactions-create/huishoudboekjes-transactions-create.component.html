@@ -1,17 +1,35 @@
 <dialog [id]="'create-' + transactionType + '-dialog'">
     <h1>Create {{transactionType}}</h1>
 
-    <table>
-        <tr><td>Description</td><td><input [(ngModel)]="transaction.description"/></td></tr>
-        <tr><td>Price</td><td><input [(ngModel)]="transaction.price" type="number" /></td></tr>
-        <tr><td>Category</td><td>
-            <select [(ngModel)]="transaction.categoryId">
-                <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+    <form [formGroup]="createTransactionForm">
+      <p class="form-error-message" *ngIf="validatePrice()">{{validatePrice()}}</p>
+
+      <table>
+        <tr>
+          <td>Price</td>
+          <td>
+            <input id="price" type="number" name="price" placeholder="Price" formControlName="price" />
+          </td>
+        </tr>
+        <tr>
+          <td>Description (Optional)</td>
+          <td>
+            <input id="description" type="text" name="description" placeholder="Description" formControlName="description" />
+          </td>
+        </tr>
+        <tr>
+          <td>Category (Optional)</td>
+          <td>
+            <select id="category" name="category" formControlName="category" >
+              <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
             </select>
-        </td></tr>
-    </table>
-    
-    <div>
-        <button style="float: left;" (click)="onCancel()">Cancel</button><button style="float: right;" (click)="onSave()">Save</button>
-    </div>
+          </td>
+        </tr>
+      </table>
+
+      <div>
+        <button style="float: left;" (click)="onCancel()">Cancel</button>
+        <button style="float: right;" (click)="onSave()">Save</button>
+      </div>
+    </form>
 </dialog>
