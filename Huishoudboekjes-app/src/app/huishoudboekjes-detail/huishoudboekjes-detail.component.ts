@@ -13,7 +13,7 @@ import { TransactionType } from '../transaction-type.enum';
 })
 export class HuishoudboekjesDetailComponent {
 
-  book: Book = new Book();
+  book: Book = new Book("");
   income: Transaction[] = [];
   expenses: Transaction[] = [];
 

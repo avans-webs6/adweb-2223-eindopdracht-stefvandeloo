@@ -2,11 +2,13 @@ export class Book {
     id: string;
     title: string;
     description: string;
+    userEmail: string
 
-    constructor() {
+    constructor(userEmail: string) {
         this.id = "";
         this.title = "";
         this.description = "";
+        this.userEmail = userEmail;
     }
 
     createBook(id: string, title: string, description: string) {

@@ -93,12 +93,12 @@ export class BookService {
 
   getBooksFromFirestore(collectionTitle: string) {
     return new Observable((Subscriber: Subscriber<Book[]>) => {
-      onSnapshot(collection(this.firestore, collectionTitle).withConverter(this.bookConverter), (snapshot) => {
+      onSnapshot(collection(this.firestore, collectionTitle), (snapshot) => {
         let books: Book[] = [];
         snapshot.forEach((doc) => {
           let book = doc.data();
           book['id'] = doc.id;
-          books.push(book);
+          books.push(book as Book);
         });
         Subscriber.next(books);
       });
@@ -110,12 +110,13 @@ export class BookService {
         return {
             id: book.id,
             title: book.title,
-            description: book.description
+            description: book.description,
+            userEmail: book.userEmail
         };
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
-        let book = new Book();
+        let book = new Book(data.userEmail);
         book.createBook(data.id, data.title, data.description);
         return book;
     }

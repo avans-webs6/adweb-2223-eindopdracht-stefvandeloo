@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Book } from '../book.model';
 import { BookService } from '../book.service';
+import {getAuth} from "firebase/auth";
 
 @Component({
   selector: 'app-huishoudboekjes-create',
@@ -9,25 +10,31 @@ import { BookService } from '../book.service';
 })
 export class HuishoudboekjesCreateComponent {
 
-  book: Book = new Book();
+  book: Book;
   createDialog: any;
 
-  constructor(public bookService: BookService) {  }
+  constructor(public bookService: BookService) {
+    const auth = getAuth();
+    this.book = new Book(auth.currentUser?.email ?? "");
+  }
 
   ngOnInit(): void {
     this.createDialog = document.getElementById("create-book-dialog") as HTMLDialogElement;
   }
 
   onCreate() {
-    this.book = new Book();
+    let auth = getAuth()
+    if (!auth.currentUser || !auth.currentUser.email) return;
+
+    this.book = new Book(auth.currentUser.email);
     this.createDialog.showModal();
   }
 
   onSave() {
-    if (this.book.title && this.book.description) {
-      this.bookService.addBook(this.book);
-      this.createDialog.close();
-    }
+    if (!this.book.title || !this.book.description) return;
+
+    this.bookService.addBook(this.book);
+    this.createDialog.close();
   }
 
   onCancel() {

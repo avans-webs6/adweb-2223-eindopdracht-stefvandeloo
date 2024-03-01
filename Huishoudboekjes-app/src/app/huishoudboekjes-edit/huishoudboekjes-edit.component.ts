@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Book } from '../book.model';
 import { BookService } from '../book.service';
+import {getAuth} from "firebase/auth";
 
 @Component({
   selector: 'app-huishoudboekjes-edit',
@@ -11,11 +12,14 @@ export class HuishoudboekjesEditComponent {
   @Input()
   bookId: string = "";
 
-  book: Book = new Book();
+  book: Book;
 
   editDialog: any;
 
-  constructor(public bookService: BookService) {  }
+  constructor(public bookService: BookService) {
+    const auth = getAuth();
+    this.book = new Book(auth.currentUser?.email ?? "");
+  }
 
   ngAfterViewInit(): void {
     this.editDialog = document.getElementById("edit-book-dialog-" + this.bookId) as HTMLDialogElement;
