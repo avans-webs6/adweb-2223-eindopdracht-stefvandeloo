@@ -7,11 +7,15 @@ form {
   flex-direction: column;
 }
 
-.login-container {
+.login-main-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.login-container {
+  width: 250px;
 }
 
 .form-item {

@@ -7,11 +7,15 @@ form {
   flex-direction: column;
 }
 
-.register-container {
+.register-main-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.register-container {
+  width: 250px;
 }
 
 .form-item {
