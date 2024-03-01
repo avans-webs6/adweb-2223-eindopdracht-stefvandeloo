@@ -20,7 +20,7 @@
                     </p>
                 </div>
 
-                <div class="buttons">
+                <div class="buttons" *ngIf="userIsAuthor(book.userEmail)">
                     <app-huishoudboekjes-edit [bookId]="book.id"></app-huishoudboekjes-edit>
                     <button (click)="archiveBook(book)">Archive</button>
                 </div>

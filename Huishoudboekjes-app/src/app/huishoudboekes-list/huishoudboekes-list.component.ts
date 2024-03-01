@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BookService } from '../book.service';
 import { Book } from '../book.model';
+import {getAuth} from "firebase/auth";
 
 @Component({
   selector: 'app-huishoudboekes-list',
@@ -23,5 +24,11 @@ export class HuishoudboekesListComponent {
 
   dearchiveBook(book: Book) {
     this.bookService.dearchiveBook(book);
+  }
+
+  userIsAuthor(bookUserEmail: string) {
+    const auth = getAuth();
+    if (!auth.currentUser || !auth.currentUser.email) return false;
+    return auth.currentUser.email === bookUserEmail;
   }
 }
