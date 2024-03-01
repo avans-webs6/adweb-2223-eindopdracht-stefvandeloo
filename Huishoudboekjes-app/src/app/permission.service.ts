@@ -13,10 +13,10 @@ export class PermissionService {
     const auth = getAuth();
 
     if (auth.currentUser) {
-      return true
+      return true;
     } else {
       this.router.navigate(['/login']);
-      return false
+      return false;
     }
   }
 }
