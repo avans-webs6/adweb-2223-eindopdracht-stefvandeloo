@@ -6,8 +6,18 @@ div .tools div {
     margin: 10px 0 10px 0;
 }
 
-.tools {
-    width: 30%;
+.detail-top-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.detail-top-container .tools {
+    width: 50%;
+}
+
+.detail-top-container .statistics {
+  width: 50%;
 }
 
 .create-transaction-buttons button {

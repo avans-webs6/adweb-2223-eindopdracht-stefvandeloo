@@ -9,21 +9,26 @@
         {{book.description}}
     </h3>
 
-    <div class="tools">
-        <div class="datepicker">
-            <label for="date">Datum: </label>
-            <input id="date" name="date" type="month" [(ngModel)]="date" (ngModelChange)="updateIncome(book.id)" />
+    <div class="detail-top-container">
+        <div class="tools">
+            <div class="datepicker">
+                <label for="date">Datum: </label>
+                <input id="date" name="date" type="month" [(ngModel)]="date" (ngModelChange)="updateIncome(book.id)" />
+            </div>
+
+            <div class="create-transaction-buttons">
+                <button (click)="onCreateDialog(transactionTypeEnum.INCOME)">Add {{transactionTypeEnum.INCOME}}</button>
+                <button (click)="onCreateDialog(transactionTypeEnum.EXPENSES)">Add {{transactionTypeEnum.EXPENSES}}</button>
+            </div>
+
+            <button routerLink="categories" routerLinkActive="active">Categories</button>
         </div>
 
-        <div class="create-transaction-buttons">
-            <button (click)="onCreateDialog(transactionTypeEnum.INCOME)">Add {{transactionTypeEnum.INCOME}}</button>
-            <button (click)="onCreateDialog(transactionTypeEnum.EXPENSES)">Add {{transactionTypeEnum.EXPENSES}}</button>
+        <div class="statistics">
+            <app-huishoudboekjes-detail-statistics [balance]="calculateBalance()"></app-huishoudboekjes-detail-statistics>
         </div>
-
-        <button [routerLink]="'../../categories'" routerLinkActive="active">Categories</button>
     </div>
 
-    <h3 class="book-balance">Balance <span>€ {{calculateBalance()}}</span></h3>
     <div class="transactions-container">
         <app-huishoudboekjes-detail-transactions [transactions]="income" [title]="transactionTypeEnum.INCOME" [transactionType]="transactionTypeEnum.INCOME"></app-huishoudboekjes-detail-transactions>
         <app-huishoudboekjes-detail-transactions [transactions]="expenses" [title]="transactionTypeEnum.EXPENSES" [transactionType]="transactionTypeEnum.EXPENSES"></app-huishoudboekjes-detail-transactions>

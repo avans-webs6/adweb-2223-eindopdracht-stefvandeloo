@@ -8,6 +8,9 @@ import {
   AuthenticationRegisterUserComponent
 } from "./authentication-register-user/authentication-register-user.component";
 import {loginGuard} from "./login.guard";
+import {
+  HuishoudboekjesDetailStatisticsComponent
+} from "./huishoudboekjes-detail-statistics/huishoudboekjes-detail-statistics.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'overview', pathMatch: 'full' },
@@ -15,7 +18,8 @@ const routes: Routes = [
   { path: 'register', component: AuthenticationRegisterUserComponent },
   { path: 'overview', component: HuishoudboekesListComponent, canActivate: [loginGuard] },
   { path: 'book/:id', component: HuishoudboekjesDetailComponent, canActivate: [loginGuard] },
-  { path: 'categories', component: HuishoudboekjesDetailCategoriesComponent, canActivate: [loginGuard] }
+  { path: 'book/:id/categories', component: HuishoudboekjesDetailCategoriesComponent, canActivate: [loginGuard] },
+  { path: 'book/:id/statistics', component: HuishoudboekjesDetailStatisticsComponent, canActivate: [loginGuard] },
 ];
 
 @NgModule({
