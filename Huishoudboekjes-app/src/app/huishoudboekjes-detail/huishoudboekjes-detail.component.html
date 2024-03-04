@@ -23,6 +23,7 @@
         <button [routerLink]="'../../categories'" routerLinkActive="active">Categories</button>
     </div>
 
+    <h3 class="book-balance">Balance <span>€ {{calculateBalance()}}</span></h3>
     <div class="transactions-container">
         <app-huishoudboekjes-detail-transactions [transactions]="income" [title]="transactionTypeEnum.INCOME" [transactionType]="transactionTypeEnum.INCOME"></app-huishoudboekjes-detail-transactions>
         <app-huishoudboekjes-detail-transactions [transactions]="expenses" [title]="transactionTypeEnum.EXPENSES" [transactionType]="transactionTypeEnum.EXPENSES"></app-huishoudboekjes-detail-transactions>

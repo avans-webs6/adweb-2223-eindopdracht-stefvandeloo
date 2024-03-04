@@ -22,7 +22,7 @@ export class HuishoudboekjesDetailTransactionsComponent {
   @Input()
   transactionType = TransactionType.INCOME;
 
-  constructor(private transactionService: TransactionService, private categoryService: CategoryService) { 
+  constructor(private transactionService: TransactionService, private categoryService: CategoryService) {
     this.categoryService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
@@ -36,5 +36,10 @@ export class HuishoudboekjesDetailTransactionsComponent {
 
   deleteTransaction(transactionId: string) {
     this.transactionService.deleteTransaction(transactionId);
+  }
+
+  formatPrice(price: string) {
+    if (price.endsWith(".00")) return price.replace(".00", ",-");
+    return price;
   }
 }

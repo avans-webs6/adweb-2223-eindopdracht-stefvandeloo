@@ -44,9 +44,10 @@ export class HuishoudboekjesTransactionsCreateComponent {
 
   onSave() {
     if (this.validatePrice()) return;
+    const transactionPrice = this.createTransactionForm.value.price.toFixed(2);
     this.transaction.createTransaction(this.transaction.id,
                                       this.createTransactionForm.value.description,
-                                      this.createTransactionForm.value.price,
+                                      transactionPrice,
                                       this.createDateStringOfToday(),
                                       this.transactionType,
                                       this.bookId,

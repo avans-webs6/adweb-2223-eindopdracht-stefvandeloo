@@ -71,12 +71,21 @@ export class HuishoudboekjesDetailComponent {
   }
 
   filterTransactionsByDate(transactions: Transaction[]) {
-    return transactions.filter(i => new Date(i.date).getMonth() === new Date(this.date).getMonth() && new Date(i.date).getFullYear() === new Date(this.date).getFullYear());
+    return transactions.filter(i =>
+      new Date(i.date).getMonth() === new Date(this.date).getMonth() &&
+      new Date(i.date).getFullYear() === new Date(this.date).getFullYear()
+    );
   }
 
   sortData(transactions: Transaction[]) {
     return transactions.sort((first, second) => {
       return <any>new Date(first.date) - <any>new Date(second.date);
     });
+  }
+
+  calculateBalance() {
+    let income = this.income.reduce((a, b) => a + Number(b.price), 0);
+    let expenses = this.expenses.reduce((a, b) => a + Number(b.price), 0);
+    return (income - expenses).toFixed(2);
   }
 }
