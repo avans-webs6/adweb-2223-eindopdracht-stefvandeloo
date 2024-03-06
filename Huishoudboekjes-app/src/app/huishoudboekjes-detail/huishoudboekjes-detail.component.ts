@@ -88,4 +88,8 @@ export class HuishoudboekjesDetailComponent {
     let expenses = this.expenses.reduce((a, b) => a + Number(b.price), 0);
     return (income - expenses).toFixed(2);
   }
+
+  combineIncomeAndExpenses() {
+    return this.income.concat(this.expenses);
+  }
 }

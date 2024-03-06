@@ -25,7 +25,7 @@
         </div>
 
         <div class="statistics">
-            <app-huishoudboekjes-detail-statistics [balance]="calculateBalance()"></app-huishoudboekjes-detail-statistics>
+            <app-huishoudboekjes-detail-statistics [balance]="calculateBalance()" [transactions]="combineIncomeAndExpenses()"></app-huishoudboekjes-detail-statistics>
         </div>
     </div>
 
