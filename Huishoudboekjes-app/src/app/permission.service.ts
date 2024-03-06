@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {getAuth} from "firebase/auth";
 
 @Injectable({
@@ -9,13 +9,13 @@ export class PermissionService {
 
   constructor(public router: Router) { }
 
-  canActivate(): boolean {
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     const auth = getAuth();
 
     if (auth.currentUser) {
       return true;
     } else {
-      this.router.navigate(['/login']);
+      await this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
       return false;
     }
   }

@@ -23,15 +23,6 @@ export class BookService {
   constructor(private transactionService: TransactionService) {
     const app = getApp();
     this.firestore = getFirestore(app);
-    const auth = getAuth(app);
-
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log("User logged in with email: ", user.email);
-      } else {
-        console.log("No user logged in");
-      }
-    });
   }
 
   getBooks(): Observable<Book[]> {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
 
 @Component({
   selector: 'app-authentication-login-user',
@@ -10,8 +11,9 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 export class AuthenticationLoginUserComponent {
   auth = getAuth();
   loginForm: FormGroup;
+  returnUrl: string = '/';
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.loginForm = new FormGroup({
       'email': new FormControl(null,
         [Validators.required,
@@ -22,19 +24,19 @@ export class AuthenticationLoginUserComponent {
   }
 
   loginUser() {
+    if (this.auth.currentUser) return;
+
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
 
     if (email && password && !this.validateEmail() && !this.validatePassword()) {
       signInWithEmailAndPassword(this.auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user.email)
+        .then(async () => {
+          this.route.queryParams.subscribe(retUrl => this.returnUrl = retUrl['returnUrl']);
+          await this.router.navigateByUrl(this.returnUrl);
         })
         .catch((error) => {
           const errorCode = error.code;
-          console.log(errorCode)
-          console.log(error.message)
           switch (errorCode) {
             case "auth/invalid-email":
               this.loginForm.setErrors({firebaseError: "Invalid email"})
