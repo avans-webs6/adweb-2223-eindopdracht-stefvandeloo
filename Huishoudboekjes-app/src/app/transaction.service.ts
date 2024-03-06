@@ -49,6 +49,20 @@ export class TransactionService {
     });
   }
 
+  getTransactions() {
+    return new Observable((subscriber: Subscriber<Transaction[]>) => {
+      onSnapshot(collection(this.firestore, this.transactionsCollectionName), (snapshot) => {
+        let transactions: Transaction[] = [];
+        snapshot.forEach((doc) => {
+          let transaction = doc.data() as Transaction;
+          transaction['id'] = doc.id;
+          transactions.push(transaction);
+        });
+        subscriber.next(transactions);
+      });
+    });
+  }
+
   getTransaction(transactionId: string) {
     return new Observable((subscriber: Subscriber<Transaction>) => {
       getDoc(doc(this.firestore, this.transactionsCollectionName + '/' + transactionId)).then((doc) => {

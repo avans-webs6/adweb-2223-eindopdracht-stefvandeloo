@@ -24,10 +24,10 @@ export class HuishoudboekjesDetailCategoriesEditComponent {
     this.categoryService.getCategory(this.category.id).subscribe((category) => {
       this.category = category;
     });
-    
+
     this.editDialog.showModal();
   }
-  
+
   onSave() {
     if (this.category.name && this.category.budget) {
       this.categoryService.editCategory(this.category);

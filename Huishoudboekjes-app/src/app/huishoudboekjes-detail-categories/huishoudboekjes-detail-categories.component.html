@@ -1,15 +1,8 @@
 <app-huishoudboekjes-detail-categories-create></app-huishoudboekjes-detail-categories-create>
 
 <h3>Transaction categories</h3>
-<ul>
-    <p *ngIf="categories.length === 0">No categories found!</p>
-    <li *ngFor="let category of categories">
-        <div>
-            <p>{{category.name}}</p>
-            <p>{{category.budget}}</p>
-            <p *ngIf="category.endDate">{{category.endDate | date:'dd/MMMM/yyyy'}}</p>
-        </div>
-        <app-huishoudboekjes-detail-categories-edit [category]="category"></app-huishoudboekjes-detail-categories-edit>
-        <button (click)="deleteCategory(category.id)">Delete</button>
-    </li>
-</ul>
+
+<div class="categories-container">
+  <app-huishoudboekjes-detail-categories-list [categories]="categories" (categoryEventEmitter)="setCategory($event)"></app-huishoudboekjes-detail-categories-list>
+  <app-huishoudboekjes-detail-categories-detail *ngIf="selectedCategory" [category]="selectedCategory"></app-huishoudboekjes-detail-categories-detail>
+</div>

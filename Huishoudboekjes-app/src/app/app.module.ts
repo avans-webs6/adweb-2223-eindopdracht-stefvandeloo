@@ -23,6 +23,8 @@ import { AuthenticationRegisterUserComponent } from './authentication-register-u
 import { AuthenticationLoginUserComponent } from './authentication-login-user/authentication-login-user.component';
 import {PermissionService} from "./permission.service";
 import { HuishoudboekjesDetailStatisticsComponent } from './huishoudboekjes-detail-statistics/huishoudboekjes-detail-statistics.component';
+import { HuishoudboekjesDetailCategoriesListComponent } from './huishoudboekjes-detail-categories-list/huishoudboekjes-detail-categories-list.component';
+import { HuishoudboekjesDetailCategoriesDetailComponent } from './huishoudboekjes-detail-categories-detail/huishoudboekjes-detail-categories-detail.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { HuishoudboekjesDetailStatisticsComponent } from './huishoudboekjes-deta
     HuishoudboekjesDetailCategoriesEditComponent,
     AuthenticationRegisterUserComponent,
     AuthenticationLoginUserComponent,
-    HuishoudboekjesDetailStatisticsComponent
+    HuishoudboekjesDetailStatisticsComponent,
+    HuishoudboekjesDetailCategoriesListComponent,
+    HuishoudboekjesDetailCategoriesDetailComponent
   ],
     imports: [
         BrowserModule,

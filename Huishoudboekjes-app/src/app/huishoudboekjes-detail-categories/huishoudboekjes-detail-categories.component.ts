@@ -9,16 +9,10 @@ import { Category } from '../category.model';
   styleUrls: ['./huishoudboekjes-detail-categories.component.css']
 })
 export class HuishoudboekjesDetailCategoriesComponent {
-
   categories: Category[] = [];
+  selectedCategory: Category | undefined;
 
-  constructor(private categoryService: CategoryService, private route: ActivatedRoute) {
-    this.categoryService.getCategories().subscribe((categories) => {
-      this.categories = categories;
-    });
-  }
-
-  deleteCategory(categoryId: string) {
-    this.categoryService.deleteCategory(categoryId);
+  setCategory(category: Category) {
+    this.selectedCategory = category;
   }
 }

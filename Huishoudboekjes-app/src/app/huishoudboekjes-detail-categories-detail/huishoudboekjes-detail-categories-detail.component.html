@@ -1,0 +1,13 @@
+<div *ngIf="category">
+  <p>{{category.name}}</p>
+
+  <div class="category-progress">
+<!--    <div class="progress-bar" role="progressbar" [style.width]="(categoryProgress / category.budget) * 100 + '%'" attr.aria-valuenow="{{(categoryProgress / category.budget) * 100}}" aria-valuemin="0" aria-valuemax="100"></div>!-->
+    <progress id="category-progress" [value]="categoryProgress" max="100">{{categoryProgress}}</progress>
+    <p>{{category.budget}}</p>
+  </div>
+  <p *ngIf="category.endDate">{{category.endDate | date:'dd/MMMM/yyyy'}}</p>
+</div>
+
+<app-huishoudboekjes-detail-categories-edit [category]="category"></app-huishoudboekjes-detail-categories-edit>
+<button (click)="deleteCategory(category.id)">Delete</button>
