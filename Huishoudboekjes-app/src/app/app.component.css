@@ -1,11 +1,5 @@
-* {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.form-error-message {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
+.router-outlet {
+  margin: 20px;
 }
 
 .navbar {
