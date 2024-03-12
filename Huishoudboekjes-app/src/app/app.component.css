@@ -7,3 +7,80 @@
   font-size: 12px;
   margin-top: 5px;
 }
+
+.navbar {
+  background-color: #000080;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-content img {
+  height: 70px;
+  margin-right: 20px;
+  border-radius: 15px;
+}
+
+.navbar-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.navbar-links li:last-child {
+  margin-right: 0;
+}
+
+.navbar-links li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  position: relative;
+}
+
+.navbar-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #fff;
+  transition: width 0.3s ease-in-out;
+}
+
+.navbar-links li a:hover::after {
+  width: 100%;
+}
+
+.navbar-actions {
+  display: flex;
+}
+
+.navbar-actions a,
+.navbar-actions button {
+  color: #000080;
+  background-color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin-right: 10px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.navbar-actions a:hover,
+.navbar-actions button:hover {
+  background-color: #4da6ff;
+  cursor: pointer;
+}

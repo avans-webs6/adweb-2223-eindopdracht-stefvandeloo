@@ -19,7 +19,7 @@ export class AppComponent {
     const auth = getAuth();
     auth.onAuthStateChanged((user) => {
       if (user) {
-        router.navigate(['/overview']);
+        router.navigate(['/']);
       }
       this.user = user;
     });

@@ -1,3 +1,17 @@
-<h1>{{title}}</h1>
-<button *ngIf="user" (click)="logout()">Logout</button>
+<nav class="navbar">
+  <div class="navbar-content">
+    <a routerLink="/"><img src="assets/OpenAI-budgeting-tool.jpeg" alt="OpenAI-budgeting-tool-logo" /></a>
+    <ul class="navbar-links">
+      <li><a routerLink="/books">Huishoudboekjes</a></li>
+    </ul>
+  </div>
+  <div class="navbar-actions">
+    <button *ngIf="user; else authLinks" (click)="logout()">Logout</button>
+    <ng-template #authLinks>
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+    </ng-template>
+  </div>
+</nav>
+
 <router-outlet></router-outlet>

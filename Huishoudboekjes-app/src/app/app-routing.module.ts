@@ -13,10 +13,10 @@ import {
 } from "./huishoudboekjes-detail-statistics/huishoudboekjes-detail-statistics.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'overview', pathMatch: 'full' },
+  { path: '', redirectTo: 'books', pathMatch: 'full' },
   { path: 'login', component: AuthenticationLoginUserComponent },
   { path: 'register', component: AuthenticationRegisterUserComponent },
-  { path: 'overview', component: HuishoudboekesListComponent, canActivate: [loginGuard] },
+  { path: 'books', component: HuishoudboekesListComponent, canActivate: [loginGuard] },
   { path: 'book/:id', component: HuishoudboekjesDetailComponent, canActivate: [loginGuard] },
   { path: 'book/:id/categories', component: HuishoudboekjesDetailCategoriesComponent, canActivate: [loginGuard] },
   { path: 'book/:id/statistics', component: HuishoudboekjesDetailStatisticsComponent, canActivate: [loginGuard] },

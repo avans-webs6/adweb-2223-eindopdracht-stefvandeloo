@@ -17,7 +17,7 @@ import { HuishoudboekjesDetailCategoriesComponent } from './huishoudboekjes-deta
 import { CategoryService } from './category.service';
 import { HuishoudboekjesDetailCategoriesCreateComponent } from './huishoudboekjes-detail-categories-create/huishoudboekjes-detail-categories-create.component';
 import { HuishoudboekjesDetailCategoriesEditComponent } from './huishoudboekjes-detail-categories-edit/huishoudboekjes-detail-categories-edit.component';
-import { DatePipe } from '@angular/common';
+import {DatePipe, NgOptimizedImage} from '@angular/common';
 import {environment} from "../environments/environment";
 import { AuthenticationRegisterUserComponent } from './authentication-register-user/authentication-register-user.component';
 import { AuthenticationLoginUserComponent } from './authentication-login-user/authentication-login-user.component';
@@ -49,7 +49,8 @@ import { HuishoudboekjesDetailCategoriesDetailComponent } from './huishoudboekje
         BrowserModule,
         AppRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgOptimizedImage
     ],
   providers: [BookService, TransactionService, CategoryService, PermissionService, DatePipe],
   bootstrap: [AppComponent]
