@@ -1,29 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BookService } from '../book.service';
 import { Book } from '../book.model';
 import {getAuth} from "firebase/auth";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-huishoudboekes-list',
   templateUrl: './huishoudboekes-list.component.html',
   styleUrls: ['./huishoudboekes-list.component.css']
 })
-export class HuishoudboekesListComponent {
-  books: Observable<Book[]>;
-  archivedBooks: Observable<Book[]>;
+export class HuishoudboekesListComponent implements OnInit {
+  books: Book[] | undefined;
+  isArchived: boolean = false;
 
-  constructor(public bookService: BookService) {
-    this.books = bookService.getBooks();
-    this.archivedBooks = bookService.getArchivedBooks();
+  constructor(private bookService: BookService, private route: ActivatedRoute) {  }
+
+  ngOnInit() {
+    this.route.data.subscribe(data => this.isArchived = data["isArchived"]);
+
+    if (this.isArchived) this.bookService.getArchivedBooks().subscribe(books => this.books = books);
+    else this.bookService.getBooks().subscribe(books => this.books = books);
   }
 
-  archiveBook(book: Book) {
-    this.bookService.archiveBook(book);
+  async archiveBook(book: Book) {
+    await this.bookService.archiveBook(book);
   }
 
-  dearchiveBook(book: Book) {
-    this.bookService.dearchiveBook(book);
+  async dearchiveBook(book: Book) {
+    await this.bookService.dearchiveBook(book);
   }
 
   userIsAuthor(bookUserEmail: string) {

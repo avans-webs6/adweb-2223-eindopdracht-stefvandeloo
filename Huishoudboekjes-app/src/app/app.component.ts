@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { getAuth, signOut } from "firebase/auth";
 import {initializeApp} from "firebase/app";
 import {environment} from "../environments/environment";
-import firebase from "firebase/compat";
 import {Router} from "@angular/router";
 
 @Component({

@@ -15,8 +15,9 @@ import {
 const routes: Routes = [
   { path: '', redirectTo: 'books', pathMatch: 'full' },
   { path: 'login', component: AuthenticationLoginUserComponent },
-  { path: 'register', component: AuthenticationRegisterUserComponent },
-  { path: 'books', component: HuishoudboekesListComponent, canActivate: [loginGuard] },
+  { path: 'register', component: AuthenticationRegisterUserComponent},
+  { path: 'books', component: HuishoudboekesListComponent, data: { isArchived: false }, canActivate: [loginGuard] },
+  { path: 'books/archived', component: HuishoudboekesListComponent, data: { isArchived: true }, canActivate: [loginGuard] },
   { path: 'book/:id', component: HuishoudboekjesDetailComponent, canActivate: [loginGuard] },
   { path: 'book/:id/categories', component: HuishoudboekjesDetailCategoriesComponent, canActivate: [loginGuard] },
   { path: 'book/:id/statistics', component: HuishoudboekjesDetailStatisticsComponent, canActivate: [loginGuard] },

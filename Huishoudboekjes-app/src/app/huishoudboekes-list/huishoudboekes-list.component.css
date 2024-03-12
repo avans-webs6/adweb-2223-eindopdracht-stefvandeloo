@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    background-color: #f2f2f2;
+    padding: 20px;
 }
 
 .books div {
@@ -31,13 +33,28 @@ a:hover {
     word-wrap: break-word;
 }
 
-.buttons {
+.buttons-container,
+.authorized-buttons {
     display: flex;
-    height: fit-content;
-    width: fit-content;
-    margin-left: 15px;
 }
 
-.buttons button {
-    margin-left: 5px;
+.buttons-container button,
+.authorized-buttons button {
+    height: 3em;
+}
+
+#archive-button {
+    background-color: #ff0000;
+}
+
+#archive-button:hover {
+    background-color: #ff4d4d;
+}
+
+#dearchive-button {
+    background-color: #5ebd5e;
+}
+
+#dearchive-button:hover {
+    background-color: #6edc6e;
 }

@@ -2,11 +2,16 @@
   <div class="navbar-content">
     <a routerLink="/"><img src="assets/OpenAI-budgeting-tool.jpeg" alt="OpenAI-budgeting-tool-logo" /></a>
     <ul class="navbar-links">
-      <li><a routerLink="/books">Huishoudboekjes</a></li>
+        <li><a routerLink="/books">Huishoudboekjes</a></li>
+        <li><a routerLink="/books/archived">Archived huishoudboekjes</a></li>
     </ul>
   </div>
   <div class="navbar-actions">
-    <button *ngIf="user; else authLinks" (click)="logout()">Logout</button>
+      <div class="auth-logged-in-container" *ngIf="user; else authLinks">
+          <p *ngIf="user.email">{{user.email}}</p>
+          <button  (click)="logout()">Logout</button>
+      </div>
+
     <ng-template #authLinks>
       <a routerLink="/login">Login</a>
       <a routerLink="/register">Register</a>

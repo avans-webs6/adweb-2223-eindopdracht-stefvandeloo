@@ -8,6 +8,21 @@ body {
   padding: 0;
 }
 
+button {
+  color: #fff;
+  background-color: #000080;
+  border: none;
+  padding: 8px 16px;
+  margin-right: 10px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3789d9;
+}
+
 .form-error-message {
   color: red;
   font-size: 12px;

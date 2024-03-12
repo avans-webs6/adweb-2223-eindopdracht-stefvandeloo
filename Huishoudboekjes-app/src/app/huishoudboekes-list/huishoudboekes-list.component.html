@@ -2,14 +2,15 @@
 
 <div class="books">
     <div>
-        <h2>Huishoudboekjes</h2>
+        <h1><label *ngIf="isArchived">Archived </label>Huishoudboekjes</h1>
         <ul>
-            <p *ngIf="(books | async)?.length === 0">No huishoudboekjes found!</p>
-            <li *ngFor="let book of books | async">
+            <p *ngIf="!books || books.length === 0">No huishoudboekjes found!</p>
+            <li *ngFor="let book of books">
                 <div class="book-information">
-                    <label for="title">Title: </label>
-                    <a id="title" routerLink="../book/{{book.id}}" routerLinkActive="active">{{book.title}}</a>
-
+                    <p id="title">
+                        <label for="title">Title: </label>
+                        {{book.title}}
+                    </p>
                     <p id="description">
                         <label for="description">Description: </label>
                         {{book.description}}
@@ -20,34 +21,19 @@
                     </p>
                 </div>
 
-                <div class="buttons" *ngIf="userIsAuthor(book.userEmail)">
-                    <app-huishoudboekjes-edit [bookId]="book.id"></app-huishoudboekjes-edit>
-                    <button (click)="archiveBook(book)">Archive</button>
-                </div>
-            </li>
-        </ul>
-    </div>
 
-    <div>
-        <h3>Archived huishoudboekjes</h3>
-        <ul>
-            <p *ngIf="(archivedBooks | async)?.length === 0">No archived huishoudboekjes found!</p>
-            <li *ngFor="let archivedBook of archivedBooks | async">
-                <div class="book-information">
-                    <p id="archived-title">
-                        <label for="archived-title">Title: </label>
-                        {{archivedBook.title}}
-                    </p>
+                <button id="dearchive-button" *ngIf="isArchived else activeBooks" (click)="dearchiveBook(book)">Dearchive</button>
 
-                    <p id="archived-description">
-                        <label for="archived-description">Description: </label>
-                        {{archivedBook.description}}
-                    </p>
-                </div>
+                <ng-template #activeBooks>
+                    <div class="buttons-container">
+                        <button routerLink="../book/{{book.id}}" routerLinkActive="active">Open</button>
 
-                <div class="buttons">
-                    <button (click)="dearchiveBook(archivedBook)">Dearchive</button>
-                </div>
+                        <div class="authorized-buttons" *ngIf="userIsAuthor(book.userEmail)">
+                            <app-huishoudboekjes-edit [bookId]="book.id"></app-huishoudboekjes-edit>
+                            <button id="archive-button" (click)="archiveBook(book)">Archive</button>
+                        </div>
+                    </div>
+                </ng-template>
             </li>
         </ul>
     </div>

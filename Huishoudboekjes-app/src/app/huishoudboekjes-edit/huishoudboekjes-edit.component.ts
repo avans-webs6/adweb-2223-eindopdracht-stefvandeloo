@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import { Book } from '../book.model';
 import { BookService } from '../book.service';
 import {getAuth} from "firebase/auth";
@@ -9,7 +9,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   templateUrl: './huishoudboekjes-edit.component.html',
   styleUrls: ['./huishoudboekjes-edit.component.css']
 })
-export class HuishoudboekjesEditComponent {
+export class HuishoudboekjesEditComponent implements AfterViewInit {
   @Input()
   bookId: string = "";
 

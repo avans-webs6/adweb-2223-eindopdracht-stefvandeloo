@@ -76,5 +76,14 @@
 .navbar-actions a:hover,
 .navbar-actions button:hover {
   background-color: #4da6ff;
-  cursor: pointer;
+}
+
+.auth-logged-in-container {
+  display: flex;
+  align-items: center;
+}
+
+.auth-logged-in-container p {
+    color: white;
+    margin-right: 10px;
 }
