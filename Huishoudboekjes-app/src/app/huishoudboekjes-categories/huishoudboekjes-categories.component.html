@@ -1,0 +1,8 @@
+<app-huishoudboekjes-categories-create></app-huishoudboekjes-categories-create>
+
+<h3>Transaction categories</h3>
+
+<div class="categories-container">
+  <app-huishoudboekjes-categories-list [categories]="categories" (categoryEventEmitter)="setCategory($event)"></app-huishoudboekjes-categories-list>
+  <app-huishoudboekjes-categories-detail *ngIf="selectedCategory" [category]="selectedCategory"></app-huishoudboekjes-categories-detail>
+</div>

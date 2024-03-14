@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Category} from "../category.model";
 import {CategoryService} from "../category.service";
 import {ActivatedRoute} from "@angular/router";
@@ -6,11 +6,11 @@ import {TransactionService} from "../transaction.service";
 import {Transaction} from "../transaction.model";
 
 @Component({
-  selector: 'app-huishoudboekjes-detail-categories-detail',
-  templateUrl: './huishoudboekjes-detail-categories-detail.component.html',
-  styleUrls: ['./huishoudboekjes-detail-categories-detail.component.css']
+  selector: 'app-huishoudboekjes-categories-detail',
+  templateUrl: './huishoudboekjes-categories-detail.component.html',
+  styleUrls: ['./huishoudboekjes-categories-detail.component.css']
 })
-export class HuishoudboekjesDetailCategoriesDetailComponent implements OnChanges {
+export class HuishoudboekjesCategoriesDetailComponent implements OnChanges {
   @Input()
   category: Category = new Category();
 

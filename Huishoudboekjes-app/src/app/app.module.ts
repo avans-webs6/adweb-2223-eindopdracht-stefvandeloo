@@ -13,38 +13,38 @@ import { HuishoudboekjesDetailComponent } from './huishoudboekjes-detail/huishou
 import { HuishoudboekjesDetailTransactionsComponent } from './huishoudboekjes-detail-transactions/huishoudboekjes-detail-transactions.component';
 import { HuishoudboekjesTransactionsCreateComponent } from './huishoudboekjes-transactions-create/huishoudboekjes-transactions-create.component';
 import { HuishoudboekjesTransactionsEditComponent } from './huishoudboekjes-transactions-edit/huishoudboekjes-transactions-edit.component';
-import { HuishoudboekjesDetailCategoriesComponent } from './huishoudboekjes-detail-categories/huishoudboekjes-detail-categories.component';
+import { HuishoudboekjesCategoriesComponent } from './huishoudboekjes-categories/huishoudboekjes-categories.component';
 import { CategoryService } from './category.service';
-import { HuishoudboekjesDetailCategoriesCreateComponent } from './huishoudboekjes-detail-categories-create/huishoudboekjes-detail-categories-create.component';
-import { HuishoudboekjesDetailCategoriesEditComponent } from './huishoudboekjes-detail-categories-edit/huishoudboekjes-detail-categories-edit.component';
+import { HuishoudboekjesCategoriesCreateComponent } from './huishoudboekjes-categories-create/huishoudboekjes-categories-create.component';
+import { HuishoudboekjesCategoriesEditComponent } from './huishoudboekjes-categories-edit/huishoudboekjes-categories-edit.component';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
-import {environment} from "../environments/environment";
 import { AuthenticationRegisterUserComponent } from './authentication-register-user/authentication-register-user.component';
 import { AuthenticationLoginUserComponent } from './authentication-login-user/authentication-login-user.component';
 import {PermissionService} from "./permission.service";
 import { HuishoudboekjesDetailStatisticsComponent } from './huishoudboekjes-detail-statistics/huishoudboekjes-detail-statistics.component';
-import { HuishoudboekjesDetailCategoriesListComponent } from './huishoudboekjes-detail-categories-list/huishoudboekjes-detail-categories-list.component';
-import { HuishoudboekjesDetailCategoriesDetailComponent } from './huishoudboekjes-detail-categories-detail/huishoudboekjes-detail-categories-detail.component';
+import { HuishoudboekjesCategoriesListComponent } from './huishoudboekjes-categories-list/huishoudboekjes-categories-list.component';
+import { HuishoudboekjesCategoriesDetailComponent } from './huishoudboekjes-categories-detail/huishoudboekjes-categories-detail.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HuishoudboekesListComponent,
-    HuishoudboekjesCreateComponent,
-    HuishoudboekjesEditComponent,
-    HuishoudboekjesDetailComponent,
-    HuishoudboekjesDetailTransactionsComponent,
-    HuishoudboekjesTransactionsCreateComponent,
-    HuishoudboekjesTransactionsEditComponent,
-    HuishoudboekjesDetailCategoriesComponent,
-    HuishoudboekjesDetailCategoriesCreateComponent,
-    HuishoudboekjesDetailCategoriesEditComponent,
-    AuthenticationRegisterUserComponent,
-    AuthenticationLoginUserComponent,
-    HuishoudboekjesDetailStatisticsComponent,
-    HuishoudboekjesDetailCategoriesListComponent,
-    HuishoudboekjesDetailCategoriesDetailComponent
-  ],
+    declarations: [
+        AppComponent,
+        HuishoudboekesListComponent,
+        HuishoudboekjesCreateComponent,
+        HuishoudboekjesEditComponent,
+        HuishoudboekjesDetailComponent,
+        HuishoudboekjesDetailTransactionsComponent,
+        HuishoudboekjesTransactionsCreateComponent,
+        HuishoudboekjesTransactionsEditComponent,
+        HuishoudboekjesCategoriesComponent,
+        HuishoudboekjesCategoriesCreateComponent,
+        HuishoudboekjesCategoriesEditComponent,
+        AuthenticationRegisterUserComponent,
+        AuthenticationLoginUserComponent,
+        HuishoudboekjesDetailStatisticsComponent,
+        HuishoudboekjesCategoriesListComponent,
+        HuishoudboekjesCategoriesDetailComponent,
+        HuishoudboekjesCategoriesCreateComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,

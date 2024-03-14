@@ -9,5 +9,5 @@
   <p *ngIf="category.endDate">{{category.endDate | date:'dd/MMMM/yyyy'}}</p>
 </div>
 
-<app-huishoudboekjes-detail-categories-edit [category]="category"></app-huishoudboekjes-detail-categories-edit>
+<app-huishoudboekjes-categories-edit [category]="category"></app-huishoudboekjes-categories-edit>
 <button (click)="deleteCategory(category.id)">Delete</button>

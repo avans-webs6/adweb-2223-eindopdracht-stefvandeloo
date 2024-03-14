@@ -4,11 +4,11 @@ import {CategoryService} from "../category.service";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-huishoudboekjes-detail-categories-list',
-  templateUrl: './huishoudboekjes-detail-categories-list.component.html',
-  styleUrls: ['./huishoudboekjes-detail-categories-list.component.css']
+  selector: 'app-huishoudboekjes-categories-list',
+  templateUrl: './huishoudboekjes-categories-list.component.html',
+  styleUrls: ['./huishoudboekjes-categories-list.component.css']
 })
-export class HuishoudboekjesDetailCategoriesListComponent {
+export class HuishoudboekjesCategoriesListComponent {
   @Input()
   categories: Category[] = [];
 

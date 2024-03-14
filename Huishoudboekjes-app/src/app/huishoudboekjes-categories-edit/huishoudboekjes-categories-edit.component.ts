@@ -3,11 +3,11 @@ import { Category } from '../category.model';
 import { CategoryService } from '../category.service';
 
 @Component({
-  selector: 'app-huishoudboekjes-detail-categories-edit',
-  templateUrl: './huishoudboekjes-detail-categories-edit.component.html',
-  styleUrls: ['./huishoudboekjes-detail-categories-edit.component.css']
+  selector: 'app-huishoudboekjes-categories-edit',
+  templateUrl: './huishoudboekjes-categories-edit.component.html',
+  styleUrls: ['./huishoudboekjes-categories-edit.component.css']
 })
-export class HuishoudboekjesDetailCategoriesEditComponent {
+export class HuishoudboekjesCategoriesEditComponent {
 
   @Input()
   category: Category = new Category();
