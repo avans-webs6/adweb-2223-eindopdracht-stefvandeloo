@@ -1,16 +1,23 @@
-import { Component } from '@angular/core';
-import { Category } from '../category.model';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Category} from '../category.model';
+import {CategoryService} from "../category.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-huishoudboekjes-categories',
-  templateUrl: './huishoudboekjes-categories.component.html',
-  styleUrls: ['./huishoudboekjes-categories.component.css']
+    selector: 'app-huishoudboekjes-categories',
+    templateUrl: './huishoudboekjes-categories.component.html',
+    styleUrls: ['./huishoudboekjes-categories.component.css']
 })
 export class HuishoudboekjesCategoriesComponent {
-  categories: Category[] = [];
-  selectedCategory: Category | undefined;
+    categories: Category[] = [];
 
-  setCategory(category: Category) {
-    this.selectedCategory = category;
-  }
+    constructor(private categoryService: CategoryService, private route: ActivatedRoute) {
+        this.categoryService.getCategories().subscribe((categories) => {
+            this.categories = categories;
+        });
+    }
+
+    deleteCategory(categoryId: string) {
+        this.categoryService.deleteCategory(categoryId);
+    }
 }

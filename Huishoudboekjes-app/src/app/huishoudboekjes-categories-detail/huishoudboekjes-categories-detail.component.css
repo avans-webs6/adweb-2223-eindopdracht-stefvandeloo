@@ -1,0 +1,14 @@
+.progress-container {
+    display: flex;
+    position: relative;
+}
+
+#category-progress {
+    width: 100%;
+}
+
+#current-value {
+    position: absolute;
+    top: -20px; /* Adjust this value as needed */
+    transform: translateX(-50%);
+}

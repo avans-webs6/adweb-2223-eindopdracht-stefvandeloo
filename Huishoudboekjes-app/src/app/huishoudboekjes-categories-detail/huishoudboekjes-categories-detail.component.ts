@@ -45,8 +45,4 @@ export class HuishoudboekjesCategoriesDetailComponent implements OnChanges {
       }
     });
   }
-
-  deleteCategory(categoryId: string) {
-    this.categoryService.deleteCategory(categoryId);
-  }
 }

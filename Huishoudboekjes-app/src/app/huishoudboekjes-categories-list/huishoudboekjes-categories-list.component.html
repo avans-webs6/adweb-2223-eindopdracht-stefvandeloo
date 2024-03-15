@@ -1,7 +1,0 @@
-<ul>
-  <p *ngIf="categories.length === 0">No categories found!</p>
-
-  <li *ngFor="let category of categories">
-    <button (click)="selectCategory(category)">{{category.name}}</button>
-  </li>
-</ul>
