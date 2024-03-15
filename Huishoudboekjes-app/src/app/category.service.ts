@@ -71,7 +71,7 @@ export class CategoryService {
           id: category.id,
           name: category.name,
           budget: category.budget,
-          endDate: deleteField()
+          endDate: ""
         }
       }
     },

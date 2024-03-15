@@ -11,38 +11,63 @@ import {Transaction} from "../transaction.model";
   styleUrls: ['./huishoudboekjes-categories-detail.component.css']
 })
 export class HuishoudboekjesCategoriesDetailComponent implements OnChanges {
-  @Input()
-  category: Category = new Category();
+    @Input()
+    category: Category = new Category();
 
-  @Input()
-  categoryProgress: number = 0.00;
+    balance: number = 0.00;
+    progress: number = 0;
+    transactions: Transaction[] = [];
 
-  transactions: Transaction[] = [];
-
-  constructor(private categoryService: CategoryService,
-              private transactionsService: TransactionService,
-              private route: ActivatedRoute) { }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['category']) {
-      //TODO: Make sure only transactions of the current category are loaded
-      this.transactionsService.getTransactions().subscribe((transactions) => {
-        this.transactions = transactions;
-        this.categoryProgress = 0.00;
-        this.calculateBudgetProgress();
-      });
+    constructor(private categoryService: CategoryService,
+                private transactionsService: TransactionService,
+                private route: ActivatedRoute) {
     }
-  }
 
-  calculateBudgetProgress() {
-    this.transactions.forEach((transaction) => {
-      if (transaction.categoryId) {
-        if (transaction.categoryId === this.category.id) {
-          this.categoryProgress += Number(transaction.price);
-          console.log(transaction)
-          console.log(this.categoryProgress)
+    //TODO: Instead of ngOnChanges use observers
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['category']) {
+            this.transactionsService.getTransactions().subscribe((transactions) => {
+                this.transactions = transactions;
+                this.calculateBudget();
+                this.progress = this.calculateProgress();
+                console.log(this.progress)
+            });
         }
-      }
-    });
-  }
+    }
+
+    calculateBudget() {
+        this.balance = 0.00;
+        this.transactions.forEach((transaction) => {
+            if (transaction.categoryId) {
+                if (transaction.categoryId === this.category.id) {
+                    this.balance += Number(transaction.price);
+                }
+            }
+        });
+    }
+
+    calculateProgress() {
+        return (this.balance / this.category.budget) * 100;
+    }
+
+    isOverBudget() {
+        return this.balance >= this.category.budget;
+    }
+
+    isOverDue() {
+        return new Date(this.category.endDate).getDate() < new Date().getDate();
+    }
+
+    getProgressBarColor() {
+        if (this.progress >= 70 && this.progress < 95) {
+            return 'orange';
+        } else if (this.progress >= 95) {
+            return 'red';
+        }
+        return 'green';
+    }
+
+    deleteCategory(categoryId: string) {
+        this.categoryService.deleteCategory(categoryId);
+    }
 }

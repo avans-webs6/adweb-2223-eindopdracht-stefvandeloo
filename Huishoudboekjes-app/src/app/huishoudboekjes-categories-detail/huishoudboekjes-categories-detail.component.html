@@ -1,10 +1,24 @@
 <div *ngIf="category">
-  <p>{{category.name}}</p>
-
-  <div class="progress-container">
-    <progress id="category-progress" [value]="categoryProgress" max="100"></progress>
-    <span id="current-value" [style.left.%]="categoryProgress">{{categoryProgress}}</span>
-    <p>{{category.budget}}</p>
-  </div>
-  <p *ngIf="category.endDate">{{category.endDate | date:'dd/MMMM/yyyy'}}</p>
+    <div class="categories-container">
+        <div class="category-card">
+            <div class="category-header">
+                <h5 [ngStyle]="{'visibility': isOverBudget() ? 'visible' : 'hidden'}" class="over-budget">OVER BUDGET</h5>
+                <h2 class="category-name">Name: {{category.name}}</h2>
+                <div class="category-dates" [ngStyle]="{'visibility': category.endDate ? 'visible' : 'hidden'}">
+                    <p class="end-date" [ngStyle]="{'color': isOverDue() ? 'red' : 'black'}">End Date: {{category.endDate | date:'dd/MM/yyyy'}}</p>
+                </div>
+            </div>
+            <div class="category-budget">
+                <p class="budget-amount">Budget: € {{category.budget}}</p>
+                <p class="current-balance">Balance: € {{balance}}</p>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" [ngStyle]="{'width': calculateProgress() + '%', 'background-color': getProgressBarColor()}"></div>
+            </div>
+            <div class="category-actions">
+                <app-huishoudboekjes-categories-edit [category]="category"></app-huishoudboekjes-categories-edit>
+                <button (click)="deleteCategory(category.id)">Delete</button>
+            </div>
+        </div>
+    </div>
 </div>

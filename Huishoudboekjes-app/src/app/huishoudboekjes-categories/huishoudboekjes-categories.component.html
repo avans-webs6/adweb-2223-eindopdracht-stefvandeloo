@@ -1,16 +1,10 @@
 <app-huishoudboekjes-categories-create></app-huishoudboekjes-categories-create>
 
-<h3>Transaction categories</h3>
+<h1>Categories</h1>
+<h4>Today is: {{getCurrentDate() | date:'dd/MM/yyyy'}}</h4>
 
 <div class="categories-container">
-<!--  <app-huishoudboekjes-categories-list [categories]="categories" (categoryEventEmitter)="setCategory($event)"></app-huishoudboekjes-categories-list>-->
-<!--  <app-huishoudboekjes-categories-detail *ngIf="selectedCategory" [category]="selectedCategory"></app-huishoudboekjes-categories-detail>-->
-
-    <ul>
-        <li *ngFor="let category of categories">
-            <app-huishoudboekjes-categories-detail [category]="category"></app-huishoudboekjes-categories-detail>
-            <app-huishoudboekjes-categories-edit [category]="category"></app-huishoudboekjes-categories-edit>
-            <button (click)="deleteCategory(category.id)">Delete</button>
-        </li>
-    </ul>
+    <div *ngFor="let category of categories">
+        <app-huishoudboekjes-categories-detail [category]="category"></app-huishoudboekjes-categories-detail>
+    </div>
 </div>

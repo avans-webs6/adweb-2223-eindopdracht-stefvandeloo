@@ -17,7 +17,7 @@ export class HuishoudboekjesCategoriesComponent {
         });
     }
 
-    deleteCategory(categoryId: string) {
-        this.categoryService.deleteCategory(categoryId);
+    getCurrentDate() {
+        return new Date();
     }
 }
