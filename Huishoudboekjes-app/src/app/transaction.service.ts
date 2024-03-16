@@ -1,10 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import {getApp, initializeApp} from "firebase/app";
-import { Firestore , getFirestore, onSnapshot, collection, updateDoc, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
+import {
+    Firestore,
+    getFirestore,
+    onSnapshot,
+    collection,
+    updateDoc,
+    doc,
+    getDoc,
+    setDoc,
+    deleteDoc,
+    query, where
+} from "firebase/firestore";
 import { environment } from 'src/environments/environment';
 import { Transaction } from './transaction.model';
 import { TransactionType } from './transaction-type.enum';
+import firebase from "firebase/compat";
+import CollectionReference = firebase.firestore.CollectionReference;
 
 @Injectable({
   providedIn: 'root'
@@ -33,20 +46,39 @@ export class TransactionService {
     });
   }
 
-  createTransactionSnapshot(bookId: string, Subscriber: Subscriber<Transaction[]>, transactionType: TransactionType) {
-    onSnapshot(collection(this.firestore, this.transactionsCollectionName), (snapshot) => {
+  getTransactionsOfBook(bookId: string, transactionType?: TransactionType) {
+      return new Observable((subscriber: Subscriber<Transaction[]>) => {
+            this.createTransactionSnapshot(bookId, subscriber, transactionType);
+      });
+  }
+
+  createTransactionSnapshot(bookId: string, Subscriber: Subscriber<Transaction[]>, transactionType?: TransactionType) {
+    const transactionQuery = this.createQuery(bookId, transactionType);
+
+    onSnapshot(transactionQuery, (snapshot) => {
       let transactions: Transaction[] = [];
       snapshot.forEach((doc) => {
         let transaction = doc.data() as Transaction;
-        if (!transaction.bookId || !transaction.bookId.match(bookId)) return;
-
-        if (transaction.type === transactionType) {
           transaction['id'] = doc.id;
           transactions.push(transaction);
-        }
       });
       Subscriber.next(transactions);
     });
+  }
+
+  createQuery(bookId: string, transactionType: TransactionType | undefined) {
+      let q = query(
+          collection(this.firestore, this.transactionsCollectionName),
+          where("bookId", "==", bookId)
+        );
+
+      if (transactionType) {
+          q = query(
+              q,
+              where("type", "==", transactionType)
+          );
+      }
+      return q;
   }
 
   getTransactions() {

@@ -4,13 +4,14 @@ import {CategoryService} from "../category.service";
 import {ActivatedRoute} from "@angular/router";
 import {TransactionService} from "../transaction.service";
 import {Transaction} from "../transaction.model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-huishoudboekjes-categories-detail',
   templateUrl: './huishoudboekjes-categories-detail.component.html',
   styleUrls: ['./huishoudboekjes-categories-detail.component.css']
 })
-export class HuishoudboekjesCategoriesDetailComponent implements OnChanges {
+export class HuishoudboekjesCategoriesDetailComponent {
     @Input()
     category: Category = new Category();
 
@@ -21,18 +22,11 @@ export class HuishoudboekjesCategoriesDetailComponent implements OnChanges {
     constructor(private categoryService: CategoryService,
                 private transactionsService: TransactionService,
                 private route: ActivatedRoute) {
-    }
-
-    //TODO: Instead of ngOnChanges use observers
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['category']) {
-            this.transactionsService.getTransactions().subscribe((transactions) => {
-                this.transactions = transactions;
-                this.calculateBudget();
-                this.progress = this.calculateProgress();
-                console.log(this.progress)
-            });
-        }
+        this.transactionsService.getTransactions().subscribe((transactions) => {
+            this.transactions = transactions;
+            this.calculateBudget();
+            this.calculateProgress();
+        });
     }
 
     calculateBudget() {
@@ -47,7 +41,7 @@ export class HuishoudboekjesCategoriesDetailComponent implements OnChanges {
     }
 
     calculateProgress() {
-        return (this.balance / this.category.budget) * 100;
+        this.progress = (this.balance / this.category.budget) * 100;
     }
 
     isOverBudget() {

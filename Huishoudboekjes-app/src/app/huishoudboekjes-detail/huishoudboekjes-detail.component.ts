@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Transaction } from '../transaction.model';
 import { TransactionService } from '../transaction.service';
 import { TransactionType } from '../transaction-type.enum';
+import {Observable, Subscriber} from "rxjs";
 
 @Component({
   selector: 'app-huishoudboekjes-detail',
@@ -16,6 +17,7 @@ export class HuishoudboekjesDetailComponent {
   book: Book = new Book("");
   income: Transaction[] = [];
   expenses: Transaction[] = [];
+  combinedTransactions: Transaction[] = [];
 
   date: Date = new Date();
 
@@ -32,8 +34,7 @@ export class HuishoudboekjesDetailComponent {
       this.book = book;
     });
 
-    this.receiveIncomeOfBookByDate(bookId);
-    this.receiveExpensesOfBookByDate(bookId);
+    this.getTransactionsByDate(bookId);
   }
 
   ngAfterViewInit() {
@@ -51,7 +52,7 @@ export class HuishoudboekjesDetailComponent {
     }
   }
 
-  updateIncome(bookId: string) {
+  getTransactionsByDate(bookId: string) {
     this.receiveIncomeOfBookByDate(bookId);
     this.receiveExpensesOfBookByDate(bookId);
   }
@@ -81,15 +82,5 @@ export class HuishoudboekjesDetailComponent {
     return transactions.sort((first, second) => {
       return <any>new Date(first.date) - <any>new Date(second.date);
     });
-  }
-
-  calculateBalance() {
-    let income = this.income.reduce((a, b) => a + Number(b.price), 0);
-    let expenses = this.expenses.reduce((a, b) => a + Number(b.price), 0);
-    return (income - expenses).toFixed(2);
-  }
-
-  combineIncomeAndExpenses() {
-    return this.income.concat(this.expenses);
   }
 }

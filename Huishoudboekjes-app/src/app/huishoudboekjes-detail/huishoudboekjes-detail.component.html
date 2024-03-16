@@ -13,7 +13,7 @@
         <div class="tools">
             <div class="datepicker">
                 <label for="date">Datum: </label>
-                <input id="date" name="date" type="month" [(ngModel)]="date" (ngModelChange)="updateIncome(book.id)" />
+                <input id="date" name="date" type="month" [(ngModel)]="date" (ngModelChange)="getTransactionsByDate(book.id)" />
             </div>
 
             <div class="create-transaction-buttons">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="statistics">
-            <app-huishoudboekjes-detail-statistics [balance]="calculateBalance()" [transactions]="combineIncomeAndExpenses()"></app-huishoudboekjes-detail-statistics>
+            <app-huishoudboekjes-detail-statistics></app-huishoudboekjes-detail-statistics>
         </div>
     </div>
 
