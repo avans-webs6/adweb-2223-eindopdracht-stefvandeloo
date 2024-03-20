@@ -45,7 +45,7 @@ export class HuishoudboekjesCategoriesDetailComponent {
     }
 
     isOverBudget() {
-        return this.balance >= this.category.budget;
+        return this.balance > this.category.budget;
     }
 
     isOverDue() {
