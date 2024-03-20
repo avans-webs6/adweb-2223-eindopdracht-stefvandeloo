@@ -9,8 +9,8 @@
                 </div>
             </div>
             <div class="category-budget">
-                <p class="budget-amount">Budget: € {{category.budget}}</p>
-                <p class="current-balance">Balance: € {{balance}}</p>
+                <p class="budget-amount">Budget: € {{category.budget | number: '1.2-2'}}</p>
+                <p class="current-balance">Balance: € {{balance | number: '1.2-2'}}</p>
             </div>
             <div class="progress-container">
                 <div class="progress-bar" [ngStyle]="{'width': progress + '%', 'background-color': getProgressBarColor()}"></div>

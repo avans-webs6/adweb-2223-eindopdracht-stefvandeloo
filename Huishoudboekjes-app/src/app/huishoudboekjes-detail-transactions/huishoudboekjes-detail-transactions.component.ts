@@ -37,9 +37,4 @@ export class HuishoudboekjesDetailTransactionsComponent {
   async deleteTransaction(transactionId: string) {
     await this.transactionService.deleteTransaction(transactionId);
   }
-
-  formatPrice(price: string) {
-    if (price.endsWith(".00")) return price.replace(".00", ",-");
-    return price;
-  }
 }

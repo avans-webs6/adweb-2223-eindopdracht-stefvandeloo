@@ -52,7 +52,7 @@ export class HuishoudboekjesTransactionsEditComponent {
 
   async onSave() {
     if (this.validatePrice()) return;
-    this.transaction.price = this.editTransactionForm.value.price.toFixed(2);
+    this.transaction.price = this.editTransactionForm.value.price;
     this.transaction.description = this.editTransactionForm.value.description;
     this.transaction.categoryId = this.editTransactionForm.value.category;
     await this.transactionService.editTransaction(this.transaction);
