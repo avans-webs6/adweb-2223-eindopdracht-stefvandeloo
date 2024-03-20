@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { Book } from '../book.model';
-import { BookService } from '../book.service';
-import { ActivatedRoute } from '@angular/router';
-import { Transaction } from '../transaction.model';
-import { TransactionService } from '../transaction.service';
-import { TransactionType } from '../transaction-type.enum';
-import {Observable, Subscriber} from "rxjs";
+import {Component} from '@angular/core';
+import {Book} from '../book.model';
+import {BookService} from '../book.service';
+import {ActivatedRoute} from '@angular/router';
+import {Transaction} from '../transaction.model';
+import {TransactionService} from '../transaction.service';
+import {TransactionType} from '../transaction-type.enum';
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-huishoudboekjes-detail',
@@ -17,10 +17,10 @@ export class HuishoudboekjesDetailComponent {
   book: Book = new Book("");
   income: Transaction[] = [];
   expenses: Transaction[] = [];
-  combinedTransactions: Transaction[] = [];
+
+  transactions$: BehaviorSubject<Transaction[]> = new BehaviorSubject<Transaction[]>([]);
 
   date: Date = new Date();
-
   transactionTypeEnum = TransactionType;
 
   createIncomeDialog: any;
@@ -49,26 +49,26 @@ export class HuishoudboekjesDetailComponent {
         break;
       case this.transactionTypeEnum.EXPENSES:
         this.createExpensesDialog.showModal();
+        break;
     }
   }
 
   getTransactionsByDate(bookId: string) {
-    this.receiveIncomeOfBookByDate(bookId);
-    this.receiveExpensesOfBookByDate(bookId);
-  }
-
-  receiveIncomeOfBookByDate(bookId: string) {
-    this.transactionService.getIncomeOfBook(bookId).subscribe((income) => {
-      this.income = this.filterTransactionsByDate(income);
-      this.sortData(this.income);
+    this.transactionService.getTransactionsOfBook(bookId).subscribe((transactions) => {
+        transactions = this.filterAndSortTransactions(transactions);
+        this.income = this.filterTransactionsByType(transactions, TransactionType.INCOME);
+        this.expenses = this.filterTransactionsByType(transactions, TransactionType.EXPENSES);
+        this.transactions$.next(transactions);
     });
   }
 
-  receiveExpensesOfBookByDate(bookId: string) {
-    this.transactionService.getExpensesOfBook(bookId).subscribe((expenses) => {
-      this.expenses = this.filterTransactionsByDate(expenses);
-      this.sortData(this.expenses);
-    });
+  filterTransactionsByType(transactions: Transaction[], transactionType: TransactionType) {
+    return transactions.filter(i => i.type === transactionType);
+  }
+
+  filterAndSortTransactions(transactions: Transaction[]) {
+    transactions = this.filterTransactionsByDate(transactions);
+    return this.sortData(transactions);
   }
 
   filterTransactionsByDate(transactions: Transaction[]) {
