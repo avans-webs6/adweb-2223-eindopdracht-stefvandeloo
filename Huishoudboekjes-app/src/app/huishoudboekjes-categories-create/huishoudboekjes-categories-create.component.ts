@@ -23,9 +23,9 @@ export class HuishoudboekjesCategoriesCreateComponent {
     this.createDialog.showModal();
   }
 
-  onSave() {
+  async onSave() {
     if (this.category.name && this.category.budget) {
-      this.categoryService.addCategory(this.category);
+      await this.categoryService.addCategory(this.category);
       this.createDialog.close();
     }
   }

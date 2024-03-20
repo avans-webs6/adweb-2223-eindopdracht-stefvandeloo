@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subscriber, from, map} from 'rxjs';
-import { initializeApp } from "firebase/app";
 import { Firestore , getFirestore, onSnapshot, collection, updateDoc, deleteDoc, doc, getDoc, setDoc, getDocs, query, where } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { environment } from 'src/environments/environment';
 import { Book } from './book.model';
 import { TransactionService } from './transaction.service';
-import firebase from "firebase/compat";
 import { getApp } from "firebase/app";
-
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +11,6 @@ import { getApp } from "firebase/app";
 export class BookService {
   firestore: Firestore;
   booksCollectionName = "books";
-  transactionsCollectionName = "transactions";
   archivedBooksCollectionName = "archivedBooks";
   constructor(private transactionService: TransactionService) {
     const app = getApp();

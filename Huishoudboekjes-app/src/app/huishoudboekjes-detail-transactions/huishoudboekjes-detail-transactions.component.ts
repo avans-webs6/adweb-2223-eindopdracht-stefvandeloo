@@ -34,8 +34,8 @@ export class HuishoudboekjesDetailTransactionsComponent {
     return category.name;
   }
 
-  deleteTransaction(transactionId: string) {
-    this.transactionService.deleteTransaction(transactionId);
+  async deleteTransaction(transactionId: string) {
+    await this.transactionService.deleteTransaction(transactionId);
   }
 
   formatPrice(price: string) {

@@ -42,7 +42,7 @@ export class HuishoudboekjesTransactionsCreateComponent {
     });
   }
 
-  onSave() {
+  async onSave() {
     if (this.validatePrice()) return;
     const transactionPrice = this.createTransactionForm.value.price.toFixed(2);
     this.transaction.createTransaction(this.transaction.id,
@@ -52,7 +52,7 @@ export class HuishoudboekjesTransactionsCreateComponent {
                                       this.transactionType,
                                       this.bookId,
                                       this.createTransactionForm.value.category);
-    this.transactionService.addTransaction(this.transaction);
+    await this.transactionService.addTransaction(this.transaction);
 
     this.transaction = new Transaction();
     this.createTransactionForm.reset();

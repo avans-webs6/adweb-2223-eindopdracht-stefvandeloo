@@ -61,7 +61,14 @@ export class HuishoudboekjesCategoriesDetailComponent {
         return 'green';
     }
 
-    deleteCategory(categoryId: string) {
-        this.categoryService.deleteCategory(categoryId);
+    async deleteCategory(categoryId: string) {
+        await this.categoryService.deleteCategory(categoryId);
+    }
+
+    formatPrice(price: number) {
+        console.log(typeof price);
+        const fixedPrice = price.toFixed(2);
+        if (fixedPrice.endsWith(".00")) return fixedPrice.replace(".00", ",-");
+        return fixedPrice;
     }
 }

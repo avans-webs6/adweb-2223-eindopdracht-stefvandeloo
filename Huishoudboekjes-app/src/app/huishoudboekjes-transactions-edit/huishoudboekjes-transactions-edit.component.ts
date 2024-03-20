@@ -50,12 +50,12 @@ export class HuishoudboekjesTransactionsEditComponent {
     this.editDialog.showModal();
   }
 
-  onSave() {
+  async onSave() {
     if (this.validatePrice()) return;
     this.transaction.price = this.editTransactionForm.value.price.toFixed(2);
     this.transaction.description = this.editTransactionForm.value.description;
     this.transaction.categoryId = this.editTransactionForm.value.category;
-    this.transactionService.editTransaction(this.transaction);
+    await this.transactionService.editTransaction(this.transaction);
     this.editDialog.close();
   }
 

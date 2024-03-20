@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {from, map, mergeMap, Observable, Subscriber} from 'rxjs';
-import {getApp, initializeApp} from "firebase/app";
+import {from, map, Observable, Subscriber} from 'rxjs';
+import { getApp } from "firebase/app";
 import {
     Firestore,
     getFirestore,
@@ -13,37 +13,19 @@ import {
     deleteDoc,
     query, where, getDocs
 } from "firebase/firestore";
-import { environment } from 'src/environments/environment';
 import { Transaction } from './transaction.model';
 import { TransactionType } from './transaction-type.enum';
-import firebase from "firebase/compat";
-import CollectionReference = firebase.firestore.CollectionReference;
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
   firestore: Firestore;
-  booksCollectionName = "books";
   transactionsCollectionName = "transactions";
-  archivedBooksCollectionName = "archivedBooks";
-  incomeCollectionName = "income";
 
   constructor() {
     const app = getApp();
     this.firestore = getFirestore(app);
-  }
-
-  getIncomeOfBook(bookId: string) {
-    return new Observable((Subscriber: Subscriber<Transaction[]>) => {
-      this.createTransactionSnapshot(bookId, Subscriber, TransactionType.INCOME);
-    });
-  }
-
-  getExpensesOfBook(bookId: string) {
-    return new Observable((Subscriber: Subscriber<Transaction[]>) => {
-      this.createTransactionSnapshot(bookId, Subscriber, TransactionType.EXPENSES);
-    });
   }
 
   getTransactionsOfBook(bookId: string, transactionType?: TransactionType) {
@@ -52,71 +34,55 @@ export class TransactionService {
       });
   }
 
-  createTransactionSnapshot(bookId: string, Subscriber: Subscriber<Transaction[]>, transactionType?: TransactionType) {
+    getTransactions() {
+        return new Observable((subscriber: Subscriber<Transaction[]>) => {
+            this.createTransactionSnapshot(undefined, subscriber);
+        });
+    }
+
+  createTransactionSnapshot(bookId: string | undefined, Subscriber: Subscriber<Transaction[]>, transactionType?: TransactionType) {
     const transactionQuery = this.createQuery(bookId, transactionType);
 
     onSnapshot(transactionQuery, (snapshot) => {
       let transactions: Transaction[] = [];
       snapshot.forEach((doc) => {
         let transaction = doc.data() as Transaction;
-          transaction['id'] = doc.id;
+          transaction.id = doc.id;
           transactions.push(transaction);
       });
       Subscriber.next(transactions);
     });
   }
 
-  createQuery(bookId: string, transactionType: TransactionType | undefined) {
-      let q = query(
-          collection(this.firestore, this.transactionsCollectionName),
-          where("bookId", "==", bookId)
-        );
-
-      if (transactionType) {
-          q = query(
-              q,
-              where("type", "==", transactionType)
-          );
-      }
+  createQuery(bookId: string | undefined, transactionType: TransactionType | undefined) {
+      let q = query(collection(this.firestore, this.transactionsCollectionName));
+      if (bookId) q = query(q, where("bookId", "==", bookId));
+      if (transactionType) q = query(q, where("type", "==", transactionType));
       return q;
   }
 
-  getTransactions() {
-    return new Observable((subscriber: Subscriber<Transaction[]>) => {
-      onSnapshot(collection(this.firestore, this.transactionsCollectionName), (snapshot) => {
-        let transactions: Transaction[] = [];
-        snapshot.forEach((doc) => {
-          let transaction = doc.data() as Transaction;
-          transaction['id'] = doc.id;
-          transactions.push(transaction);
-        });
-        subscriber.next(transactions);
-      });
-    });
-  }
-
   getTransaction(transactionId: string) {
-    return new Observable((subscriber: Subscriber<Transaction>) => {
-      getDoc(doc(this.firestore, this.transactionsCollectionName + '/' + transactionId)).then((doc) => {
-        let transaction = doc.data() as Transaction ?? {};
-        transaction['id'] = doc.id;
-        subscriber.next(transaction);
-      });
-    });
+    return from(getDoc(doc(this.firestore, this.transactionsCollectionName + '/' + transactionId))).pipe(
+        map(doc => {
+            let transaction = doc.data() as Transaction;
+            transaction.id = doc.id;
+            return transaction;
+        })
+    );
   }
 
-  editTransaction(transaction: Transaction) {
-    updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.id).withConverter(this.transactionConverter), transaction);
+  async editTransaction(transaction: Transaction) {
+    await updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.id).withConverter(this.transactionConverter), transaction);
   }
 
-  addTransaction(transaction: Transaction) {
+  async addTransaction(transaction: Transaction) {
     const transactionDocument = doc(collection(this.firestore, this.transactionsCollectionName)).withConverter(this.transactionConverter);
     transaction.id = transactionDocument.id;
-    setDoc(transactionDocument, transaction);
+    await setDoc(transactionDocument, transaction);
   }
 
-  deleteTransaction(transactionId: string) {
-    deleteDoc(doc(this.firestore, this.transactionsCollectionName, transactionId));
+  async deleteTransaction(transactionId: string) {
+    await deleteDoc(doc(this.firestore, this.transactionsCollectionName, transactionId));
   }
 
     async changeTransactionsBookId(oldBookId: string, newBookId: string) {
@@ -124,21 +90,13 @@ export class TransactionService {
             collection(this.firestore, this.transactionsCollectionName),
             where("bookId", "==", oldBookId)
         );
-        let transactions = await getDocs(transactionQuery.withConverter(this.transactionConverter));
+        const transactions = await getDocs(transactionQuery.withConverter(this.transactionConverter));
         transactions.forEach((transaction) => {
             updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.data().id), { bookId: newBookId });
         });
-
-        from(getDocs(transactionQuery.withConverter(this.transactionConverter)))
-            .pipe(
-                mergeMap(transactions => transactions.docs),
-                map(transaction => {
-                    updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.data().id), { bookId: newBookId })
-                })
-            )
     }
 
-  public transactionConverter = {
+  transactionConverter = {
     toFirestore: (transaction: Transaction) => {
     return {
             id: transaction.id,

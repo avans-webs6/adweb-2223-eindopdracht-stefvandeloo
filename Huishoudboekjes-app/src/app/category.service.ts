@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
-import {getApp, initializeApp} from "firebase/app";
-import { Firestore , getFirestore, onSnapshot, collection, updateDoc, deleteDoc, doc, getDoc, setDoc, deleteField } from "firebase/firestore";
-import { environment } from 'src/environments/environment';
+import {from, map, Observable, Subscriber} from 'rxjs';
+import { getApp } from "firebase/app";
+import { Firestore , getFirestore, onSnapshot, collection, updateDoc, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { Category } from './category.model';
 
 @Injectable({
@@ -23,7 +22,7 @@ export class CategoryService {
         let categories: Category[] = [];
         snapshot.forEach((doc) => {
           let category = doc.data() as Category;
-          category['id'] = doc.id;
+          category.id = doc.id;
           categories.push(category);
         });
         Subscriber.next(categories);
@@ -32,57 +31,47 @@ export class CategoryService {
   }
 
   getCategory(categoryId: string): Observable<Category> {
-    return new Observable((subscriber: Subscriber<Category>) => {
-      getDoc(doc(this.firestore, this.categoryCollectionName, categoryId)).then((doc) => {
-        let category = doc.data() as Category ?? {};
-        category['id'] = doc.id;
-        subscriber.next(category);
-      });
-    });
+    return from(getDoc(doc(this.firestore, this.categoryCollectionName, categoryId))).pipe(
+        map(doc => {
+            let category = doc.data() as Category;
+            category.id = doc.id;
+            return category;
+        })
+      );
   }
 
-  addCategory(category: Category) {
+  async addCategory(category: Category) {
     const categoryDocument = doc(collection(this.firestore, this.categoryCollectionName)).withConverter(this.categoryConverter);
     category.id = categoryDocument.id;
-    setDoc(categoryDocument, category);
+    await setDoc(categoryDocument, category);
   }
 
-  editCategory(category: Category) {
+  async editCategory(category: Category) {
     const categoryDocument = doc(this.firestore, this.categoryCollectionName, category.id);
     const categoryData = this.categoryConverter.toFirestore(category);
-    updateDoc(categoryDocument, categoryData);
+    await updateDoc(categoryDocument, categoryData);
   }
 
-  deleteCategory(categoryId: string) {
-    deleteDoc(doc(this.firestore, this.categoryCollectionName, categoryId));
+  async deleteCategory(categoryId: string) {
+    await deleteDoc(doc(this.firestore, this.categoryCollectionName, categoryId));
   }
 
   categoryConverter = {
     toFirestore: (category: Category) => {
-      if (category.endDate) {
+        console.log(category.endDate)
         return {
           id: category.id,
           name: category.name,
           budget: category.budget,
           endDate: category.endDate
-        }
-      } else {
-        return {
-          id: category.id,
-          name: category.name,
-          budget: category.budget,
-          endDate: ""
-        }
-      }
+        };
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
 
         let category = new Category();
         category.createCategory(data.id, data.name, data.budget);
-        if (data.endDate) {
-          category.setEndDate(data.endDate);
-        }
+        category.setEndDate(data.endDate ?? "");
         return category;
     }
   };
