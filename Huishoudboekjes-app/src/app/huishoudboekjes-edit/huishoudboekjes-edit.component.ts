@@ -39,10 +39,10 @@ export class HuishoudboekjesEditComponent implements AfterViewInit {
     this.editDialog.showModal();
   }
 
-  onSave() {
+  async onSave() {
     if (this.validateTitle()) return;
     this.book.createBook(this.book.id, this.editBookForm.value.title, this.editBookForm.value.description);
-    this.bookService.editBook(this.book);
+    await this.bookService.editBook(this.book);
     this.editBookForm.reset();
     this.editDialog.close();
   }

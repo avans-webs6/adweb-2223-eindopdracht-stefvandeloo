@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
+import {Observable, Subscriber, from, map} from 'rxjs';
 import { initializeApp } from "firebase/app";
 import { Firestore , getFirestore, onSnapshot, collection, updateDoc, deleteDoc, doc, getDoc, setDoc, getDocs, query, where } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -18,8 +18,6 @@ export class BookService {
   booksCollectionName = "books";
   transactionsCollectionName = "transactions";
   archivedBooksCollectionName = "archivedBooks";
-  incomeCollectionName = "income";
-
   constructor(private transactionService: TransactionService) {
     const app = getApp();
     this.firestore = getFirestore(app);
@@ -34,52 +32,44 @@ export class BookService {
   }
 
   getBook(bookId: string): Observable<Book> {
-    return new Observable((subscriber: Subscriber<Book>) => {
-      getDoc(doc(this.firestore, this.booksCollectionName, bookId).withConverter(this.bookConverter)).then((doc) => {
-        let book = doc.data() as Book;
-        book['id'] = doc.id;
-        subscriber.next(book);
-      });
-    });
+      return from(getDoc(doc(this.firestore, this.booksCollectionName, bookId).withConverter(this.bookConverter))).pipe(
+          map(doc => {
+              const book = doc.data() as Book;
+              book.id = doc.id;
+              return book;
+          })
+      );
   }
 
-  addBook(book: Book) {
-    this.addBookCollection(book, this.booksCollectionName);
+  async addBook(book: Book) {
+    await this.addBookCollection(book, this.booksCollectionName);
   }
 
-  editBook(book: Book) {
-    updateDoc(doc(this.firestore, this.booksCollectionName, book.id).withConverter(this.bookConverter), this.bookConverter.toFirestore(book));
+  async editBook(book: Book) {
+    await updateDoc(doc(this.firestore, this.booksCollectionName, book.id).withConverter(this.bookConverter), this.bookConverter.toFirestore(book));
   }
 
-  addBookCollection(book: Book, collectionTitle: string) {
+  async addBookCollection(book: Book, collectionTitle: string) {
     const bookDocument = doc(collection(this.firestore, collectionTitle)).withConverter(this.bookConverter);
     book.id = bookDocument.id;
-    setDoc(bookDocument, book);
+    await setDoc(bookDocument, book);
   }
 
   async archiveBook(book: Book) {
-    const oldBookId = this.toggleArchivationBook(book, this.archivedBooksCollectionName, this.booksCollectionName);
-    await this.changeTransactionsBookId(oldBookId, book.id);
+    const oldBookId = await this.toggleArchivationBook(book, this.archivedBooksCollectionName, this.booksCollectionName);
+    await this.transactionService.changeTransactionsBookId(oldBookId, book.id);
   }
 
   async dearchiveBook(book: Book) {
-    const oldBookId = this.toggleArchivationBook(book, this.booksCollectionName, this.archivedBooksCollectionName);
-    await this.changeTransactionsBookId(oldBookId, book.id);
+    const oldBookId = await this.toggleArchivationBook(book, this.booksCollectionName, this.archivedBooksCollectionName);
+    await this.transactionService.changeTransactionsBookId(oldBookId, book.id);
   }
 
-  toggleArchivationBook(book: Book, addCollectionName: string, deleteCollectionName: string) {
+  async toggleArchivationBook(book: Book, addCollectionName: string, deleteCollectionName: string) {
     const oldBookId = book.id;
-    deleteDoc(doc(this.firestore, deleteCollectionName, book.id));
-    this.addBookCollection(book, addCollectionName);
+    await deleteDoc(doc(this.firestore, deleteCollectionName, book.id));
+    await this.addBookCollection(book, addCollectionName);
     return oldBookId;
-  }
-
-  async changeTransactionsBookId(oldBookId: string, newBookId: string) {
-    const transactionQuery = query(collection(this.firestore, this.transactionsCollectionName), where("bookId", "==", oldBookId));
-    let transactions = await getDocs(transactionQuery.withConverter(this.transactionService.transactionConverter));
-    transactions.forEach((transaction) => {
-      updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.data().id), { bookId: newBookId });
-    });
   }
 
   getBooksFromFirestore(collectionTitle: string) {

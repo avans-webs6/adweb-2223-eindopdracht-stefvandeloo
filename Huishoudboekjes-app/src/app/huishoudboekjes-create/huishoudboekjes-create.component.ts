@@ -37,10 +37,10 @@ export class HuishoudboekjesCreateComponent {
     this.createDialog.showModal();
   }
 
-  onSave() {
+  async onSave() {
     if (this.validateTitle()) return;
     this.book.createBook(this.book.id, this.createBookForm.value.title, this.createBookForm.value.description);
-    this.bookService.addBook(this.book);
+    await this.bookService.addBook(this.book);
     this.createBookForm.reset();
     this.createDialog.close();
   }

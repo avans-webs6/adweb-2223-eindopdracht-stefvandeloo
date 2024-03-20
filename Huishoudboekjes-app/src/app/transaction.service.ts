@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
+import {from, map, mergeMap, Observable, Subscriber} from 'rxjs';
 import {getApp, initializeApp} from "firebase/app";
 import {
     Firestore,
@@ -11,7 +11,7 @@ import {
     getDoc,
     setDoc,
     deleteDoc,
-    query, where
+    query, where, getDocs
 } from "firebase/firestore";
 import { environment } from 'src/environments/environment';
 import { Transaction } from './transaction.model';
@@ -118,6 +118,25 @@ export class TransactionService {
   deleteTransaction(transactionId: string) {
     deleteDoc(doc(this.firestore, this.transactionsCollectionName, transactionId));
   }
+
+    async changeTransactionsBookId(oldBookId: string, newBookId: string) {
+        const transactionQuery = query(
+            collection(this.firestore, this.transactionsCollectionName),
+            where("bookId", "==", oldBookId)
+        );
+        let transactions = await getDocs(transactionQuery.withConverter(this.transactionConverter));
+        transactions.forEach((transaction) => {
+            updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.data().id), { bookId: newBookId });
+        });
+
+        from(getDocs(transactionQuery.withConverter(this.transactionConverter)))
+            .pipe(
+                mergeMap(transactions => transactions.docs),
+                map(transaction => {
+                    updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.data().id), { bookId: newBookId })
+                })
+            )
+    }
 
   public transactionConverter = {
     toFirestore: (transaction: Transaction) => {
