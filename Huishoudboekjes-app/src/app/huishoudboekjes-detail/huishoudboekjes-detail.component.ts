@@ -6,6 +6,7 @@ import {Transaction} from '../transaction.model';
 import {TransactionService} from '../transaction.service';
 import {TransactionType} from '../transaction-type.enum';
 import {BehaviorSubject} from "rxjs";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-huishoudboekjes-detail',
@@ -20,13 +21,13 @@ export class HuishoudboekjesDetailComponent {
 
   transactions$: BehaviorSubject<Transaction[]> = new BehaviorSubject<Transaction[]>([]);
 
-  date: Date = new Date();
+  date: string = "";
   transactionTypeEnum = TransactionType;
 
   createIncomeDialog: any;
   createExpensesDialog: any;
 
-  constructor(private bookService: BookService, private transactionService: TransactionService, private route: ActivatedRoute) {
+  constructor(private bookService: BookService, private transactionService: TransactionService, private route: ActivatedRoute, private datePipe: DatePipe) {
     let bookId = this.route.snapshot.paramMap.get('id');
     if (!bookId) return;
 
@@ -34,6 +35,7 @@ export class HuishoudboekjesDetailComponent {
       this.book = book;
     });
 
+    this.date = this.setDateString();
     this.getTransactionsByDate(bookId);
   }
 
@@ -51,6 +53,11 @@ export class HuishoudboekjesDetailComponent {
         this.createExpensesDialog.showModal();
         break;
     }
+  }
+
+  setDateString() {
+      const date = this.datePipe.transform(new Date(), 'yyyy-MM');
+      return date ? date : "";
   }
 
   getTransactionsByDate(bookId: string) {
