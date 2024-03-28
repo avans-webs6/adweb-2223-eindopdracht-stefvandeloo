@@ -13,7 +13,10 @@ import {BehaviorSubject} from "rxjs";
   styleUrls: ['./huishoudboekjes-detail-statistics.component.css']
 })
 export class HuishoudboekjesDetailStatisticsComponent implements OnInit {
-  balance = "";
+  balance = 0;
+  totalIncome = 0;
+  totalExpenses = 0;
+
   income: Transaction[] = [];
   expenses: Transaction[] = [];
 
@@ -28,18 +31,27 @@ export class HuishoudboekjesDetailStatisticsComponent implements OnInit {
       this.transactionsBehaviour.subscribe((transactions) => {
           this.income = transactions.filter((transaction) => transaction.type === TransactionType.INCOME);
           this.expenses = transactions.filter((transaction) => transaction.type === TransactionType.EXPENSES);
+          this.calculateIncomeAndExpenses();
           this.calculateBalance();
       });
   }
 
-  formatNumber(number: string) {
-    if (number.endsWith(".00")) return number.replace(".00", ",-");
-    return number;
+  formatNumber(number: number) {
+    const formattedNumber = number.toFixed(2);
+    if (formattedNumber.endsWith(".00")) return formattedNumber.replace(".00", ",-");
+    return formattedNumber;
   }
 
     calculateBalance() {
-        const income = this.income.reduce((a, b) => a + Number(b.price), 0);
-        const expenses = this.expenses.reduce((a, b) => a + Number(b.price), 0);
-        this.balance = (income - expenses).toFixed(2);
+      this.balance = (this.totalIncome - this.totalExpenses);
+    }
+
+    calculateIncomeAndExpenses() {
+        this.totalIncome = this.calculateTotal(this.income);
+        this.totalExpenses = this.calculateTotal(this.expenses);
+    }
+
+    calculateTotal(transactions: Transaction[]) {
+        return transactions.reduce((a, b) => a + Number(b.price), 0);
     }
 }
