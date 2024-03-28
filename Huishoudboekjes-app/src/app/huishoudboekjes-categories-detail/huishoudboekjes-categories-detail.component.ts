@@ -50,7 +50,7 @@ export class HuishoudboekjesCategoriesDetailComponent {
     }
 
     isOverDue() {
-        return new Date(this.category.endDate).getDate() < new Date().getDate();
+        return new Date(this.category.endDate).getTime() < new Date().getTime();
     }
 
     getProgressBarColor() {
