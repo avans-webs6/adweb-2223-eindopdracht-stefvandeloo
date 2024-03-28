@@ -1,7 +1,6 @@
 <app-huishoudboekjes-create></app-huishoudboekjes-create>
 
 <div class="books">
-    <div>
         <h1><label *ngIf="isArchived">Archived </label>Huishoudboekjes</h1>
         <ul>
             <p *ngIf="!books || books.length === 0">No huishoudboekjes found!</p>
@@ -36,5 +35,4 @@
                 </ng-template>
             </li>
         </ul>
-    </div>
 </div>
