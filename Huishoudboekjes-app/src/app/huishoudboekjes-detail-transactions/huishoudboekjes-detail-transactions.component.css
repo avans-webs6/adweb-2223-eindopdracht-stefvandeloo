@@ -3,11 +3,11 @@ li {
     align-items: center;
     word-wrap: break-word;
     margin-bottom: 20px;
-    height: 100px;
+    min-height: 100px;
 }
 
 .transaction-information p {
-    min-width: 100px;
+    width: 200px;
     margin: 5px 0 5px 0;
 }
 
