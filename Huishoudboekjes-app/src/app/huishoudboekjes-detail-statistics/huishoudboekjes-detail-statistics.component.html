@@ -10,5 +10,5 @@
 </div>
 <div class="stat-container">
     <span class="label">Balance:</span>
-    <span class="value">€ {{formatNumber(balance)}}</span>
+    <span class="value" [ngStyle]="{'color': balance >= 0 ? 'black' : 'red'}">€ {{formatNumber(balance)}}</span>
 </div>
