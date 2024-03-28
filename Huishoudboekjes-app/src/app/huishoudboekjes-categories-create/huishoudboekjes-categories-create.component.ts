@@ -45,6 +45,7 @@ export class HuishoudboekjesCategoriesCreateComponent {
   }
 
   onCancel() {
+    this.createCategoryForm.reset();
     this.createDialog.close();
   }
 

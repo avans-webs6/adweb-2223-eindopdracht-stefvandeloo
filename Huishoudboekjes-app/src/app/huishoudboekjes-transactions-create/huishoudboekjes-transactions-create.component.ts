@@ -60,7 +60,8 @@ export class HuishoudboekjesTransactionsCreateComponent {
   }
 
   onCancel() {
-    this.transaction = new Transaction();
+    // this.transaction = new Transaction(); TODO: TEST IF THIS LINE IS NEEDED!
+    this.createTransactionForm.reset();
     this.createDialog.close();
   }
 

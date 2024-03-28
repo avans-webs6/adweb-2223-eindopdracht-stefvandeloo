@@ -49,6 +49,7 @@ export class HuishoudboekjesCategoriesEditComponent {
   }
 
   onCancel() {
+    this.editCategoryForm.reset();
     this.editDialog.close();
   }
 

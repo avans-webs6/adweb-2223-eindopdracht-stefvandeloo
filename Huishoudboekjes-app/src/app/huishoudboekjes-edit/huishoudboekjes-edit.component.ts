@@ -48,6 +48,7 @@ export class HuishoudboekjesEditComponent implements AfterViewInit {
   }
 
   onCancel() {
+    this.editBookForm.reset();
     this.editDialog.close();
   }
 

@@ -60,6 +60,7 @@ export class HuishoudboekjesTransactionsEditComponent {
   }
 
   onCancel() {
+    this.editTransactionForm.reset();
     this.editDialog.close();
   }
 

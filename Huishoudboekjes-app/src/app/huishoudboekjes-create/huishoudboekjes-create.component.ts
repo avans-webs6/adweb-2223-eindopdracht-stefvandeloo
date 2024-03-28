@@ -46,6 +46,7 @@ export class HuishoudboekjesCreateComponent {
   }
 
   onCancel() {
+    this.createBookForm.reset();
     this.createDialog.close();
   }
 
