@@ -37,9 +37,17 @@
 }
 
 .progress-container {
+    position: relative;
     background-color: #e6e6e6;
     border-radius: 8px;
     overflow: hidden;
+}
+
+.progress-percentage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .progress-bar {

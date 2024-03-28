@@ -42,6 +42,7 @@ export class HuishoudboekjesCategoriesDetailComponent {
 
     calculateProgress() {
         this.progress = (this.balance / this.category.budget) * 100;
+        if (this.progress > 100) this.progress = 100;
     }
 
     isOverBudget() {

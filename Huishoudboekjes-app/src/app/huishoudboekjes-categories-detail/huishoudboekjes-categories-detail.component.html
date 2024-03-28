@@ -13,7 +13,9 @@
                 <p class="current-balance">Balance: € {{balance | number: '1.2-2'}}</p>
             </div>
             <div class="progress-container">
-                <div class="progress-bar" [ngStyle]="{'width': progress + '%', 'background-color': getProgressBarColor()}"></div>
+                <div class="progress-bar" [ngStyle]="{'width': progress + '%', 'background-color': getProgressBarColor()}">
+                    <span class="progress-percentage">{{progress.toFixed(2)}}%</span>
+                </div>
             </div>
             <div class="category-actions">
                 <app-huishoudboekjes-categories-edit [category]="category"></app-huishoudboekjes-categories-edit>
