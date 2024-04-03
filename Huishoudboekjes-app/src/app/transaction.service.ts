@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import {from, map, Observable, Subscriber} from 'rxjs';
-import { getApp } from "firebase/app";
 import {
-    Firestore,
-    getFirestore,
     onSnapshot,
     collection,
     updateDoc,
@@ -15,18 +12,15 @@ import {
 } from "firebase/firestore";
 import { Transaction } from './transaction.model';
 import { TransactionType } from './transaction-type.enum';
+import {FirebaseService} from "./firebase.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
-  firestore: Firestore;
   transactionsCollectionName = "transactions";
 
-  constructor() {
-    const app = getApp();
-    this.firestore = getFirestore(app);
-  }
+  constructor(private firebase: FirebaseService) {  }
 
   getTransactionsOfBook(bookId: string, transactionType?: TransactionType) {
       return new Observable((subscriber: Subscriber<Transaction[]>) => {
@@ -55,14 +49,14 @@ export class TransactionService {
   }
 
   createQuery(bookId: string | undefined, transactionType: TransactionType | undefined) {
-      let q = query(collection(this.firestore, this.transactionsCollectionName));
+      let q = query(collection(this.firebase.firestore, this.transactionsCollectionName));
       if (bookId) q = query(q, where("bookId", "==", bookId));
       if (transactionType) q = query(q, where("type", "==", transactionType));
       return q;
   }
 
   getTransaction(transactionId: string) {
-    return from(getDoc(doc(this.firestore, this.transactionsCollectionName + '/' + transactionId))).pipe(
+    return from(getDoc(doc(this.firebase.firestore, this.transactionsCollectionName + '/' + transactionId))).pipe(
         map(doc => {
             let transaction = doc.data() as Transaction;
             transaction.id = doc.id;
@@ -72,27 +66,27 @@ export class TransactionService {
   }
 
   async editTransaction(transaction: Transaction) {
-    await updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.id).withConverter(this.transactionConverter), transaction);
+    await updateDoc(doc(this.firebase.firestore, this.transactionsCollectionName, transaction.id).withConverter(this.transactionConverter), transaction);
   }
 
   async addTransaction(transaction: Transaction) {
-    const transactionDocument = doc(collection(this.firestore, this.transactionsCollectionName)).withConverter(this.transactionConverter);
+    const transactionDocument = doc(collection(this.firebase.firestore, this.transactionsCollectionName)).withConverter(this.transactionConverter);
     transaction.id = transactionDocument.id;
     await setDoc(transactionDocument, transaction);
   }
 
   async deleteTransaction(transactionId: string) {
-    await deleteDoc(doc(this.firestore, this.transactionsCollectionName, transactionId));
+    await deleteDoc(doc(this.firebase.firestore, this.transactionsCollectionName, transactionId));
   }
 
     async changeTransactionsBookId(oldBookId: string, newBookId: string) {
         const transactionQuery = query(
-            collection(this.firestore, this.transactionsCollectionName),
+            collection(this.firebase.firestore, this.transactionsCollectionName),
             where("bookId", "==", oldBookId)
         );
         const transactions = await getDocs(transactionQuery.withConverter(this.transactionConverter));
         transactions.forEach((transaction) => {
-            updateDoc(doc(this.firestore, this.transactionsCollectionName, transaction.data().id), { bookId: newBookId });
+            updateDoc(doc(this.firebase.firestore, this.transactionsCollectionName, transaction.data().id), { bookId: newBookId });
         });
     }
 
