@@ -20,9 +20,9 @@ import { HuishoudboekjesCategoriesEditComponent } from './huishoudboekjes-catego
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 import { AuthenticationRegisterUserComponent } from './authentication-register-user/authentication-register-user.component';
 import { AuthenticationLoginUserComponent } from './authentication-login-user/authentication-login-user.component';
-import {PermissionService} from "./permission.service";
 import { HuishoudboekjesDetailStatisticsComponent } from './huishoudboekjes-detail-statistics/huishoudboekjes-detail-statistics.component';
 import { HuishoudboekjesCategoriesDetailComponent } from './huishoudboekjes-categories-detail/huishoudboekjes-categories-detail.component';
+import {FirebaseService} from "./firebase.service";
 
 @NgModule({
     declarations: [
@@ -50,7 +50,7 @@ import { HuishoudboekjesCategoriesDetailComponent } from './huishoudboekjes-cate
         ReactiveFormsModule,
         NgOptimizedImage
     ],
-  providers: [BookService, TransactionService, CategoryService, PermissionService, DatePipe],
+  providers: [FirebaseService, BookService, TransactionService, CategoryService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

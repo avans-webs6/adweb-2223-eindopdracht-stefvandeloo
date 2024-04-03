@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { getAuth, signOut } from "firebase/auth";
 import {initializeApp} from "firebase/app";
-import {environment} from "../environments/environment";
-import {Router} from "@angular/router";
+import {environment} from "../environments/environment.development";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -10,15 +10,14 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Huishoudboekjes-app';
   app = initializeApp(environment.firebaseConfig);
   user: any;
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private route: ActivatedRoute) {
     const auth = getAuth();
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
       if (user) {
-        router.navigate(['/']);
+          await router.navigate(['/']);
       }
       this.user = user;
     });
@@ -26,8 +25,8 @@ export class AppComponent {
 
   logout() {
     const auth = getAuth();
-    signOut(auth).then(() => {
-      this.router.navigate(['/login']);
+    signOut(auth).then(async () => {
+      await this.router.navigate(['/login']);
     }).catch((error) => {
       console.log("Error signing out", error);
     });
