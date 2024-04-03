@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HuishoudboekjesCategoriesCreateComponent } from './huishoudboekjes-categories-create.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 describe('HuishoudboekjesCategoriesCreateComponent', () => {
   let component: HuishoudboekjesCategoriesCreateComponent;
@@ -8,7 +9,8 @@ describe('HuishoudboekjesCategoriesCreateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HuishoudboekjesCategoriesCreateComponent]
+      declarations: [HuishoudboekjesCategoriesCreateComponent],
+      imports: [ReactiveFormsModule]
     });
     fixture = TestBed.createComponent(HuishoudboekjesCategoriesCreateComponent);
     component = fixture.componentInstance;

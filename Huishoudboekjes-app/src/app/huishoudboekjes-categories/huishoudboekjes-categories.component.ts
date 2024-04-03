@@ -11,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 export class HuishoudboekjesCategoriesComponent {
     categories: Category[] = [];
 
-    constructor(private categoryService: CategoryService, private route: ActivatedRoute) {
+    constructor(private categoryService: CategoryService) {
         this.categoryService.getCategories().subscribe((categories) => {
             this.categories = categories;
         });

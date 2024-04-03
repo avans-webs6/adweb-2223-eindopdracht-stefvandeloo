@@ -10,7 +10,6 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  app = initializeApp(environment.firebaseConfig);
   user: any;
 
   constructor(public router: Router, private route: ActivatedRoute) {

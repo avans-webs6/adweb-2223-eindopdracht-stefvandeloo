@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,12 +17,12 @@ import { HuishoudboekjesCategoriesComponent } from './huishoudboekjes-categories
 import { CategoryService } from './category.service';
 import { HuishoudboekjesCategoriesCreateComponent } from './huishoudboekjes-categories-create/huishoudboekjes-categories-create.component';
 import { HuishoudboekjesCategoriesEditComponent } from './huishoudboekjes-categories-edit/huishoudboekjes-categories-edit.component';
-import {DatePipe, NgOptimizedImage} from '@angular/common';
+import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { AuthenticationRegisterUserComponent } from './authentication-register-user/authentication-register-user.component';
 import { AuthenticationLoginUserComponent } from './authentication-login-user/authentication-login-user.component';
 import { HuishoudboekjesDetailStatisticsComponent } from './huishoudboekjes-detail-statistics/huishoudboekjes-detail-statistics.component';
 import { HuishoudboekjesCategoriesDetailComponent } from './huishoudboekjes-categories-detail/huishoudboekjes-categories-detail.component';
-import {FirebaseService} from "./firebase.service";
+import { FirebaseService } from "./firebase.service";
 
 @NgModule({
     declarations: [
@@ -40,8 +40,7 @@ import {FirebaseService} from "./firebase.service";
         AuthenticationRegisterUserComponent,
         AuthenticationLoginUserComponent,
         HuishoudboekjesDetailStatisticsComponent,
-        HuishoudboekjesCategoriesDetailComponent,
-        HuishoudboekjesCategoriesCreateComponent
+        HuishoudboekjesCategoriesDetailComponent
     ],
     imports: [
         BrowserModule,
