@@ -11,14 +11,11 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class HuishoudboekjesCreateComponent {
 
-  book: Book;
+  book: Book | undefined;
   createDialog: any;
   createBookForm: FormGroup;
 
   constructor(public bookService: BookService) {
-    const auth = getAuth();
-    this.book = new Book(auth.currentUser?.email ?? "");
-
     this.createBookForm = new FormGroup({
       'title': new FormControl(null, [Validators.required]),
       'description': new FormControl(null)
@@ -33,12 +30,12 @@ export class HuishoudboekjesCreateComponent {
     let auth = getAuth()
     if (!auth.currentUser || !auth.currentUser.email) return;
 
-    this.book = new Book(auth.currentUser.email);
+    this.book = new Book("", "", "", auth.currentUser.email);
     this.createDialog.showModal();
   }
 
   async onSave() {
-    if (this.validateTitle()) return;
+    if (!this.book || this.validateTitle()) return;
     this.book.createBook(this.book.id, this.createBookForm.value.title, this.createBookForm.value.description);
     await this.bookService.addBook(this.book);
     this.createBookForm.reset();

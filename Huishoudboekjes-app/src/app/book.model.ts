@@ -1,13 +1,13 @@
 export class Book {
-    id: string;
-    title: string;
-    description: string;
-    userEmail: string
+    id: string = "";
+    title: string = "";
+    description: string = "";
+    userEmail: string = "";
 
-    constructor(userEmail: string) {
-        this.id = "";
-        this.title = "";
-        this.description = "";
+    constructor(id: string = "", title: string = "", description: string = "", userEmail: string = "") {
+        this.id = id;
+        this.title = title;
+        this.description = description;
         this.userEmail = userEmail;
     }
 

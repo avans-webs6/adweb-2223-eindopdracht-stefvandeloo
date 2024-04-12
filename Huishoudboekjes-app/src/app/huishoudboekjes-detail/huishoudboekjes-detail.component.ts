@@ -15,7 +15,7 @@ import {DatePipe} from "@angular/common";
 })
 export class HuishoudboekjesDetailComponent {
 
-  book: Book = new Book("");
+  book: Book | undefined;
   income: Transaction[] = [];
   expenses: Transaction[] = [];
 

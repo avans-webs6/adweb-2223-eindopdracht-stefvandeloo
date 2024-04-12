@@ -13,13 +13,12 @@ export class HuishoudboekjesEditComponent implements AfterViewInit {
   @Input()
   bookId: string = "";
 
-  book: Book;
+  book: Book | undefined;
   editDialog: any;
   editBookForm: FormGroup;
 
   constructor(public bookService: BookService) {
     const auth = getAuth();
-    this.book = new Book(auth.currentUser?.email ?? "");
 
     this.editBookForm = new FormGroup({
       'title': new FormControl(null, [Validators.required]),
@@ -40,7 +39,7 @@ export class HuishoudboekjesEditComponent implements AfterViewInit {
   }
 
   async onSave() {
-    if (this.validateTitle()) return;
+    if (!this.book || this.validateTitle()) return;
     this.book.createBook(this.book.id, this.editBookForm.value.title, this.editBookForm.value.description);
     await this.bookService.editBook(this.book);
     this.editBookForm.reset();

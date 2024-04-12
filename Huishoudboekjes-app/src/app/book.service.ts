@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import {Observable, Subscriber, from, map} from 'rxjs';
-import { onSnapshot, collection, updateDoc, deleteDoc, doc, getDoc, setDoc, getDocs, query, where } from "firebase/firestore";
-import { Book } from './book.model';
-import { TransactionService } from './transaction.service';
+import {Injectable} from '@angular/core';
+import {from, map, Observable, Subscriber} from 'rxjs';
+import {collection, deleteDoc, doc, getDoc, onSnapshot, setDoc, updateDoc} from "firebase/firestore";
+import {Book} from './book.model';
+import {TransactionService} from './transaction.service';
 import {FirebaseService} from "./firebase.service";
 
 @Injectable({
@@ -78,18 +78,16 @@ export class BookService {
 
   private bookConverter = {
     toFirestore: (book: Book) => {
-        return {
-            id: book.id,
-            title: book.title,
-            description: book.description,
-            userEmail: book.userEmail
-        };
+      return {
+        id: book.id,
+        title: book.title,
+        description: book.description,
+        userEmail: book.userEmail
+      };
     },
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
-        const data = snapshot.data(options);
-        let book = new Book(data.userEmail);
-        book.createBook(data.id, data.title, data.description);
-        return book;
+      const data = snapshot.data(options);
+      return new Book(data.id, data.title, data.description, data.userEmail);
     }
   };
 }

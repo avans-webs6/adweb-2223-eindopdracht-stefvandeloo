@@ -3,6 +3,8 @@ import { getAuth, signOut } from "firebase/auth";
 import {initializeApp} from "firebase/app";
 import {environment} from "../environments/environment.development";
 import {ActivatedRoute, Router} from "@angular/router";
+import firebase from "firebase/compat";
+import app = firebase.app;
 
 @Component({
   selector: 'app-root',
@@ -10,9 +12,11 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  app = initializeApp(environment.firebaseConfig);
   user: any;
 
   constructor(public router: Router, private route: ActivatedRoute) {
+
     const auth = getAuth();
     auth.onAuthStateChanged(async (user) => {
       if (user) {

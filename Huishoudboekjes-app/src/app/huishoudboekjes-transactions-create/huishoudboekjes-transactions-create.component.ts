@@ -15,7 +15,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class HuishoudboekjesTransactionsCreateComponent {
 
   @Input()
-  bookId: string = "";
+  bookId?: string = "";
 
   @Input()
   transactionType: string = TransactionType.INCOME;
@@ -43,7 +43,7 @@ export class HuishoudboekjesTransactionsCreateComponent {
   }
 
   async onSave() {
-    if (this.validatePrice()) return;
+    if (!this.bookId || this.validatePrice()) return;
     const transactionPrice = this.createTransactionForm.value.price.toFixed(2);
     this.transaction.createTransaction(this.transaction.id,
                                       this.createTransactionForm.value.description,
