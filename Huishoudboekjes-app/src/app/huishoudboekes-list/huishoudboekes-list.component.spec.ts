@@ -12,7 +12,7 @@ import {Book} from "../book.model";
 describe('HuishoudboekesListComponent', () => {
   let component: HuishoudboekesListComponent;
   let fixture: ComponentFixture<HuishoudboekesListComponent>;
-  let mockBookService = jasmine.createSpyObj('BookService', ['getBooks', 'addBook']);
+  let mockBookService = jasmine.createSpyObj(BookService, ['getBooks', 'addBook']);
   let mockCreateComponent = MockComponent(HuishoudboekjesCreateComponent);
 
   beforeEach(async () => {
