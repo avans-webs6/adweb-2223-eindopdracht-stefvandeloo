@@ -45,7 +45,7 @@ export class HuishoudboekjesCategoriesEditComponent {
       this.category = new Category(this.category.id,
                                     this.editCategoryForm.value.name,
                                     this.editCategoryForm.value.budget,
-                                    this.editCategoryForm.value.date);
+                                    this.editCategoryForm.value.date ?? "");
       await this.categoryService.editCategory(this.category);
       this.editCategoryForm.reset();
       this.editDialog.close();
@@ -61,10 +61,10 @@ export class HuishoudboekjesCategoriesEditComponent {
     }
 
     validateName() {
-        const title = this.editCategoryForm.get('name');
+        const name = this.editCategoryForm.get('name');
 
-        if (!title) return;
-        if (!title.value) return "Please enter a name";
+        if (!name) return;
+        if (!name.value) return "Please enter a name";
         return;
     }
 
@@ -79,8 +79,7 @@ export class HuishoudboekjesCategoriesEditComponent {
     validateDate() {
         const date = this.editCategoryForm.get('date');
 
-        if (!date) return;
-        if (date.value && new Date(date.value).getTime() < new Date().getTime()) return "Please enter a date in the future";
+        if (date && date.value && new Date(date.value).getTime() < new Date().getTime()) return "Please enter a date in the future";
         return;
     }
 }
