@@ -15,8 +15,8 @@ jobs:
         working-directory: ./Huishoudboekjes-app/
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          entryPoint: ./Huishoudboekjes-app/
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ADWEB_2223_HUISHOUDBOEKJES }}
           channelId: live
           projectId: adweb-2223-huishoudboekjes
-          entryPoint: ./Huishoudboekjes-app/
