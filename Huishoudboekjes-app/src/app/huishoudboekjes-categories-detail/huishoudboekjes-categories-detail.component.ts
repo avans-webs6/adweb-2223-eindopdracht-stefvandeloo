@@ -4,6 +4,7 @@ import {CategoryService} from "../category.service";
 import {ActivatedRoute} from "@angular/router";
 import {TransactionService} from "../transaction.service";
 import {Transaction} from "../transaction.model";
+import {TransactionType} from "../transaction-type.enum";
 
 @Component({
   selector: 'app-huishoudboekjes-categories-detail',
@@ -18,9 +19,7 @@ export class HuishoudboekjesCategoriesDetailComponent {
     progress: number = 0;
     transactions: Transaction[] = [];
 
-    constructor(private categoryService: CategoryService,
-                private transactionsService: TransactionService,
-                private route: ActivatedRoute) {
+    constructor(private categoryService: CategoryService, private transactionsService: TransactionService) {
         this.transactionsService.getTransactions().subscribe((transactions) => {
             this.transactions = transactions;
             this.calculateBudget();
@@ -31,11 +30,11 @@ export class HuishoudboekjesCategoriesDetailComponent {
     calculateBudget() {
         this.balance = 0.00;
         this.transactions.forEach((transaction) => {
-            if (transaction.categoryId && this.category) {
-                if (transaction.categoryId === this.category.id) {
-                    this.balance += Number(transaction.price);
-                }
-            }
+            if (!transaction.categoryId || !this.category) return;
+            if (transaction.categoryId !== this.category.id) return;
+
+            if (transaction.type === TransactionType.INCOME) this.balance += Number(transaction.price);
+            else if (transaction.type === TransactionType.EXPENSES) this.balance -= Number(transaction.price);
         });
     }
 

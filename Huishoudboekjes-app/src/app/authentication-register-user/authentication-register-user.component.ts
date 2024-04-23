@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FirebaseService} from "../firebase.service";
 
 @Component({
   selector: 'app-authentication-register-user',
@@ -12,7 +13,7 @@ export class AuthenticationRegisterUserComponent {
     auth = getAuth();
     registerForm : FormGroup;
 
-    constructor() {
+    constructor(private firebaseService: FirebaseService) {
       this.registerForm = new FormGroup({
         'email': new FormControl(null,
           [Validators.required,
