@@ -65,9 +65,7 @@ export class CategoryService {
     fromFirestore: (snapshot: { data: (arg0: any) => any; }, options: any) => {
         const data = snapshot.data(options);
 
-        let category = new Category();
-        category.createCategory(data.id, data.name, data.budget);
-        category.setEndDate(data.endDate ?? "");
+        let category = new Category(data.id, data.name, data.budget, data.endDate ?? "");
         return category;
     }
   };

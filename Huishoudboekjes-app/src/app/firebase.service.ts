@@ -11,8 +11,7 @@ export class FirebaseService {
   public firestore: Firestore;
 
   constructor() {
-      const firebaseConfig = environment.firebaseConfig;
-      const app = initializeApp(firebaseConfig);
+      const app = initializeApp(environment.firebaseConfig);
       this.firestore = getFirestore(app);
   }
 }

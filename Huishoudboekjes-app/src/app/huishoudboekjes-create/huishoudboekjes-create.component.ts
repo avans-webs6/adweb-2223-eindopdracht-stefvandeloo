@@ -27,16 +27,22 @@ export class HuishoudboekjesCreateComponent {
   }
 
   onCreate() {
-    let auth = getAuth()
+    const auth = getAuth();
     if (!auth.currentUser || !auth.currentUser.email) return;
 
-    this.book = new Book("", "", "", auth.currentUser.email);
+    this.book = new Book("",
+                          this.createBookForm.value.title,
+                          this.createBookForm.value.description,
+                          auth.currentUser.email);
+
     this.createDialog.showModal();
   }
 
   async onSave() {
     if (!this.book || this.validateTitle()) return;
-    this.book.createBook(this.book.id, this.createBookForm.value.title, this.createBookForm.value.description);
+    this.book.title = this.createBookForm.value.title;
+    this.book.description = this.createBookForm.value.description;
+
     await this.bookService.addBook(this.book);
     this.createBookForm.reset();
     this.createDialog.close();

@@ -1,6 +1,6 @@
 <button (click)="openEditDialog()">Edit</button>
 
-<dialog [id]="'edit-category-dialog-' + category.id">
+<dialog *ngIf="category" [id]="'edit-category-dialog-' + category.id">
     <h1>Edit Category</h1>
 
     <form [formGroup]="editCategoryForm">

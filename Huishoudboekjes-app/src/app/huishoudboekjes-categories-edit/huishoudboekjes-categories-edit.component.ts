@@ -11,7 +11,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class HuishoudboekjesCategoriesEditComponent {
 
   @Input()
-  category: Category = new Category();
+  category: Category | undefined;
 
   editDialog: any;
   editCategoryForm: FormGroup;
@@ -25,10 +25,12 @@ export class HuishoudboekjesCategoriesEditComponent {
   }
 
   ngAfterViewInit(): void {
+    if (!this.category) return;
     this.editDialog = document.getElementById("edit-category-dialog-" + this.category.id) as HTMLDialogElement;
   }
 
   openEditDialog() {
+    if (!this.category) return;
     this.categoryService.getCategory(this.category.id).subscribe((category) => {
       this.category = category;
       this.editCategoryForm.setValue({name: category.name, budget: category.budget, date: category.endDate});
@@ -38,11 +40,12 @@ export class HuishoudboekjesCategoriesEditComponent {
   }
 
   async onSave() {
-      if (this.validateForm()) return;
+      if (!this.category || this.validateForm()) return;
 
-      this.category.name = this.editCategoryForm.value.name;
-      this.category.budget = this.editCategoryForm.value.budget;
-      this.category.endDate = this.editCategoryForm.value.date;
+      this.category = new Category(this.category.id,
+                                    this.editCategoryForm.value.name,
+                                    this.editCategoryForm.value.budget,
+                                    this.editCategoryForm.value.date);
       await this.categoryService.editCategory(this.category);
       this.editCategoryForm.reset();
       this.editDialog.close();

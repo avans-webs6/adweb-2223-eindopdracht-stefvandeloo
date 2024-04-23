@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router, RouterStateSnapshot} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {FirebaseService} from "../firebase.service";
 
 @Component({
   selector: 'app-authentication-login-user',
@@ -13,7 +14,7 @@ export class AuthenticationLoginUserComponent {
   loginForm: FormGroup;
   returnUrl: string = '/';
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private firebaseService: FirebaseService) {
     this.loginForm = new FormGroup({
       'email': new FormControl(null,
         [Validators.required,

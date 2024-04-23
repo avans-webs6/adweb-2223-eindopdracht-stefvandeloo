@@ -10,7 +10,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class HuishoudboekjesCategoriesCreateComponent {
 
-  category: Category = new Category();
+  category: Category | undefined;
   createDialog: any;
   createCategoryForm: FormGroup;
 
@@ -27,7 +27,6 @@ export class HuishoudboekjesCategoriesCreateComponent {
   }
 
   onCreate() {
-    this.category = new Category();
     this.createDialog.showModal();
   }
 
@@ -35,10 +34,10 @@ export class HuishoudboekjesCategoriesCreateComponent {
     if (this.validateForm()) return;
 
     const budget = this.createCategoryForm.value.budget.toFixed(2);
-    this.category.createCategory(this.category.id,
+    this.category = new Category("",
                                 this.createCategoryForm.value.name,
-                                budget);
-    this.category.setEndDate(this.createCategoryForm.value.date);
+                                budget,
+                                this.createCategoryForm.value.date);
     await this.categoryService.addCategory(this.category);
     this.createCategoryForm.reset();
     this.createDialog.close();

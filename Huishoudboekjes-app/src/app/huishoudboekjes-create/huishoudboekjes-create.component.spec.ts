@@ -25,10 +25,10 @@ describe('HuishoudboekjesCreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create book', () => {
+  it('should create book', async () => {
     component.book = new Book("", "", "", "test@email.com");
     component.createBookForm.setValue({title: 'New Book', description: 'New Description'});
-    component.onSave();
+    await component.onSave();
 
     expect(component.book).toBeTruthy();
     expect(component.book.title).toContain('New Book');

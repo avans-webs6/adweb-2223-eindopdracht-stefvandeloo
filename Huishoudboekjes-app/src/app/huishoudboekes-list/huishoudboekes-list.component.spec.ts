@@ -27,7 +27,7 @@ describe('HuishoudboekesListComponent', () => {
 
     mockBookService.getBooks.and.returnValue(of([
       new Book("1", 'Book 1', 'Description 1', 'Test1@email.com' ),
-      new Book("2", 'Book 2', 'Description 2' )
+      new Book("2", 'Book 2', 'Description 2', '' )
     ]));
 
     fixture.detectChanges();
@@ -51,7 +51,7 @@ describe('HuishoudboekesListComponent', () => {
     expect(compiled.querySelectorAll(selector).length).toEqual(2);
     expect(compiled.querySelectorAll(selector)[2]).toBeFalsy();
 
-    component.books?.push(new Book("3", 'NEW_BOOK', 'Description 3'));
+    component.books?.push(new Book("3", 'NEW_BOOK', 'Description 3', ''));
     fixture.detectChanges();
 
     expect(compiled.querySelectorAll(selector).length).toEqual(3);

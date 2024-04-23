@@ -4,17 +4,18 @@ import { HuishoudboekjesEditComponent } from './huishoudboekjes-edit.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {Book} from "../book.model";
 import {BookService} from "../book.service";
+import firebase from "firebase/compat";
 
 describe('HuishoudboekjesEditComponent', () => {
   let component: HuishoudboekjesEditComponent;
   let fixture: ComponentFixture<HuishoudboekjesEditComponent>;
   let mockBookService = jasmine.createSpyObj(BookService, ['editBook']);
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [HuishoudboekjesEditComponent],
       imports: [ReactiveFormsModule],
-      providers: [{ provide: BookService, useValue: mockBookService}],
+      providers: [{ provide: BookService, useValue: mockBookService }],
     });
     fixture = TestBed.createComponent(HuishoudboekjesEditComponent);
     component = fixture.componentInstance;

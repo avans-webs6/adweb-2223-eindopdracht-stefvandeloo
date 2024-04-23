@@ -18,8 +18,6 @@ export class HuishoudboekjesEditComponent implements AfterViewInit {
   editBookForm: FormGroup;
 
   constructor(public bookService: BookService) {
-    const auth = getAuth();
-
     this.editBookForm = new FormGroup({
       'title': new FormControl(null, [Validators.required]),
       'description': new FormControl(null)
@@ -40,7 +38,11 @@ export class HuishoudboekjesEditComponent implements AfterViewInit {
 
   async onSave() {
     if (!this.book || this.validateTitle()) return;
-    this.book.createBook(this.book.id, this.editBookForm.value.title, this.editBookForm.value.description);
+    this.book = new Book(this.book.id,
+                          this.editBookForm.value.title,
+                          this.editBookForm.value.description,
+                          this.book.userEmail);
+
     await this.bookService.editBook(this.book);
     this.editBookForm.reset();
     this.editDialog.close();

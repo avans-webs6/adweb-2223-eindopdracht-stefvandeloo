@@ -13,7 +13,7 @@ import {Observable} from "rxjs";
 })
 export class HuishoudboekjesCategoriesDetailComponent {
     @Input()
-    category: Category = new Category();
+    category: Category | undefined;
 
     balance: number = 0.00;
     progress: number = 0;
@@ -32,7 +32,7 @@ export class HuishoudboekjesCategoriesDetailComponent {
     calculateBudget() {
         this.balance = 0.00;
         this.transactions.forEach((transaction) => {
-            if (transaction.categoryId) {
+            if (transaction.categoryId && this.category) {
                 if (transaction.categoryId === this.category.id) {
                     this.balance += Number(transaction.price);
                 }
@@ -41,16 +41,17 @@ export class HuishoudboekjesCategoriesDetailComponent {
     }
 
     calculateProgress() {
+        if (!this.category) return;
         this.progress = (this.balance / this.category.budget) * 100;
         if (this.progress > 100) this.progress = 100;
     }
 
     isOverBudget() {
-        return this.balance > this.category.budget;
+        return this.category && this.balance > this.category.budget;
     }
 
     isOverDue() {
-        return new Date(this.category.endDate).getTime() < new Date().getTime();
+        return this.category && new Date(this.category.endDate).getTime() < new Date().getTime();
     }
 
     getProgressBarColor() {
