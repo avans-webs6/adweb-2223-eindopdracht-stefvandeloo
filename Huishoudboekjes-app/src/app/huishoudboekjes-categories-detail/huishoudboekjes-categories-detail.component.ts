@@ -1,10 +1,9 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Category} from "../category.model";
 import {CategoryService} from "../category.service";
 import {ActivatedRoute} from "@angular/router";
 import {TransactionService} from "../transaction.service";
 import {Transaction} from "../transaction.model";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-huishoudboekjes-categories-detail',

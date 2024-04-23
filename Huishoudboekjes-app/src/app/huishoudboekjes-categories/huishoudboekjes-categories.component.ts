@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {Category} from '../category.model';
 import {CategoryService} from "../category.service";
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'app-huishoudboekjes-categories',

@@ -2,7 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HuishoudboekjesDetailComponent } from './huishoudboekjes-detail.component';
 import { TransactionType } from '../transaction-type.enum';
 import {RouterTestingModule} from "@angular/router/testing";
-import {DatePipe, NgOptimizedImage} from "@angular/common";
+import {DatePipe} from "@angular/common";
 import {
     HuishoudboekjesDetailStatisticsComponent
 } from "../huishoudboekjes-detail-statistics/huishoudboekjes-detail-statistics.component";
@@ -12,8 +12,6 @@ import {
 import {
     HuishoudboekjesDetailTransactionsComponent
 } from "../huishoudboekjes-detail-transactions/huishoudboekjes-detail-transactions.component";
-import {BrowserModule} from "@angular/platform-browser";
-import {AppRoutingModule} from "../app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 describe('HuishoudboekjesDetailComponent', () => {

@@ -4,7 +4,6 @@ import { HuishoudboekjesEditComponent } from './huishoudboekjes-edit.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {Book} from "../book.model";
 import {BookService} from "../book.service";
-import firebase from "firebase/compat";
 
 describe('HuishoudboekjesEditComponent', () => {
   let component: HuishoudboekjesEditComponent;

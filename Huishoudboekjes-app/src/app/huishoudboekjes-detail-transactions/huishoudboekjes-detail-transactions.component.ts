@@ -29,7 +29,7 @@ export class HuishoudboekjesDetailTransactionsComponent {
   }
 
   getCategoryName(categoryId: string) {
-    let category = this.categories.filter(c => c.id === categoryId)[0];
+    const category = this.categories.filter(c => c.id === categoryId)[0];
     if (!category) return "";
     return category.name;
   }

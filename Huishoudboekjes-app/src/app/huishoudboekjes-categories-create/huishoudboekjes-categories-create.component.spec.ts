@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HuishoudboekjesCategoriesCreateComponent } from './huishoudboekjes-categories-create.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {Book} from "../book.model";
-import {BookService} from "../book.service";
 import {CategoryService} from "../category.service";
 import {Category} from "../category.model";
 
@@ -18,7 +16,6 @@ describe('HuishoudboekjesCategoriesCreateComponent', () => {
       declarations: [HuishoudboekjesCategoriesCreateComponent],
       imports: [ReactiveFormsModule],
       providers: [{ provide: CategoryService, useValue: mockCategoryService}],
-
     });
     fixture = TestBed.createComponent(HuishoudboekjesCategoriesCreateComponent);
     component = fixture.componentInstance;

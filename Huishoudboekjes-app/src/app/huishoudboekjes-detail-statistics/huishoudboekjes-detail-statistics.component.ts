@@ -1,10 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Transaction} from "../transaction.model";
-import {TransactionService} from "../transaction.service";
 import {TransactionType} from "../transaction-type.enum";
-import {ActivatedRoute} from "@angular/router";
-import {Book} from "../book.model";
-import {HuishoudboekjesDetailComponent} from "../huishoudboekjes-detail/huishoudboekjes-detail.component";
 import {BehaviorSubject} from "rxjs";
 
 @Component({
