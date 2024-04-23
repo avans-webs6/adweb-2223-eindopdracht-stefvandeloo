@@ -26,7 +26,7 @@ export class HuishoudboekjesTransactionsCreateComponent {
   createDialog: any;
   createTransactionForm: FormGroup;
 
-  constructor(public transactionService: TransactionService, private categoryService: CategoryService, public datepipe: DatePipe) {
+  constructor(public transactionService: TransactionService, private categoryService: CategoryService, public datePipe: DatePipe) {
     this.createTransactionForm = new FormGroup({
       'price': new FormControl(null, [Validators.required, Validators.min(0.01)]),
       'description': new FormControl(null),
@@ -66,7 +66,7 @@ export class HuishoudboekjesTransactionsCreateComponent {
   }
 
   createDateStringOfToday() {
-    let date = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+    let date = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     return date ? date : new Date().toString();
   }
 
