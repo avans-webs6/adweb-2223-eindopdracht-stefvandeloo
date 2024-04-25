@@ -36,10 +36,11 @@ export class AuthenticationLoginUserComponent {
           await this.router.navigateByUrl(this.returnUrl);
         })
         .catch((error) => {
-          const errorCode = error.code;
-          switch (errorCode) {
+          switch (error.code) {
             case "auth/invalid-email":
-              this.loginForm.setErrors({firebaseError: "Invalid email"});
+            case "auth/wrong-password":
+            case "auth/user-not-found":
+              this.loginForm.setErrors({firebaseError: "Invalid email or password"});
               break;
             default:
               this.loginForm.setErrors({firebaseError: "Something went wrong. Please try again later"});

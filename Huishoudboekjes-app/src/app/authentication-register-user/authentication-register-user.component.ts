@@ -35,15 +35,15 @@ export class AuthenticationRegisterUserComponent {
             console.log(user.email)
           })
           .catch((error) => {
-            const errorCode = error.code;
-            switch (errorCode) {
+            switch (error.code) {
               case "auth/invalid-email":
-              case "auth/wrong-password":
-              case "auth/user-not-found":
-                this.registerForm.setErrors({firebaseError: "Invalid email or password"})
+                this.registerForm.setErrors({firebaseError: "Invalid email or password"});
+                break;
+              case "auth/email-already-in-use":
+                this.registerForm.setErrors({firebaseError: "Email already in use"});
                 break;
               default:
-                this.registerForm.setErrors({firebaseError: "Something went wrong. Please try again later"})
+                this.registerForm.setErrors({firebaseError: "Something went wrong. Please try again later"});
             }
           });
       }
