@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import { getAuth, signOut } from "firebase/auth";
-import {initializeApp} from "firebase/app";
-import {environment} from "../environments/environment.development";
-import {ActivatedRoute, Router} from "@angular/router";
-import firebase from "firebase/compat";
-import app = firebase.app;
+import {Router} from "@angular/router";
 import {FirebaseService} from "./firebase.service";
 
 @Component({
@@ -16,8 +11,7 @@ export class AppComponent {
   user: any;
 
   constructor(public router: Router, private firebaseService: FirebaseService) {
-    const auth = getAuth();
-    auth.onAuthStateChanged(async (user) => {
+    firebaseService.auth.onAuthStateChanged(async (user) => {
       if (user) {
           await router.navigate(['/']);
       }
@@ -25,12 +19,7 @@ export class AppComponent {
     });
   }
 
-  logout() {
-    const auth = getAuth();
-    signOut(auth).then(async () => {
-      await this.router.navigate(['/login']);
-    }).catch((error) => {
-      console.log("Error signing out", error);
-    });
+  async logout() {
+    await this.firebaseService.signOut();
   }
 }

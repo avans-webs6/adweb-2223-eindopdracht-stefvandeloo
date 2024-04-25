@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {FirebaseService} from "../firebase.service";
 
@@ -10,7 +10,6 @@ import {FirebaseService} from "../firebase.service";
 })
 export class AuthenticationRegisterUserComponent {
 
-    auth = getAuth();
     registerForm : FormGroup;
 
     constructor(private firebaseService: FirebaseService) {
@@ -30,7 +29,7 @@ export class AuthenticationRegisterUserComponent {
       const password = this.registerForm.get('password')?.value;
 
       if (email && password && !this.validateEmail() && !this.validatePassword()) {
-        createUserWithEmailAndPassword(this.auth, email, password)
+        createUserWithEmailAndPassword(this.firebaseService.auth, email, password)
           .then((userCredential) => {
             const user = userCredential.user;
             console.log(user.email)

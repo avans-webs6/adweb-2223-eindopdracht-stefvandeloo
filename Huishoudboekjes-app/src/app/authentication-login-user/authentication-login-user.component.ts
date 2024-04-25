@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FirebaseService} from "../firebase.service";
@@ -10,7 +10,6 @@ import {FirebaseService} from "../firebase.service";
   styleUrls: ['./authentication-login-user.component.css']
 })
 export class AuthenticationLoginUserComponent {
-  auth = getAuth();
   loginForm: FormGroup;
   returnUrl: string = '/';
 
@@ -25,13 +24,13 @@ export class AuthenticationLoginUserComponent {
   }
 
   loginUser() {
-    if (this.auth.currentUser) return;
+    if (this.firebaseService.auth.currentUser) return;
 
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
 
     if (email && password && !this.validateEmail() && !this.validatePassword()) {
-      signInWithEmailAndPassword(this.auth, email, password)
+      signInWithEmailAndPassword(this.firebaseService.auth, email, password)
         .then(async () => {
           this.route.queryParams.subscribe(retUrl => this.returnUrl = retUrl['returnUrl']);
           await this.router.navigateByUrl(this.returnUrl);
