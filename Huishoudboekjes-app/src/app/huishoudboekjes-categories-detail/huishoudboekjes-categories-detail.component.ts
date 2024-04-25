@@ -40,8 +40,8 @@ export class HuishoudboekjesCategoriesDetailComponent {
 
     calculateProgress() {
         if (!this.category) return;
-        this.progress = (this.balance / this.category.budget) * 100;
-        if (this.progress > 100) this.progress = 100;
+        this.progress = (this.balance / this.category.budget);
+        if (this.progress > 1) this.progress = 1;
     }
 
     isOverBudget() {
@@ -53,9 +53,9 @@ export class HuishoudboekjesCategoriesDetailComponent {
     }
 
     getProgressBarColor() {
-        if (this.progress >= 70 && this.progress < 95) {
+        if (this.progress >= .7 && this.progress < .95) {
             return 'orange';
-        } else if (this.progress >= 95) {
+        } else if (this.progress >= .95) {
             return 'red';
         }
         return 'green';

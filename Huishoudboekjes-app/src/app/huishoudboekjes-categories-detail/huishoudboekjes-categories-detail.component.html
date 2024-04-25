@@ -9,12 +9,12 @@
                 </div>
             </div>
             <div class="category-budget">
-                <p class="budget-amount">Budget: € {{category.budget | number: '1.2-2'}}</p>
-                <p class="current-balance">Balance: € {{balance | number: '1.2-2'}}</p>
+                <p class="budget-amount">Budget: {{category.budget | currency}}</p>
+                <p class="current-balance">Balance: {{balance | currency}}</p>
             </div>
             <div class="progress-container">
-                <div class="progress-bar" [ngStyle]="{'width': progress + '%', 'background-color': getProgressBarColor()}">
-                    <span class="progress-percentage">{{progress.toFixed(2)}}%</span>
+                <div class="progress-bar" [ngStyle]="{'width': progress * 100 + '%', 'background-color': getProgressBarColor()}">
+                    <span class="progress-percentage">{{progress | percent: '1.0-2'}}</span>
                 </div>
             </div>
             <div class="category-actions">

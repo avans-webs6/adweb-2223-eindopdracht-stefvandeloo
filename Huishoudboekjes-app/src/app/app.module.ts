@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {DEFAULT_CURRENCY_CODE, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -49,7 +49,14 @@ import { FirebaseService } from "./firebase.service";
         ReactiveFormsModule,
         NgOptimizedImage
     ],
-  providers: [FirebaseService, BookService, TransactionService, CategoryService, DatePipe],
+  providers: [
+    FirebaseService,
+    BookService,
+    TransactionService,
+    CategoryService,
+    DatePipe,
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

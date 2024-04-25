@@ -2,13 +2,13 @@
 
 <div class="stat-container">
     <span class="label">Income:</span>
-    <span class="value">€ {{formatNumber(totalIncome)}}</span>
+    <span class="value">{{totalIncome | currency}} </span>
 </div>
 <div class="stat-container">
     <span class="label">Expense:</span>
-    <span class="value">€ {{formatNumber(totalExpenses)}}</span>
+    <span class="value">{{totalExpenses | currency}}</span>
 </div>
 <div class="stat-container">
     <span class="label">Balance:</span>
-    <span class="value" [ngStyle]="{'color': balance >= 0 ? 'black' : 'red'}">€ {{formatNumber(balance)}}</span>
+    <span class="value" [ngStyle]="{'color': balance >= 0 ? 'black' : 'red'}">{{balance | currency}}</span>
 </div>
