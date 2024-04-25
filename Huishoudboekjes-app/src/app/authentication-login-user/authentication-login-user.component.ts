@@ -39,10 +39,10 @@ export class AuthenticationLoginUserComponent {
           const errorCode = error.code;
           switch (errorCode) {
             case "auth/invalid-email":
-              this.loginForm.setErrors({firebaseError: "Invalid email"})
+              this.loginForm.setErrors({firebaseError: "Invalid email"});
               break;
             default:
-              this.loginForm.setErrors({firebaseError: "Something went wrong. Please try again later"})
+              this.loginForm.setErrors({firebaseError: "Something went wrong. Please try again later"});
           }
         });
     }

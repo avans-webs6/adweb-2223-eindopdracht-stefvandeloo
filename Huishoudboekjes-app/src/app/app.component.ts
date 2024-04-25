@@ -21,5 +21,6 @@ export class AppComponent {
 
   async logout() {
     await this.firebaseService.signOut();
+    await this.router.navigate(['/login']);
   }
 }
