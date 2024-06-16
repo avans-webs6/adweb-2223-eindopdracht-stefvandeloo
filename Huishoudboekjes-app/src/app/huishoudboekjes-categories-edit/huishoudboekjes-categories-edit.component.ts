@@ -40,8 +40,8 @@ export class HuishoudboekjesCategoriesEditComponent {
   }
 
   async onSave() {
-    this.editDialog.close();
       if (!this.category || this.validateForm()) return;
+      this.editDialog.close();
 
       this.category = new Category(this.category.id,
                                     this.editCategoryForm.value.name,

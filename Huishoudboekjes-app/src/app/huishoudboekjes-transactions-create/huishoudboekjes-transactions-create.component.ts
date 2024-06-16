@@ -43,8 +43,9 @@ export class HuishoudboekjesTransactionsCreateComponent {
   }
 
   async onSave() {
-    this.createDialog.close();
     if (!this.bookId || this.validatePrice()) return;
+    this.createDialog.close();
+
     const transactionPrice = this.createTransactionForm.value.price.toFixed(2);
     this.transaction.createTransaction(this.transaction.id,
                                       this.createTransactionForm.value.description,

@@ -31,9 +31,9 @@ export class HuishoudboekjesCategoriesCreateComponent {
   }
 
   async onSave() {
-    this.createDialog.close();
     if (this.validateForm()) return;
 
+    this.createDialog.close();
     const budget = this.createCategoryForm.value.budget.toFixed(2);
     this.category = new Category("",
                                 this.createCategoryForm.value.name,

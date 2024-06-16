@@ -39,8 +39,9 @@ export class HuishoudboekjesCreateComponent {
   }
 
   async onSave() {
-    this.createDialog.close();
     if (!this.book || this.validateTitle()) return;
+    this.createDialog.close();
+
     this.book.title = this.createBookForm.value.title;
     this.book.description = this.createBookForm.value.description;
 

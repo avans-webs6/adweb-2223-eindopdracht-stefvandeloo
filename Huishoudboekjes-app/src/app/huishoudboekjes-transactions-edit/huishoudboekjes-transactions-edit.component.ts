@@ -51,8 +51,8 @@ export class HuishoudboekjesTransactionsEditComponent {
   }
 
   async onSave() {
-    this.editDialog.close();
     if (this.validatePrice()) return;
+    this.editDialog.close();
     this.transaction.price = this.editTransactionForm.value.price;
     this.transaction.description = this.editTransactionForm.value.description;
     this.transaction.categoryId = this.editTransactionForm.value.category;
