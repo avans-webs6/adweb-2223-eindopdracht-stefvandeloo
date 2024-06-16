@@ -4,7 +4,7 @@
         <label>Title: </label>
         {{book.title}}
     </h2>
-    <h3>
+    <h3 *ngIf="book.description">
         <label>Description: </label>
         {{book.description}}
     </h3>

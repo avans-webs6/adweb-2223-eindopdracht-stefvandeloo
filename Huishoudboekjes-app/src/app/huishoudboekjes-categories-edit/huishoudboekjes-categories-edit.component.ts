@@ -40,6 +40,7 @@ export class HuishoudboekjesCategoriesEditComponent {
   }
 
   async onSave() {
+    this.editDialog.close();
       if (!this.category || this.validateForm()) return;
 
       this.category = new Category(this.category.id,
@@ -48,7 +49,6 @@ export class HuishoudboekjesCategoriesEditComponent {
                                     this.editCategoryForm.value.date ?? "");
       await this.categoryService.editCategory(this.category);
       this.editCategoryForm.reset();
-      this.editDialog.close();
   }
 
   onCancel() {

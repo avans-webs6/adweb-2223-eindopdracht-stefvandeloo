@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {from, map, Observable, Subscriber} from 'rxjs';
+import {filter, from, map, Observable, Subscriber} from 'rxjs';
 import {
     onSnapshot,
     collection,
@@ -26,6 +26,18 @@ export class TransactionService {
       return new Observable((subscriber: Subscriber<Transaction[]>) => {
             this.createTransactionSnapshot(bookId, subscriber, transactionType);
       });
+  }
+
+  getTransactionsOfBookByDate(bookId: string, date: Date, transactionType?: TransactionType) {
+    return new Observable((subscriber: Subscriber<Transaction[]>) => {
+      this.createTransactionSnapshot(bookId, subscriber, transactionType);
+    }).pipe(map((transactions) => {
+      return transactions.filter(transaction => {
+        return new Date(transaction.date).getMonth() === date.getMonth() && new Date(transaction.date).getFullYear() === date.getFullYear();
+      }).sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
+    }));
   }
 
     getTransactions() {

@@ -36,6 +36,7 @@ export class HuishoudboekjesEditComponent implements AfterViewInit {
   }
 
   async onSave() {
+    this.editDialog.close();
     if (!this.book || this.validateTitle()) return;
     this.book = new Book(this.book.id,
                           this.editBookForm.value.title,
@@ -44,7 +45,6 @@ export class HuishoudboekjesEditComponent implements AfterViewInit {
 
     await this.bookService.editBook(this.book);
     this.editBookForm.reset();
-    this.editDialog.close();
   }
 
   onCancel() {

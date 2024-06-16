@@ -61,8 +61,7 @@ export class HuishoudboekjesDetailComponent {
   }
 
   getTransactionsByDate(bookId: string) {
-    this.transactionService.getTransactionsOfBook(bookId).subscribe((transactions) => {
-        transactions = this.filterAndSortTransactions(transactions);
+    this.transactionService.getTransactionsOfBookByDate(bookId, new Date(this.date)).subscribe((transactions) => {
         this.income = this.filterTransactionsByType(transactions, TransactionType.INCOME);
         this.expenses = this.filterTransactionsByType(transactions, TransactionType.EXPENSES);
         this.transactions$.next(transactions);
@@ -71,23 +70,5 @@ export class HuishoudboekjesDetailComponent {
 
   filterTransactionsByType(transactions: Transaction[], transactionType: TransactionType) {
     return transactions.filter(i => i.type === transactionType);
-  }
-
-  filterAndSortTransactions(transactions: Transaction[]) {
-    transactions = this.filterTransactionsByDate(transactions);
-    return this.sortData(transactions);
-  }
-
-  filterTransactionsByDate(transactions: Transaction[]) {
-    return transactions.filter(i =>
-      new Date(i.date).getMonth() === new Date(this.date).getMonth() &&
-      new Date(i.date).getFullYear() === new Date(this.date).getFullYear()
-    );
-  }
-
-  sortData(transactions: Transaction[]) {
-    return transactions.sort((first, second) => {
-      return <any>new Date(first.date) - <any>new Date(second.date);
-    });
   }
 }
