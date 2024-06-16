@@ -23,4 +23,9 @@ describe('HuishoudboekjesCategoriesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have date of current day', () => {
+    const today = new Date();
+    expect(component.getCurrentDate()).toEqual(today);
+  });
 });
