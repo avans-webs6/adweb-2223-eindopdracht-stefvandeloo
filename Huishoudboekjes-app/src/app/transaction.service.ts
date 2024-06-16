@@ -22,12 +22,6 @@ export class TransactionService {
 
   constructor(private firebase: FirebaseService) {  }
 
-  getTransactionsOfBook(bookId: string, transactionType?: TransactionType) {
-      return new Observable((subscriber: Subscriber<Transaction[]>) => {
-            this.createTransactionSnapshot(bookId, subscriber, transactionType);
-      });
-  }
-
   getTransactionsOfBookByDate(bookId: string, date: Date, transactionType?: TransactionType) {
     return new Observable((subscriber: Subscriber<Transaction[]>) => {
       this.createTransactionSnapshot(bookId, subscriber, transactionType);
