@@ -42,5 +42,4 @@ testem.log
 Thumbs.db
 
 # Firebase
-/.firebase
-/src/environments/
+/Huishoudboekjes-app/src/environments/
