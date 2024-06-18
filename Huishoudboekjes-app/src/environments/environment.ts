@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: "AIzaSyBaTDFADzWBGrf36AUiW8fYv9T9RibeM-E",
+    apiKey: "AIzaSyDIY-jCazPl4Esod-FzgzOZRyfBNSHhpWo",
     authDomain: "adweb-2223-huishoudboekjes.firebaseapp.com",
     projectId: "adweb-2223-huishoudboekjes",
     storageBucket: "adweb-2223-huishoudboekjes.appspot.com", 
