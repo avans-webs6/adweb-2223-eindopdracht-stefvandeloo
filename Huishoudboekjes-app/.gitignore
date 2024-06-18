@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # Firebase
-/Huishoudboekjes-app/src/environments/
+/Huishoudboekjes-app/src/environments/environment.development.ts
