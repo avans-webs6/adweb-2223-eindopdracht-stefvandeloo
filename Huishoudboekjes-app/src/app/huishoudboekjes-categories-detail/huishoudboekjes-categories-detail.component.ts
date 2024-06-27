@@ -33,8 +33,7 @@ export class HuishoudboekjesCategoriesDetailComponent {
             if (!transaction.categoryId || !this.category) return;
             if (transaction.categoryId !== this.category.id) return;
 
-            if (transaction.type === TransactionType.INCOME) this.balance += Number(transaction.price);
-            else if (transaction.type === TransactionType.EXPENSES) this.balance -= Number(transaction.price);
+            this.balance += Number(transaction.price);
         });
     }
 
